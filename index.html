@@ -2,10 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="WFL · 3D GAME ART PORTFOLIO">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="WFL 3D Game Art Portfolio">
 <title>WFL · 3D GAME ART PORTFOLIO</title>
 
+<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -26,8 +27,8 @@ body{
         "Microsoft YaHei",
         Arial,
         sans-serif;
-    background:#08090b;
-    color:#f5f5f5;
+    background:#080808;
+    color:#fff;
     min-height:100vh;
 }
 
@@ -56,123 +57,61 @@ body::before{
     position:fixed;
     inset:0;
     pointer-events:none;
-    z-index:-2;
+    z-index:-1;
     background:
         radial-gradient(
-            circle at 15% 15%,
-            rgba(255,255,255,.055),
-            transparent 28%
+            circle at 20% 10%,
+            rgba(255,255,255,.05),
+            transparent 30%
         ),
         radial-gradient(
-            circle at 85% 70%,
+            circle at 80% 80%,
             rgba(255,255,255,.035),
             transparent 30%
         );
 }
 
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:-1;
-    opacity:.18;
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        );
-    background-size:40px 40px;
-}
-
 /* =========================
-   Header
+   顶部
 ========================= */
 
-header{
+.header{
     position:sticky;
     top:0;
     z-index:100;
-    height:76px;
-    background:rgba(8,9,11,.88);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.nav{
-    max-width:1400px;
-    height:100%;
-    margin:auto;
-    padding:0 32px;
+    height:72px;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    padding:0 6vw;
+    background:rgba(8,8,8,.88);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.logo-mark{
-    width:38px;
-    height:38px;
-    border:1px solid rgba(255,255,255,.4);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-    letter-spacing:-1px;
-    background:#111318;
-}
-
-.logo-text{
-    font-size:14px;
-    font-weight:700;
+    font-size:20px;
+    font-weight:900;
     letter-spacing:2px;
 }
 
-.logo-sub{
-    color:#777;
-    font-size:10px;
-    letter-spacing:1.5px;
-    margin-top:2px;
+.logo span{
+    color:#999;
+    font-weight:500;
 }
 
-.nav-links{
+.nav{
     display:flex;
     gap:28px;
-    align-items:center;
 }
 
-.nav-links a{
+.nav a{
     color:#aaa;
-    font-size:13px;
+    font-size:14px;
     transition:.2s;
 }
 
-.nav-links a:hover{
-    color:#fff;
-}
-
-.admin-btn{
-    border:1px solid #333;
-    background:#111;
-    color:#ddd;
-    padding:9px 15px;
-    border-radius:5px;
-    font-size:12px;
-    transition:.2s;
-}
-
-.admin-btn:hover{
-    border-color:#777;
+.nav a:hover{
     color:#fff;
 }
 
@@ -181,141 +120,149 @@ header{
 ========================= */
 
 .hero{
-    max-width:1400px;
-    margin:auto;
-    padding:110px 32px 80px;
+    min-height:550px;
+    padding:110px 6vw 90px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::after{
+    content:"WFL";
+    position:absolute;
+    right:-30px;
+    bottom:-110px;
+    font-size:300px;
+    line-height:1;
+    font-weight:900;
+    color:rgba(255,255,255,.025);
+    pointer-events:none;
+}
+
+.hero-content{
+    max-width:1000px;
+    position:relative;
+    z-index:2;
 }
 
 .hero-label{
-    color:#777;
-    font-size:11px;
+    color:#999;
+    font-size:13px;
     letter-spacing:4px;
-    margin-bottom:22px;
+    margin-bottom:20px;
 }
 
 .hero h1{
-    font-size:clamp(44px,7vw,92px);
-    line-height:.95;
+    font-size:clamp(48px,8vw,110px);
+    line-height:.9;
     letter-spacing:-5px;
-    font-weight:800;
-    max-width:950px;
+    font-weight:900;
+    margin-bottom:30px;
 }
 
 .hero h1 span{
-    color:#666;
-}
-
-.hero-description{
-    margin-top:30px;
-    max-width:650px;
-    color:#999;
-    font-size:15px;
-    line-height:1.9;
-}
-
-.hero-meta{
-    margin-top:38px;
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
-.meta-item{
-    border:1px solid #292b30;
-    padding:9px 14px;
     color:#888;
-    font-size:11px;
-    letter-spacing:1px;
+}
+
+.hero p{
+    max-width:650px;
+    color:#aaa;
+    font-size:17px;
+    line-height:1.8;
 }
 
 /* =========================
-   Main
+   状态
 ========================= */
 
-main{
-    max-width:1400px;
-    margin:auto;
-    padding:0 32px 100px;
+.connection-status{
+    margin-top:30px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 15px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.03);
+    border-radius:999px;
+    color:#aaa;
+    font-size:13px;
 }
 
-.section-head{
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#777;
+}
+
+.status-dot.ok{
+    background:#55d98a;
+    box-shadow:0 0 12px rgba(85,217,138,.7);
+}
+
+.status-dot.error{
+    background:#ff5555;
+    box-shadow:0 0 12px rgba(255,85,85,.6);
+}
+
+/* =========================
+   内容
+========================= */
+
+.section{
+    width:min(1400px,88vw);
+    margin:auto;
+    padding:80px 0;
+}
+
+.section-header{
     display:flex;
-    align-items:end;
     justify-content:space-between;
-    margin-bottom:25px;
+    align-items:end;
     gap:20px;
+    margin-bottom:35px;
 }
 
 .section-title{
-    font-size:25px;
-    font-weight:700;
+    font-size:38px;
+    font-weight:800;
 }
 
-.section-title small{
-    display:block;
-    margin-top:7px;
-    color:#666;
-    font-size:10px;
-    letter-spacing:2px;
-    font-weight:400;
-}
-
-.filters{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-}
-
-.filter-btn{
-    background:transparent;
-    border:1px solid #292b30;
+.section-subtitle{
     color:#777;
-    padding:8px 13px;
-    border-radius:4px;
-    font-size:11px;
-    transition:.2s;
-}
-
-.filter-btn:hover,
-.filter-btn.active{
-    background:#eee;
-    border-color:#eee;
-    color:#111;
+    font-size:14px;
 }
 
 /* =========================
-   Loading
+   分类
 ========================= */
 
-.loading{
-    padding:80px 20px;
-    text-align:center;
-    color:#666;
-    border:1px solid #191a1e;
-    background:#0c0d10;
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:35px;
 }
 
-.spinner{
-    width:25px;
-    height:25px;
-    border:2px solid #333;
-    border-top-color:#fff;
-    border-radius:50%;
-    animation:spin .8s linear infinite;
-    margin:0 auto 15px;
+.filter-btn{
+    padding:10px 18px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:999px;
+    background:#101010;
+    color:#888;
+    transition:.2s;
 }
 
-@keyframes spin{
-    to{transform:rotate(360deg);}
+.filter-btn:hover{
+    color:#fff;
+    border-color:#555;
 }
 
-.error-box{
-    padding:30px;
-    background:#150d0d;
-    border:1px solid #492020;
-    color:#e6aaaa;
-    line-height:1.8;
-    font-size:13px;
+.filter-btn.active{
+    color:#000;
+    background:#fff;
+    border-color:#fff;
 }
 
 /* =========================
@@ -326,118 +273,145 @@ main{
     display:grid;
     grid-template-columns:
         repeat(3,minmax(0,1fr));
-    gap:18px;
+    gap:20px;
 }
 
 .work-card{
     position:relative;
-    background:#0e0f12;
-    border:1px solid #1c1e22;
     overflow:hidden;
+    background:#111;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:10px;
     transition:
         transform .3s,
-        border-color .3s,
-        box-shadow .3s;
+        border-color .3s;
 }
 
 .work-card:hover{
     transform:translateY(-5px);
-    border-color:#3b3d42;
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
-}
-
-.work-image-wrap{
-    position:relative;
-    aspect-ratio:16/10;
-    overflow:hidden;
-    background:#111;
+    border-color:rgba(255,255,255,.22);
 }
 
 .work-image{
     width:100%;
-    height:100%;
-    display:block;
+    aspect-ratio:16/10;
     object-fit:cover;
-    transition:transform .5s;
-}
-
-.work-card:hover .work-image{
-    transform:scale(1.035);
-}
-
-.featured-tag{
-    position:absolute;
-    left:12px;
-    top:12px;
-    background:#fff;
-    color:#111;
-    font-size:9px;
-    font-weight:800;
-    padding:5px 8px;
-    letter-spacing:1px;
+    display:block;
+    background:#171717;
 }
 
 .work-info{
-    padding:17px;
+    padding:20px;
 }
 
 .work-category{
-    color:#666;
-    font-size:9px;
+    color:#777;
+    font-size:11px;
     letter-spacing:2px;
-    text-transform:uppercase;
     margin-bottom:8px;
+    text-transform:uppercase;
 }
 
 .work-title{
-    font-size:17px;
+    font-size:20px;
     font-weight:700;
+    margin-bottom:8px;
 }
 
 .work-description{
-    margin-top:9px;
-    color:#777;
-    font-size:12px;
-    line-height:1.7;
+    color:#888;
+    font-size:13px;
+    line-height:1.6;
+    min-height:42px;
 }
 
-.work-date{
-    margin-top:13px;
-    color:#444;
-    font-size:10px;
+.work-actions{
+    display:none;
+    gap:8px;
+    margin-top:15px;
 }
 
-.admin-actions{
+.admin-mode .work-actions{
     display:flex;
-    gap:7px;
-    padding:0 17px 17px;
 }
 
-.admin-actions button{
-    flex:1;
-    border:1px solid #292b30;
-    background:#121317;
-    color:#999;
-    padding:8px;
-    border-radius:4px;
-    font-size:11px;
-}
-
-.admin-actions button:hover{
+.small-btn{
+    border:1px solid rgba(255,255,255,.15);
+    background:#191919;
     color:#fff;
-    border-color:#666;
+    border-radius:6px;
+    padding:8px 12px;
+    font-size:12px;
+}
+
+.small-btn:hover{
+    background:#292929;
+}
+
+.small-btn.delete{
+    color:#ff7777;
 }
 
 /* =========================
-   Empty
+   Loading
 ========================= */
 
-.empty{
+.loading{
     grid-column:1/-1;
-    padding:80px 20px;
+    padding:100px 20px;
     text-align:center;
-    color:#555;
-    border:1px dashed #28292d;
+    color:#777;
+}
+
+.loading-spinner{
+    width:32px;
+    height:32px;
+    border:3px solid #333;
+    border-top-color:#fff;
+    border-radius:50%;
+    margin:0 auto 20px;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =========================
+   错误
+========================= */
+
+.error-box{
+    grid-column:1/-1;
+    padding:30px;
+    border:1px solid rgba(255,80,80,.3);
+    background:rgba(255,50,50,.05);
+    border-radius:10px;
+}
+
+.error-title{
+    color:#ff7777;
+    font-size:18px;
+    margin-bottom:12px;
+}
+
+.error-text{
+    color:#aaa;
+    font-size:13px;
+    line-height:1.8;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.retry-btn{
+    margin-top:18px;
+    padding:10px 18px;
+    border:0;
+    border-radius:6px;
+    background:#fff;
+    color:#000;
 }
 
 /* =========================
@@ -445,68 +419,91 @@ main{
 ========================= */
 
 .about{
-    margin-top:110px;
-    padding-top:70px;
-    border-top:1px solid #202126;
-    display:grid;
-    grid-template-columns:1fr 1.4fr;
-    gap:80px;
+    border-top:1px solid rgba(255,255,255,.08);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.about-label{
-    color:#666;
-    font-size:10px;
-    letter-spacing:3px;
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
 }
 
 .about h2{
-    margin-top:13px;
     font-size:38px;
-    letter-spacing:-2px;
+    margin-bottom:20px;
 }
 
-.about-content{
-    color:#888;
-    line-height:2;
-    font-size:14px;
+.about p{
+    color:#999;
+    line-height:1.9;
+    font-size:15px;
 }
 
-.about-content p+p{
-    margin-top:18px;
-}
-
-.about-list{
-    margin-top:25px;
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
+.skills{
+    display:flex;
+    flex-wrap:wrap;
     gap:10px;
 }
 
-.about-list div{
-    border:1px solid #202126;
-    padding:13px;
-    color:#777;
-    font-size:11px;
+.skill{
+    border:1px solid rgba(255,255,255,.1);
+    padding:10px 15px;
+    border-radius:5px;
+    color:#aaa;
+    font-size:13px;
 }
 
 /* =========================
-   Footer
+   Admin
 ========================= */
 
-footer{
-    border-top:1px solid #18191c;
-    padding:30px 32px;
-    color:#444;
-    font-size:10px;
-    letter-spacing:1px;
+.admin-panel{
+    display:none;
+    margin-bottom:35px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#101010;
+    border-radius:10px;
 }
 
-.footer-inner{
-    max-width:1400px;
-    margin:auto;
+.admin-mode .admin-panel{
+    display:block;
+}
+
+.admin-panel-inner{
     display:flex;
     justify-content:space-between;
+    align-items:center;
     gap:20px;
+    flex-wrap:wrap;
+}
+
+.admin-title{
+    font-weight:700;
+}
+
+.admin-email{
+    color:#777;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.primary-btn{
+    border:0;
+    background:#fff;
+    color:#000;
+    padding:11px 18px;
+    border-radius:6px;
+    font-weight:700;
+}
+
+.secondary-btn{
+    border:1px solid rgba(255,255,255,.15);
+    background:#171717;
+    color:#fff;
+    padding:11px 18px;
+    border-radius:6px;
 }
 
 /* =========================
@@ -514,14 +511,14 @@ footer{
 ========================= */
 
 .modal{
+    display:none;
     position:fixed;
     inset:0;
-    z-index:500;
-    display:none;
+    z-index:1000;
     align-items:center;
     justify-content:center;
     padding:20px;
-    background:rgba(0,0,0,.75);
+    background:rgba(0,0,0,.8);
     backdrop-filter:blur(10px);
 }
 
@@ -530,64 +527,56 @@ footer{
 }
 
 .modal-box{
-    width:min(560px,100%);
+    width:min(600px,100%);
     max-height:90vh;
     overflow:auto;
-    background:#101114;
-    border:1px solid #2b2d32;
-    box-shadow:0 30px 100px rgba(0,0,0,.6);
+    background:#111;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;
+    padding:30px;
 }
 
 .modal-header{
-    padding:20px;
-    border-bottom:1px solid #24252a;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
 }
 
-.modal-title{
-    font-size:17px;
-    font-weight:700;
+.modal-header h3{
+    font-size:22px;
 }
 
 .close-btn{
-    width:30px;
-    height:30px;
-    border:1px solid #333;
-    background:#16171a;
-    color:#aaa;
-    border-radius:4px;
-}
-
-.close-btn:hover{
+    width:34px;
+    height:34px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#181818;
     color:#fff;
-}
-
-.modal-body{
-    padding:20px;
+    border-radius:6px;
+    font-size:18px;
 }
 
 .form-group{
-    margin-bottom:17px;
+    margin-bottom:18px;
 }
 
 .form-group label{
     display:block;
-    margin-bottom:7px;
-    color:#777;
-    font-size:11px;
+    margin-bottom:8px;
+    color:#aaa;
+    font-size:13px;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select{
     width:100%;
-    background:#090a0c;
-    border:1px solid #292b30;
-    color:#eee;
-    padding:11px 12px;
-    border-radius:4px;
+    padding:12px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#090909;
+    color:#fff;
+    border-radius:6px;
     outline:none;
 }
 
@@ -602,199 +591,151 @@ footer{
     resize:vertical;
 }
 
-.form-actions{
-    display:flex;
-    gap:10px;
-    margin-top:20px;
-}
-
-.primary-btn,
-.secondary-btn,
-.danger-btn{
-    border:1px solid #333;
-    padding:10px 16px;
-    border-radius:4px;
-    font-size:12px;
-}
-
-.primary-btn{
-    background:#eee;
-    color:#111;
-    border-color:#eee;
-}
-
-.secondary-btn{
-    background:#16171a;
-    color:#aaa;
-}
-
-.danger-btn{
-    background:#2a1010;
-    color:#e88;
-    border-color:#512323;
-}
-
-/* =========================
-   Upload
-========================= */
-
-.upload-area{
-    border:1px dashed #3a3c42;
-    min-height:130px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.file-drop{
+    border:1px dashed #444;
+    background:#0a0a0a;
+    padding:30px;
     text-align:center;
-    color:#666;
-    border-radius:4px;
-    transition:.2s;
+    border-radius:8px;
+    cursor:pointer;
 }
 
-.upload-area:hover,
-.upload-area.dragging{
-    border-color:#aaa;
-    color:#aaa;
-    background:#151619;
+.file-drop:hover{
+    border-color:#777;
 }
 
-.upload-area input{
+.file-drop.dragover{
+    border-color:#fff;
+    background:#171717;
+}
+
+.file-name{
+    color:#777;
+    font-size:12px;
+    margin-top:10px;
+}
+
+.preview{
     display:none;
+    margin-top:15px;
 }
 
-.upload-text strong{
-    display:block;
-    color:#aaa;
-    margin-bottom:7px;
+.preview img{
+    max-width:100%;
+    max-height:220px;
+    border-radius:6px;
 }
 
-.upload-text small{
-    font-size:10px;
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:25px;
 }
 
 /* =========================
    Login
 ========================= */
 
-.login-info{
+.login-hint{
     color:#666;
-    font-size:11px;
+    font-size:12px;
     line-height:1.7;
-    margin-bottom:18px;
-}
-
-.status{
-    padding:10px 12px;
-    border:1px solid #292b30;
-    background:#0b0c0e;
-    color:#777;
-    font-size:11px;
-    margin-bottom:15px;
-    display:none;
-}
-
-.status.show{
-    display:block;
-}
-
-.status.error{
-    color:#e89999;
-    border-color:#4b2727;
-}
-
-.status.success{
-    color:#9bc89b;
-    border-color:#294329;
+    margin-top:15px;
 }
 
 /* =========================
-   Admin floating panel
+   Footer
 ========================= */
 
-.admin-panel{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    z-index:200;
-    display:none;
-}
-
-.admin-panel.show{
+.footer{
+    padding:60px 6vw;
+    color:#555;
+    font-size:12px;
     display:flex;
-    gap:8px;
+    justify-content:space-between;
+    gap:20px;
 }
 
-.admin-panel button{
-    background:#eee;
-    color:#111;
-    border:0;
-    border-radius:5px;
-    padding:10px 14px;
-    font-size:11px;
-    font-weight:700;
-    box-shadow:0 8px 30px rgba(0,0,0,.4);
+/* =========================
+   Toast
+========================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    z-index:2000;
+    max-width:400px;
+    padding:15px 20px;
+    background:#171717;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:8px;
+    color:#fff;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+    transform:translateY(20px);
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+.toast.error{
+    border-color:rgba(255,80,80,.4);
 }
 
 /* =========================
    Responsive
 ========================= */
 
-@media(max-width:1000px){
+@media(max-width:900px){
+
     .gallery{
-        grid-template-columns:
-            repeat(2,minmax(0,1fr));
+        grid-template-columns:repeat(2,minmax(0,1fr));
     }
 
-    .about{
+    .about-grid{
         grid-template-columns:1fr;
-        gap:30px;
+        gap:40px;
+    }
+
+    .hero{
+        min-height:480px;
     }
 }
 
-@media(max-width:700px){
-    header{
-        height:auto;
+@media(max-width:600px){
+
+    .header{
+        padding:0 20px;
     }
 
     .nav{
-        padding:15px 18px;
-        gap:15px;
-    }
-
-    .nav-links{
         display:none;
     }
 
     .hero{
-        padding:75px 18px 55px;
+        padding:80px 20px;
+    }
+
+    .section{
+        width:calc(100% - 40px);
+    }
+
+    .gallery{
+        grid-template-columns:1fr;
     }
 
     .hero h1{
         letter-spacing:-3px;
     }
 
-    main{
-        padding:0 18px 70px;
-    }
-
-    .section-head{
-        align-items:start;
-        flex-direction:column;
-    }
-
-    .gallery{
-        grid-template-columns:1fr;
-    }
-
-    .about{
-        margin-top:70px;
-        padding-top:50px;
-    }
-
-    .about-list{
-        grid-template-columns:1fr;
-    }
-
-    .footer-inner{
+    .footer{
+        padding:40px 20px;
         flex-direction:column;
     }
 }
@@ -803,263 +744,355 @@ footer{
 
 <body>
 
-<header>
-    <div class="nav">
+<!-- =========================
+     Header
+========================= -->
 
-        <a href="#" class="logo">
-            <div class="logo-mark">WFL</div>
+<header class="header">
 
-            <div>
-                <div class="logo-text">
-                    WFL · 3D GAME ART
-                </div>
-                <div class="logo-sub">
-                    PORTFOLIO
-                </div>
-            </div>
+    <a href="#" class="logo">
+        WFL <span>· 3D GAME ART</span>
+    </a>
+
+    <nav class="nav">
+        <a href="#works">作品</a>
+        <a href="#about">关于</a>
+        <a href="javascript:void(0)" onclick="openLogin()">
+            管理员
         </a>
+    </nav>
 
-        <nav class="nav-links">
-            <a href="#works">WORKS</a>
-            <a href="#about">ABOUT</a>
-        </nav>
-
-        <button class="admin-btn" id="loginButton">
-            ADMIN LOGIN
-        </button>
-
-    </div>
 </header>
 
 
+<!-- =========================
+     Hero
+========================= -->
+
 <section class="hero">
 
-    <div class="hero-label">
-        3D GAME ART / PORTFOLIO
-    </div>
+    <div class="hero-content">
 
-    <h1>
-        BUILDING<br>
-        <span>WORLDS IN 3D.</span>
-    </h1>
-
-    <p class="hero-description">
-        WFL 个人 3D 游戏美术作品集。
-        专注于 3D 建模、游戏美术、角色与道具制作，
-        持续学习并探索新的视觉表达方式。
-    </p>
-
-    <div class="hero-meta">
-        <div class="meta-item">3D MODELING</div>
-        <div class="meta-item">GAME ART</div>
-        <div class="meta-item">BLENDER</div>
-        <div class="meta-item">DIGITAL ART</div>
-    </div>
-
-</section>
-
-
-<main>
-
-<section id="works">
-
-    <div class="section-head">
-
-        <div class="section-title">
-            SELECTED WORKS
-            <small>SELECTED 3D ARTWORKS</small>
+        <div class="hero-label">
+            3D GAME ART · PORTFOLIO
         </div>
 
-        <div class="filters" id="filters">
-            <button
-                class="filter-btn active"
-                data-category="全部">
-                ALL
-            </button>
-
-            <button
-                class="filter-btn"
-                data-category="角色">
-                CHARACTER
-            </button>
-
-            <button
-                class="filter-btn"
-                data-category="场景">
-                ENVIRONMENT
-            </button>
-
-            <button
-                class="filter-btn"
-                data-category="道具">
-                PROP
-            </button>
-
-            <button
-                class="filter-btn"
-                data-category="其他">
-                OTHER
-            </button>
-        </div>
-
-    </div>
-
-
-    <div id="loading" class="loading">
-        <div class="spinner"></div>
-        正在加载作品……
-    </div>
-
-    <div
-        id="errorBox"
-        class="error-box"
-        style="display:none">
-    </div>
-
-    <div
-        id="gallery"
-        class="gallery"
-        style="display:none">
-    </div>
-
-</section>
-
-
-<section id="about" class="about">
-
-    <div>
-        <div class="about-label">
-            ABOUT THE ARTIST
-        </div>
-
-        <h2>
-            WFL
-        </h2>
-    </div>
-
-    <div class="about-content">
+        <h1>
+            WFL<br>
+            <span>GAME ART</span>
+        </h1>
 
         <p>
-            这是我的个人 3D 游戏美术作品集，
-            用于展示我的建模、材质、场景以及游戏美术相关作品。
+            3D游戏美术作品集，展示角色、场景、道具以及个人3D创作。
+            记录从建模、材质到最终呈现的完整创作过程。
         </p>
 
-        <p>
-            我仍然处于不断学习和实践的阶段，
-            希望通过持续制作作品提升自己的 3D 游戏美术能力。
-        </p>
+        <div class="connection-status" id="connectionStatus">
 
-        <div class="about-list">
-            <div>3D MODELING</div>
-            <div>GAME ART</div>
-            <div>BLENDER</div>
-            <div>TEXTURING</div>
-            <div>ENVIRONMENT</div>
-            <div>PROP DESIGN</div>
+            <span
+                class="status-dot"
+                id="statusDot"
+            ></span>
+
+            <span id="statusText">
+                正在连接作品数据库...
+            </span>
+
         </div>
 
     </div>
 
 </section>
-
-</main>
-
-
-<footer>
-    <div class="footer-inner">
-        <span>© WFL · 3D GAME ART PORTFOLIO</span>
-        <span>BUILT WITH BLENDER · SUPABASE · GITHUB PAGES</span>
-    </div>
-</footer>
 
 
 <!-- =========================
-     Admin Floating Buttons
+     Works
 ========================= -->
 
-<div class="admin-panel" id="adminPanel">
+<section class="section" id="works">
 
-    <button id="uploadButton">
-        ＋ 上传作品
-    </button>
+    <div class="section-header">
 
-    <button id="logoutButton">
-        退出登录
-    </button>
+        <div>
+            <div class="section-title">
+                Selected Works
+            </div>
 
-</div>
+            <div class="section-subtitle">
+                3D GAME ART / MODELING / TEXTURE
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Admin -->
+
+    <div class="admin-panel">
+
+        <div class="admin-panel-inner">
+
+            <div>
+
+                <div class="admin-title">
+                    管理员模式
+                </div>
+
+                <div
+                    class="admin-email"
+                    id="adminEmail"
+                >
+                    -
+                </div>
+
+            </div>
+
+            <div style="display:flex;gap:10px;">
+
+                <button
+                    class="primary-btn"
+                    onclick="openWorkModal()"
+                >
+                    + 上传作品
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="logout()"
+                >
+                    退出登录
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Filters -->
+
+    <div class="filters">
+
+        <button
+            class="filter-btn active"
+            data-category="全部"
+        >
+            全部
+        </button>
+
+        <button
+            class="filter-btn"
+            data-category="角色"
+        >
+            角色
+        </button>
+
+        <button
+            class="filter-btn"
+            data-category="场景"
+        >
+            场景
+        </button>
+
+        <button
+            class="filter-btn"
+            data-category="道具"
+        >
+            道具
+        </button>
+
+        <button
+            class="filter-btn"
+            data-category="其他"
+        >
+            其他
+        </button>
+
+    </div>
+
+
+    <!-- Gallery -->
+
+    <div
+        class="gallery"
+        id="gallery"
+    >
+
+        <div class="loading">
+
+            <div class="loading-spinner"></div>
+
+            正在加载作品...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     About
+========================= -->
+
+<section
+    class="section about"
+    id="about"
+>
+
+    <div class="about-grid">
+
+        <div>
+
+            <h2>
+                About WFL
+            </h2>
+
+            <p>
+                WFL 是一个专注于3D游戏美术与数字艺术创作的个人作品集。
+                这里主要展示3D角色、场景、道具以及各种建模实验。
+            </p>
+
+            <br>
+
+            <p>
+                从基础建模到材质制作，再到最终渲染，
+                希望通过不断练习与创作提升自己的游戏美术能力。
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h2>
+                Skills
+            </h2>
+
+            <div class="skills">
+
+                <div class="skill">Blender</div>
+                <div class="skill">3D Modeling</div>
+                <div class="skill">Game Art</div>
+                <div class="skill">Hard Surface</div>
+                <div class="skill">Character</div>
+                <div class="skill">Environment</div>
+                <div class="skill">Substance Painter</div>
+                <div class="skill">Rendering</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     Footer
+========================= -->
+
+<footer class="footer">
+
+    <div>
+        © 2026 WFL · 3D GAME ART PORTFOLIO
+    </div>
+
+    <div>
+        Built with HTML · GitHub Pages · Supabase
+    </div>
+
+</footer>
 
 
 <!-- =========================
      Login Modal
 ========================= -->
 
-<div class="modal" id="loginModal">
+<div
+    class="modal"
+    id="loginModal"
+>
 
     <div class="modal-box">
 
         <div class="modal-header">
 
-            <div class="modal-title">
+            <h3>
                 管理员登录
-            </div>
+            </h3>
 
             <button
                 class="close-btn"
-                data-close="loginModal">
+                onclick="closeModal('loginModal')"
+            >
                 ×
             </button>
 
         </div>
 
-        <div class="modal-body">
 
-            <div class="login-info">
-                只有管理员账号可以上传、编辑和删除作品。
-            </div>
-
-            <div
-                class="status"
-                id="loginStatus">
-            </div>
+        <form id="loginForm">
 
             <div class="form-group">
-                <label>邮箱</label>
+
+                <label>
+                    管理员邮箱
+                </label>
 
                 <input
                     type="email"
                     id="loginEmail"
-                    placeholder="请输入管理员邮箱"
-                    autocomplete="email">
+                    value="3363903500@qq.com"
+                    required
+                >
+
             </div>
 
+
             <div class="form-group">
-                <label>密码</label>
+
+                <label>
+                    密码
+                </label>
 
                 <input
                     type="password"
                     id="loginPassword"
-                    placeholder="请输入密码"
-                    autocomplete="current-password">
+                    required
+                >
+
             </div>
 
-            <div class="form-actions">
+
+            <div
+                class="login-hint"
+                id="loginError"
+            ></div>
+
+
+            <div class="modal-actions">
 
                 <button
-                    class="primary-btn"
-                    id="doLogin">
-                    登录
-                </button>
-
-                <button
+                    type="button"
                     class="secondary-btn"
-                    data-close="loginModal">
+                    onclick="closeModal('loginModal')"
+                >
                     取消
                 </button>
 
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    登录
+                </button>
+
             </div>
 
-        </div>
+        </form>
 
     </div>
 
@@ -1067,44 +1100,58 @@ footer{
 
 
 <!-- =========================
-     Upload / Edit Modal
+     Work Modal
 ========================= -->
 
-<div class="modal" id="workModal">
+<div
+    class="modal"
+    id="workModal"
+>
 
     <div class="modal-box">
 
         <div class="modal-header">
 
-            <div class="modal-title" id="workModalTitle">
+            <h3 id="workModalTitle">
                 上传作品
-            </div>
+            </h3>
 
             <button
                 class="close-btn"
-                data-close="workModal">
+                onclick="closeModal('workModal')"
+            >
                 ×
             </button>
 
         </div>
 
-        <div class="modal-body">
 
-            <div
-                class="status"
-                id="workStatus">
-            </div>
+        <form id="workForm">
+
+            <input
+                type="hidden"
+                id="editId"
+            >
+
+            <input
+                type="hidden"
+                id="oldImageUrl"
+            >
+
 
             <div class="form-group">
 
                 <label>
-                    作品标题
+                    作品名称
                 </label>
 
                 <input
                     type="text"
                     id="workTitle"
-                    placeholder="例如：Old Pliers">
+                    placeholder="例如：Old Screwdriver"
+                    required
+                >
+
             </div>
 
 
@@ -1128,7 +1175,7 @@ footer{
                         道具
                     </option>
 
-                    <option value="其他" selected>
+                    <option value="其他">
                         其他
                     </option>
 
@@ -1145,8 +1192,8 @@ footer{
 
                 <textarea
                     id="workDescription"
-                    placeholder="简单介绍这个作品……">
-                </textarea>
+                    placeholder="简单介绍这个作品..."
+                ></textarea>
 
             </div>
 
@@ -1157,87 +1204,103 @@ footer{
                     作品图片
                 </label>
 
-                <label
-                    class="upload-area"
-                    id="uploadArea">
+                <div
+                    class="file-drop"
+                    id="fileDrop"
+                >
+
+                    <div>
+                        点击选择图片
+                    </div>
+
+                    <div
+                        style="
+                        color:#666;
+                        margin-top:8px;
+                        font-size:12px;
+                        "
+                    >
+                        或者将图片拖到这里
+                    </div>
+
+                    <div
+                        class="file-name"
+                        id="fileName"
+                    >
+                        未选择图片
+                    </div>
 
                     <input
                         type="file"
                         id="workImage"
-                        accept="image/*">
+                        accept="image/*"
+                        style="display:none"
+                    >
 
-                    <div class="upload-text">
+                </div>
 
-                        <strong>
-                            点击选择图片
-                        </strong>
-
-                        <small>
-                            或将图片拖到这里
-                        </small>
-
-                    </div>
-
-                </label>
 
                 <div
-                    id="selectedFile"
-                    style="
-                    margin-top:8px;
-                    color:#777;
-                    font-size:10px;
-                    ">
+                    class="preview"
+                    id="imagePreview"
+                >
+
+                    <img
+                        id="previewImg"
+                        alt="preview"
+                    >
+
                 </div>
 
             </div>
 
 
             <div
-                class="form-group"
-                style="display:flex;align-items:center;gap:9px;">
-
-                <input
-                    type="checkbox"
-                    id="workFeatured"
-                    style="width:auto;">
-
-                <label
-                    for="workFeatured"
-                    style="margin:0;">
-                    设为精选作品
-                </label>
-
-            </div>
+                class="login-hint"
+                id="workError"
+            ></div>
 
 
-            <div class="form-actions">
+            <div class="modal-actions">
 
                 <button
-                    class="primary-btn"
-                    id="saveWork">
-                    保存作品
-                </button>
-
-                <button
+                    type="button"
                     class="secondary-btn"
-                    data-close="workModal">
+                    onclick="closeModal('workModal')"
+                >
                     取消
                 </button>
 
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="saveWorkBtn"
+                >
+                    保存作品
+                </button>
+
             </div>
 
-        </div>
+        </form>
 
     </div>
 
 </div>
 
 
+<!-- Toast -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
 <script>
 
-/* =====================================================
+/* =========================================================
    SUPABASE CONFIG
-===================================================== */
+========================================================= */
 
 const SUPABASE_URL =
     "https://tktwfozyjmdkdetrrkif.supabase.co";
@@ -1252,383 +1315,164 @@ const BUCKET =
     "portfolio-images";
 
 
-/* =====================================================
-   初始化 Supabase
-===================================================== */
+/* =========================================================
+   初始化
+========================================================= */
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+let supabaseClient = null;
+
+try{
+
+    if(
+        typeof window.supabase === "undefined"
+    ){
+
+        throw new Error(
+            "Supabase JS SDK 加载失败。"
+        );
+
+    }
+
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+}catch(error){
+
+    console.error(error);
+
+}
 
 
-/* =====================================================
-   全局状态
-===================================================== */
+/* =========================================================
+   状态
+========================================================= */
 
-let works = [];
+let allWorks = [];
 
 let currentCategory = "全部";
 
-let editingWorkId = null;
-
-let selectedImageFile = null;
-
 let currentUser = null;
 
+let editingWork = null;
 
-/* =====================================================
+
+/* =========================================================
    DOM
-===================================================== */
+========================================================= */
 
 const gallery =
     document.getElementById("gallery");
 
-const loading =
-    document.getElementById("loading");
-
-const errorBox =
-    document.getElementById("errorBox");
-
-const loginButton =
-    document.getElementById("loginButton");
-
-const adminPanel =
-    document.getElementById("adminPanel");
-
-const loginModal =
-    document.getElementById("loginModal");
-
-const workModal =
-    document.getElementById("workModal");
-
-const loginStatus =
-    document.getElementById("loginStatus");
-
-const workStatus =
-    document.getElementById("workStatus");
-
-const workImage =
-    document.getElementById("workImage");
-
-const selectedFile =
-    document.getElementById("selectedFile");
-
-
-/* =====================================================
-   工具函数
-===================================================== */
-
-function escapeHTML(value){
-
-    if(value === null || value === undefined){
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
-
-
-function showStatus(element,message,type=""){
-
-    element.textContent = message;
-
-    element.className =
-        "status show " + type;
-}
-
-
-function hideStatus(element){
-
-    element.className = "status";
-
-    element.textContent = "";
-}
-
-
-function openModal(modal){
-
-    modal.classList.add("show");
-}
-
-
-function closeModal(modal){
-
-    modal.classList.remove("show");
-}
-
-
-/* =====================================================
-   登录状态
-===================================================== */
-
-async function checkSession(){
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.getSession();
-
-        if(error){
-
-            console.error(
-                "getSession error:",
-                error
-            );
-
-            currentUser = null;
-
-            updateAdminUI();
-
-            return;
-        }
-
-        currentUser =
-            data.session?.user || null;
-
-        updateAdminUI();
-
-    }catch(error){
-
-        console.error(
-            "Session error:",
-            error
-        );
-
-        currentUser = null;
-
-        updateAdminUI();
-    }
-}
-
-
-function isAdmin(){
-
-    return !!(
-        currentUser &&
-        currentUser.id === ADMIN_UID
+const connectionStatus =
+    document.getElementById(
+        "connectionStatus"
     );
+
+const statusDot =
+    document.getElementById("statusDot");
+
+const statusText =
+    document.getElementById("statusText");
+
+
+/* =========================================================
+   Toast
+========================================================= */
+
+function showToast(
+    message,
+    isError = false
+){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.toggle(
+        "error",
+        isError
+    );
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3500);
 }
 
 
-function updateAdminUI(){
+/* =========================================================
+   设置连接状态
+========================================================= */
 
-    if(isAdmin()){
+function setConnectionStatus(
+    type,
+    text
+){
 
-        loginButton.textContent =
-            "ADMIN · 已登录";
+    statusText.textContent = text;
 
-        adminPanel.classList.add("show");
+    statusDot.className =
+        "status-dot";
 
-    }else{
+    if(type === "ok"){
 
-        loginButton.textContent =
-            "ADMIN LOGIN";
+        statusDot.classList.add("ok");
 
-        adminPanel.classList.remove("show");
     }
 
-    renderWorks();
+    if(type === "error"){
+
+        statusDot.classList.add("error");
+
+    }
 }
 
 
-/* =====================================================
-   登录
-===================================================== */
-
-loginButton.addEventListener(
-    "click",
-    async function(){
-
-        if(isAdmin()){
-
-            return;
-        }
-
-        hideStatus(loginStatus);
-
-        openModal(loginModal);
-
-    }
-);
-
-
-document
-.getElementById("doLogin")
-.addEventListener(
-    "click",
-    async function(){
-
-        const email =
-            document
-            .getElementById("loginEmail")
-            .value
-            .trim();
-
-        const password =
-            document
-            .getElementById("loginPassword")
-            .value;
-
-        if(!email || !password){
-
-            showStatus(
-                loginStatus,
-                "请输入邮箱和密码。",
-                "error"
-            );
-
-            return;
-        }
-
-        showStatus(
-            loginStatus,
-            "正在登录……"
-        );
-
-        try{
-
-            const {
-                data,
-                error
-            } =
-            await supabaseClient.auth
-            .signInWithPassword({
-                email,
-                password
-            });
-
-            if(error){
-
-                console.error(
-                    "Supabase login error:",
-                    error
-                );
-
-                showStatus(
-                    loginStatus,
-                    error.message ||
-                    "登录失败。",
-                    "error"
-                );
-
-                return;
-            }
-
-            currentUser =
-                data.user;
-
-            if(!isAdmin()){
-
-                await supabaseClient.auth.signOut();
-
-                currentUser = null;
-
-                showStatus(
-                    loginStatus,
-                    "该账号没有管理员权限。",
-                    "error"
-                );
-
-                updateAdminUI();
-
-                return;
-            }
-
-            showStatus(
-                loginStatus,
-                "登录成功。",
-                "success"
-            );
-
-            updateAdminUI();
-
-            setTimeout(
-                function(){
-                    closeModal(loginModal);
-                    hideStatus(loginStatus);
-                },
-                500
-            );
-
-        }catch(error){
-
-            console.error(
-                "Login exception:",
-                error
-            );
-
-            showStatus(
-                loginStatus,
-                "登录失败：" +
-                (error.message || error),
-                "error"
-            );
-        }
-
-    }
-);
-
-
-/* =====================================================
-   退出
-===================================================== */
-
-document
-.getElementById("logoutButton")
-.addEventListener(
-    "click",
-    async function(){
-
-        await supabaseClient.auth.signOut();
-
-        currentUser = null;
-
-        updateAdminUI();
-
-    }
-);
-
-
-/* =====================================================
-   Auth 状态监听
-===================================================== */
-
-supabaseClient.auth
-.onAuthStateChange(
-    function(event,session){
-
-        currentUser =
-            session?.user || null;
-
-        updateAdminUI();
-
-    }
-);
-
-
-/* =====================================================
+/* =========================================================
    加载作品
-===================================================== */
+========================================================= */
 
 async function loadWorks(){
 
-    loading.style.display = "block";
+    gallery.innerHTML = `
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            正在连接 Supabase...
+        </div>
+    `;
 
-    gallery.style.display = "none";
+    setConnectionStatus(
+        "loading",
+        "正在连接作品数据库..."
+    );
 
-    errorBox.style.display = "none";
+
+    if(!supabaseClient){
+
+        showLoadError(
+            "Supabase 初始化失败。\n\n" +
+            "请确认 Supabase JS SDK 可以正常加载。"
+        );
+
+        return;
+
+    }
+
 
     try{
+
+        console.log(
+            "Supabase URL:",
+            SUPABASE_URL
+        );
+
 
         const {
             data,
@@ -1638,13 +1482,12 @@ async function loadWorks(){
         .from("works")
         .select("*")
         .order(
-            "featured",
-            {ascending:false}
-        )
-        .order(
             "created_at",
-            {ascending:false}
+            {
+                ascending:false
+            }
         );
+
 
         if(error){
 
@@ -1654,431 +1497,941 @@ async function loadWorks(){
             );
 
             throw error;
+
         }
 
-        works =
-            data || [];
 
-        loading.style.display =
-            "none";
+        allWorks =
+            Array.isArray(data)
+                ? data
+                : [];
 
-        gallery.style.display =
-            "grid";
+
+        setConnectionStatus(
+            "ok",
+            `作品数据库已连接 · ${allWorks.length} 个作品`
+        );
+
 
         renderWorks();
+
 
     }catch(error){
 
         console.error(
-            "Load works failed:",
+            "加载作品失败:",
             error
         );
 
-        loading.style.display =
-            "none";
 
-        errorBox.style.display =
-            "block";
+        setConnectionStatus(
+            "error",
+            "Supabase 连接失败"
+        );
 
-        errorBox.innerHTML = `
-            <strong>作品加载失败</strong><br><br>
-            当前无法连接作品数据库。<br>
-            错误信息：${escapeHTML(
-                error?.message ||
-                String(error)
-            )}<br><br>
-            如果这是第一次部署，请检查
-            Supabase Project URL、数据库表和 RLS 设置。
-        `;
+
+        let message =
+            "无法读取 public.works 表。\n\n";
+
+
+        if(error){
+
+            if(error.message){
+
+                message +=
+                    "错误信息：\n" +
+                    error.message +
+                    "\n\n";
+
+            }
+
+            if(error.details){
+
+                message +=
+                    "详细信息：\n" +
+                    error.details +
+                    "\n\n";
+
+            }
+
+            if(error.hint){
+
+                message +=
+                    "提示：\n" +
+                    error.hint +
+                    "\n\n";
+
+            }
+
+            if(error.code){
+
+                message +=
+                    "错误代码： " +
+                    error.code;
+
+            }
+
+        }
+
+
+        showLoadError(message);
+
     }
+
 }
 
 
-/* =====================================================
-   渲染作品
-===================================================== */
+/* =========================================================
+   错误页面
+========================================================= */
+
+function showLoadError(message){
+
+    gallery.innerHTML = `
+
+        <div class="error-box">
+
+            <div class="error-title">
+                作品加载失败
+            </div>
+
+            <div class="error-text">
+${escapeHtml(message)}
+            </div>
+
+            <button
+                class="retry-btn"
+                onclick="loadWorks()"
+            >
+                重新加载
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   Render
+========================================================= */
 
 function renderWorks(){
 
-    if(!gallery){
-        return;
+    let works =
+        [...allWorks];
+
+
+    if(currentCategory !== "全部"){
+
+        works =
+            works.filter(
+                work =>
+                    work.category ===
+                    currentCategory
+            );
+
     }
 
-    let filtered =
-        works.filter(function(work){
 
-            if(currentCategory === "全部"){
-                return true;
-            }
-
-            return work.category ===
-                currentCategory;
-
-        });
-
-
-    if(filtered.length === 0){
+    if(!works.length){
 
         gallery.innerHTML = `
-            <div class="empty">
+
+            <div class="loading">
+
                 暂时没有作品。
+
+                ${
+                    currentUser
+                    ? "点击「上传作品」添加第一个作品。"
+                    : ""
+                }
+
             </div>
+
         `;
 
         return;
+
     }
 
 
     gallery.innerHTML =
-        filtered
-        .map(function(work){
+        works.map(
+            createWorkCard
+        ).join("");
 
-            const date =
-                work.created_at
-                ?
-                new Date(
-                    work.created_at
-                ).toLocaleDateString(
-                    "zh-CN"
-                )
-                :
-                "";
+}
 
 
-            const adminActions =
-                isAdmin()
-                ?
-                `
-                <div class="admin-actions">
+/* =========================================================
+   Work Card
+========================================================= */
+
+function createWorkCard(work){
+
+    const imageUrl =
+        work.image_url ||
+        "";
+
+
+    return `
+
+        <article
+            class="work-card"
+        >
+
+            <img
+                class="work-image"
+                src="${escapeAttribute(imageUrl)}"
+                alt="${escapeAttribute(work.title)}"
+                loading="lazy"
+                onerror="
+                    this.style.opacity='0.25';
+                "
+            >
+
+            <div class="work-info">
+
+                <div class="work-category">
+                    ${escapeHtml(work.category || "其他")}
+                </div>
+
+                <div class="work-title">
+                    ${escapeHtml(work.title || "未命名作品")}
+                </div>
+
+                <div class="work-description">
+                    ${escapeHtml(work.description || "")}
+                </div>
+
+                <div class="work-actions">
 
                     <button
-                        onclick="editWork('${work.id}')">
+                        class="small-btn"
+                        onclick="editWork('${work.id}')"
+                    >
                         编辑
                     </button>
 
                     <button
-                        onclick="deleteWork('${work.id}')">
+                        class="small-btn delete"
+                        onclick="deleteWork('${work.id}')"
+                    >
                         删除
                     </button>
 
                 </div>
-                `
-                :
-                "";
 
+            </div>
 
-            return `
-                <article
-                    class="work-card">
+        </article>
 
-                    <div
-                        class="work-image-wrap">
+    `;
 
-                        <img
-                            class="work-image"
-                            src="${escapeHTML(
-                                work.image_url
-                            )}"
-                            alt="${escapeHTML(
-                                work.title
-                            )}"
-                            loading="lazy">
-
-                        ${
-                            work.featured
-                            ?
-                            `
-                            <div
-                                class="featured-tag">
-                                FEATURED
-                            </div>
-                            `
-                            :
-                            ""
-                        }
-
-                    </div>
-
-
-                    <div class="work-info">
-
-                        <div
-                            class="work-category">
-                            ${escapeHTML(
-                                work.category
-                            )}
-                        </div>
-
-                        <div
-                            class="work-title">
-                            ${escapeHTML(
-                                work.title
-                            )}
-                        </div>
-
-                        ${
-                            work.description
-                            ?
-                            `
-                            <div
-                                class="work-description">
-                                ${escapeHTML(
-                                    work.description
-                                )}
-                            </div>
-                            `
-                            :
-                            ""
-                        }
-
-                        ${
-                            date
-                            ?
-                            `
-                            <div
-                                class="work-date">
-                                ${date}
-                            </div>
-                            `
-                            :
-                            ""
-                        }
-
-                    </div>
-
-                    ${adminActions}
-
-                </article>
-            `;
-
-        })
-        .join("");
 }
 
 
-/* =====================================================
-   分类筛选
-===================================================== */
+/* =========================================================
+   Escape
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+    return escapeHtml(value);
+
+}
+
+
+/* =========================================================
+   分类按钮
+========================================================= */
 
 document
 .querySelectorAll(".filter-btn")
-.forEach(function(button){
+.forEach(button => {
 
     button.addEventListener(
         "click",
-        function(){
+        () => {
 
             document
             .querySelectorAll(".filter-btn")
-            .forEach(function(btn){
-                btn.classList.remove(
-                    "active"
-                );
-            });
-
-            this.classList.add(
-                "active"
+            .forEach(btn =>
+                btn.classList.remove("active")
             );
 
+
+            button.classList.add("active");
+
+
             currentCategory =
-                this.dataset.category;
+                button.dataset.category;
+
 
             renderWorks();
+
         }
     );
 
 });
 
 
-/* =====================================================
-   打开上传窗口
-===================================================== */
+/* =========================================================
+   登录
+========================================================= */
 
-document
-.getElementById("uploadButton")
-.addEventListener(
-    "click",
-    function(){
+function openLogin(){
 
-        if(!isAdmin()){
+    document
+        .getElementById("loginModal")
+        .classList.add("show");
 
-            alert(
-                "请先使用管理员账号登录。"
-            );
-
-            return;
-        }
-
-        editingWorkId = null;
-
-        selectedImageFile = null;
-
-        document
-        .getElementById("workModalTitle")
-        .textContent =
-            "上传作品";
-
-        document
-        .getElementById("workTitle")
-        .value = "";
-
-        document
-        .getElementById("workCategory")
-        .value = "其他";
-
-        document
-        .getElementById("workDescription")
-        .value = "";
-
-        document
-        .getElementById("workFeatured")
-        .checked = false;
-
-        workImage.value = "";
-
-        selectedFile.textContent = "";
-
-        hideStatus(workStatus);
-
-        openModal(workModal);
-
-    }
-);
-
-
-/* =====================================================
-   文件选择
-===================================================== */
-
-workImage.addEventListener(
-    "change",
-    function(){
-
-        selectedImageFile =
-            this.files?.[0] || null;
-
-        if(selectedImageFile){
-
-            selectedFile.textContent =
-                "已选择：" +
-                selectedImageFile.name;
-
-        }else{
-
-            selectedFile.textContent = "";
-        }
-    }
-);
-
-
-/* =====================================================
-   拖拽上传
-===================================================== */
-
-const uploadArea =
-    document.getElementById(
-        "uploadArea"
-    );
-
-
-uploadArea.addEventListener(
-    "dragover",
-    function(event){
-
-        event.preventDefault();
-
-        uploadArea.classList.add(
-            "dragging"
-        );
-
-    }
-);
-
-
-uploadArea.addEventListener(
-    "dragleave",
-    function(){
-
-        uploadArea.classList.remove(
-            "dragging"
-        );
-
-    }
-);
-
-
-uploadArea.addEventListener(
-    "drop",
-    function(event){
-
-        event.preventDefault();
-
-        uploadArea.classList.remove(
-            "dragging"
-        );
-
-        const file =
-            event.dataTransfer
-            .files?.[0];
-
-        if(!file){
-            return;
-        }
-
-        if(!file.type.startsWith("image/")){
-
-            showStatus(
-                workStatus,
-                "请选择图片文件。",
-                "error"
-            );
-
-            return;
-        }
-
-        selectedImageFile =
-            file;
-
-        selectedFile.textContent =
-            "已选择：" +
-            file.name;
-
-    }
-);
-
-
-/* =====================================================
-   安全文件名
-===================================================== */
-
-function safeFileName(name){
-
-    return name
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9._-]+/g,
-            "-"
-        )
-        .replace(
-            /-+/g,
-            "-"
-        )
-        .replace(
-            /^-|-$/g,
-            ""
-        );
 }
 
 
-/* =====================================================
+function closeModal(id){
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+}
+
+
+document
+.getElementById("loginForm")
+.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        const email =
+            document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById("loginPassword")
+            .value;
+
+
+        const errorBox =
+            document
+            .getElementById("loginError");
+
+
+        errorBox.textContent =
+            "正在登录...";
+
+
+        if(!supabaseClient){
+
+            errorBox.textContent =
+                "Supabase 尚未初始化。";
+
+            return;
+
+        }
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient
+            .auth
+            .signInWithPassword({
+                email,
+                password
+            });
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            if(
+                !data ||
+                !data.user
+            ){
+
+                throw new Error(
+                    "登录成功，但没有获得用户信息。"
+                );
+
+            }
+
+
+            if(
+                data.user.id !==
+                ADMIN_UID
+            ){
+
+                await supabaseClient
+                    .auth
+                    .signOut();
+
+
+                throw new Error(
+                    "这个账号不是网站管理员账号。"
+                );
+
+            }
+
+
+            currentUser =
+                data.user;
+
+
+            updateAdminUI();
+
+
+            closeModal(
+                "loginModal"
+            );
+
+
+            showToast(
+                "管理员登录成功"
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "登录失败:",
+                error
+            );
+
+
+            errorBox.textContent =
+                "登录失败：\n" +
+                (
+                    error.message ||
+                    "未知错误"
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   Session
+========================================================= */
+
+async function checkSession(){
+
+    if(!supabaseClient){
+
+        return;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
+
+
+        if(error){
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        const session =
+            data?.session;
+
+
+        if(
+            session &&
+            session.user &&
+            session.user.id ===
+            ADMIN_UID
+        ){
+
+            currentUser =
+                session.user;
+
+            updateAdminUI();
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+
+    supabaseClient
+        .auth
+        .onAuthStateChange(
+            (event, session) => {
+
+                if(
+                    session &&
+                    session.user &&
+                    session.user.id ===
+                    ADMIN_UID
+                ){
+
+                    currentUser =
+                        session.user;
+
+                }else{
+
+                    currentUser =
+                        null;
+
+                }
+
+                updateAdminUI();
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   Admin UI
+========================================================= */
+
+function updateAdminUI(){
+
+    document.body
+        .classList.toggle(
+            "admin-mode",
+            !!currentUser
+        );
+
+
+    const email =
+        document.getElementById(
+            "adminEmail"
+        );
+
+
+    if(currentUser){
+
+        email.textContent =
+            currentUser.email ||
+            "管理员";
+
+    }else{
+
+        email.textContent = "";
+
+    }
+
+
+    renderWorks();
+
+}
+
+
+/* =========================================================
+   Logout
+========================================================= */
+
+async function logout(){
+
+    if(!supabaseClient){
+
+        return;
+
+    }
+
+
+    try{
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+        currentUser =
+            null;
+
+
+        updateAdminUI();
+
+
+        showToast(
+            "已退出管理员账号"
+        );
+
+    }catch(error){
+
+        showToast(
+            error.message ||
+            "退出失败",
+            true
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   Work Modal
+========================================================= */
+
+function openWorkModal(work = null){
+
+    if(!currentUser){
+
+        openLogin();
+
+        return;
+
+    }
+
+
+    editingWork =
+        work;
+
+
+    document
+        .getElementById("workModal")
+        .classList.add("show");
+
+
+    document
+        .getElementById("workError")
+        .textContent = "";
+
+
+    document
+        .getElementById("editId")
+        .value =
+        work?.id || "";
+
+
+    document
+        .getElementById("oldImageUrl")
+        .value =
+        work?.image_url || "";
+
+
+    document
+        .getElementById("workTitle")
+        .value =
+        work?.title || "";
+
+
+    document
+        .getElementById("workCategory")
+        .value =
+        work?.category || "其他";
+
+
+    document
+        .getElementById("workDescription")
+        .value =
+        work?.description || "";
+
+
+    document
+        .getElementById("fileName")
+        .textContent =
+        work
+        ? "如果需要更换图片，请重新选择"
+        : "未选择图片";
+
+
+    const preview =
+        document.getElementById(
+            "imagePreview"
+        );
+
+
+    const previewImg =
+        document.getElementById(
+            "previewImg"
+        );
+
+
+    if(work?.image_url){
+
+        preview.style.display =
+            "block";
+
+        previewImg.src =
+            work.image_url;
+
+    }else{
+
+        preview.style.display =
+            "none";
+
+        previewImg.src = "";
+
+    }
+
+
+    document
+        .getElementById(
+            "workModalTitle"
+        )
+        .textContent =
+        work
+        ? "编辑作品"
+        : "上传作品";
+
+}
+
+
+function resetWorkForm(){
+
+    document
+        .getElementById("workForm")
+        .reset();
+
+
+    document
+        .getElementById("editId")
+        .value = "";
+
+
+    document
+        .getElementById("oldImageUrl")
+        .value = "";
+
+
+    document
+        .getElementById("fileName")
+        .textContent =
+        "未选择图片";
+
+
+    document
+        .getElementById("imagePreview")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("previewImg")
+        .src = "";
+
+}
+
+
+/* =========================================================
+   File Select
+========================================================= */
+
+const fileInput =
+    document.getElementById(
+        "workImage"
+    );
+
+const fileDrop =
+    document.getElementById(
+        "fileDrop"
+    );
+
+
+fileDrop.addEventListener(
+    "click",
+    () => {
+
+        fileInput.click();
+
+    }
+);
+
+
+fileInput.addEventListener(
+    "change",
+    () => {
+
+        handleSelectedFile(
+            fileInput.files[0]
+        );
+
+    }
+);
+
+
+fileDrop.addEventListener(
+    "dragover",
+    event => {
+
+        event.preventDefault();
+
+        fileDrop.classList.add(
+            "dragover"
+        );
+
+    }
+);
+
+
+fileDrop.addEventListener(
+    "dragleave",
+    () => {
+
+        fileDrop.classList.remove(
+            "dragover"
+        );
+
+    }
+);
+
+
+fileDrop.addEventListener(
+    "drop",
+    event => {
+
+        event.preventDefault();
+
+        fileDrop.classList.remove(
+            "dragover"
+        );
+
+
+        const file =
+            event.dataTransfer.files[0];
+
+
+        if(file){
+
+            handleSelectedFile(
+                file
+            );
+
+        }
+
+    }
+);
+
+
+function handleSelectedFile(file){
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    if(!file.type.startsWith("image/")){
+
+        showToast(
+            "请选择图片文件",
+            true
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("fileName")
+        .textContent =
+        file.name;
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        event => {
+
+            const preview =
+                document.getElementById(
+                    "imagePreview"
+                );
+
+            const img =
+                document.getElementById(
+                    "previewImg"
+                );
+
+
+            img.src =
+                event.target.result;
+
+
+            preview.style.display =
+                "block";
+
+        };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* =========================================================
    上传图片
-===================================================== */
+========================================================= */
 
 async function uploadImage(file){
 
-    if(!file){
-        return null;
+    if(!currentUser){
+
+        throw new Error(
+            "请先登录管理员账号。"
+        );
+
     }
+
+
+    if(!file){
+
+        throw new Error(
+            "请选择作品图片。"
+        );
+
+    }
+
 
     const extension =
         file.name
@@ -2086,44 +2439,43 @@ async function uploadImage(file){
         .pop()
         .toLowerCase();
 
-    const safeName =
-        safeFileName(
-            file.name
-            .replace(
-                /\.[^/.]+$/,
-                ""
-            )
-        ) ||
-        "image";
 
-    const path =
+    const safeName =
+        file.name
+        .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+        );
+
+
+    const filePath =
         "works/" +
         Date.now() +
         "-" +
-        safeName +
-        "." +
-        extension;
+        safeName;
 
 
     const {
         error
     } =
     await supabaseClient
-    .storage
-    .from(BUCKET)
-    .upload(
-        path,
-        file,
-        {
-            cacheControl:"3600",
-            upsert:false
-        }
-    );
+        .storage
+        .from(BUCKET)
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl:"3600",
+                upsert:false,
+                contentType:file.type
+            }
+        );
 
 
     if(error){
 
         throw error;
+
     }
 
 
@@ -2131,187 +2483,240 @@ async function uploadImage(file){
         data
     } =
     supabaseClient
-    .storage
-    .from(BUCKET)
-    .getPublicUrl(path);
+        .storage
+        .from(BUCKET)
+        .getPublicUrl(
+            filePath
+        );
+
+
+    if(
+        !data ||
+        !data.publicUrl
+    ){
+
+        throw new Error(
+            "图片上传成功，但无法生成图片地址。"
+        );
+
+    }
 
 
     return data.publicUrl;
+
 }
 
 
-/* =====================================================
+/* =========================================================
    保存作品
-===================================================== */
+========================================================= */
 
 document
-.getElementById("saveWork")
+.getElementById("workForm")
 .addEventListener(
-    "click",
-    async function(){
+    "submit",
+    async event => {
 
-        if(!isAdmin()){
+        event.preventDefault();
 
-            showStatus(
-                workStatus,
+
+        if(!currentUser){
+
+            showToast(
                 "请先登录管理员账号。",
-                "error"
+                true
             );
 
             return;
-        }
 
-
-        const title =
-            document
-            .getElementById("workTitle")
-            .value
-            .trim();
-
-        const category =
-            document
-            .getElementById("workCategory")
-            .value;
-
-        const description =
-            document
-            .getElementById("workDescription")
-            .value
-            .trim();
-
-        const featured =
-            document
-            .getElementById("workFeatured")
-            .checked;
-
-
-        if(!title){
-
-            showStatus(
-                workStatus,
-                "请输入作品标题。",
-                "error"
-            );
-
-            return;
         }
 
 
         const saveButton =
-            document
-            .getElementById(
-                "saveWork"
+            document.getElementById(
+                "saveWorkBtn"
             );
 
-        saveButton.disabled = true;
+
+        const errorBox =
+            document.getElementById(
+                "workError"
+            );
+
+
+        saveButton.disabled =
+            true;
+
 
         saveButton.textContent =
-            "保存中……";
+            "正在保存...";
+
+
+        errorBox.textContent =
+            "";
 
 
         try{
 
-            let imageUrl = null;
+            const title =
+                document
+                .getElementById(
+                    "workTitle"
+                )
+                .value
+                .trim();
 
 
-            /* 新作品必须上传图片 */
-
-            if(!editingWorkId){
-
-                if(!selectedImageFile){
-
-                    throw new Error(
-                        "请选择作品图片。"
-                    );
-                }
-
-                imageUrl =
-                    await uploadImage(
-                        selectedImageFile
-                    );
+            const category =
+                document
+                .getElementById(
+                    "workCategory"
+                )
+                .value;
 
 
-                const {
-                    error
-                } =
-                await supabaseClient
-                .from("works")
-                .insert({
-
-                    title,
-                    category,
-                    description,
-                    image_url:imageUrl,
-                    featured
-
-                });
+            const description =
+                document
+                .getElementById(
+                    "workDescription"
+                )
+                .value
+                .trim();
 
 
-                if(error){
-                    throw error;
-                }
-
-            }else{
-
-                const oldWork =
-                    works.find(
-                        w =>
-                        String(w.id) ===
-                        String(
-                            editingWorkId
-                        )
-                    );
+            const editId =
+                document
+                .getElementById(
+                    "editId"
+                )
+                .value;
 
 
-                if(!oldWork){
-
-                    throw new Error(
-                        "找不到正在编辑的作品。"
-                    );
-                }
-
-
-                imageUrl =
-                    oldWork.image_url;
+            const oldImageUrl =
+                document
+                .getElementById(
+                    "oldImageUrl"
+                )
+                .value;
 
 
-                if(selectedImageFile){
+            const file =
+                document
+                .getElementById(
+                    "workImage"
+                )
+                .files[0];
 
-                    imageUrl =
-                        await uploadImage(
-                            selectedImageFile
-                        );
-                }
 
+            if(!title){
 
-                const {
-                    error
-                } =
-                await supabaseClient
-                .from("works")
-                .update({
-
-                    title,
-                    category,
-                    description,
-                    image_url:imageUrl,
-                    featured
-
-                })
-                .eq(
-                    "id",
-                    editingWorkId
+                throw new Error(
+                    "请填写作品名称。"
                 );
-
-
-                if(error){
-                    throw error;
-                }
 
             }
 
 
-            closeModal(workModal);
+            let imageUrl =
+                oldImageUrl;
+
+
+            /*
+             * 新建作品必须有图片
+             */
+            if(!editId && !file){
+
+                throw new Error(
+                    "上传新作品时必须选择图片。"
+                );
+
+            }
+
+
+            /*
+             * 如果重新选择图片，则上传
+             */
+            if(file){
+
+                imageUrl =
+                    await uploadImage(
+                        file
+                    );
+
+            }
+
+
+            const payload = {
+
+                title,
+
+                category,
+
+                description,
+
+                image_url:imageUrl
+
+            };
+
+
+            if(editId){
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("works")
+                    .update(payload)
+                    .eq(
+                        "id",
+                        editId
+                    );
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                showToast(
+                    "作品修改成功"
+                );
+
+            }else{
+
+                const {
+                    error
+                } =
+                await supabaseClient
+                    .from("works")
+                    .insert([
+                        payload
+                    ]);
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                showToast(
+                    "作品上传成功"
+                );
+
+            }
+
+
+            closeModal(
+                "workModal"
+            );
+
+
+            resetWorkForm();
+
 
             await loadWorks();
 
@@ -2319,18 +2724,24 @@ document
         }catch(error){
 
             console.error(
-                "Save work error:",
+                "保存作品失败:",
                 error
             );
 
-            showStatus(
-                workStatus,
-                "保存失败：" +
-                (
-                    error.message ||
-                    error
-                ),
-                "error"
+
+            const message =
+                error?.message ||
+                "保存失败";
+
+
+            errorBox.textContent =
+                "保存失败：\n" +
+                message;
+
+
+            showToast(
+                message,
+                true
             );
 
         }finally{
@@ -2340,118 +2751,93 @@ document
 
             saveButton.textContent =
                 "保存作品";
+
         }
 
     }
 );
 
 
-/* =====================================================
+/* =========================================================
    编辑作品
-===================================================== */
+========================================================= */
 
-window.editWork =
-async function(id){
+function editWork(id){
 
-    if(!isAdmin()){
+    if(!currentUser){
+
+        openLogin();
+
         return;
+
     }
+
 
     const work =
-        works.find(
+        allWorks.find(
             item =>
-            String(item.id) ===
-            String(id)
+                String(item.id) ===
+                String(id)
         );
 
+
     if(!work){
+
+        showToast(
+            "找不到这个作品",
+            true
+        );
+
         return;
+
     }
 
-    editingWorkId =
-        work.id;
 
-    selectedImageFile =
-        null;
+    openWorkModal(work);
 
-    document
-    .getElementById(
-        "workModalTitle"
-    )
-    .textContent =
-        "编辑作品";
-
-    document
-    .getElementById(
-        "workTitle"
-    )
-    .value =
-        work.title || "";
-
-    document
-    .getElementById(
-        "workCategory"
-    )
-    .value =
-        work.category || "其他";
-
-    document
-    .getElementById(
-        "workDescription"
-    )
-    .value =
-        work.description || "";
-
-    document
-    .getElementById(
-        "workFeatured"
-    )
-    .checked =
-        !!work.featured;
-
-    workImage.value = "";
-
-    selectedFile.textContent =
-        "如需更换图片，请重新选择。";
-
-    hideStatus(workStatus);
-
-    openModal(workModal);
-};
+}
 
 
-/* =====================================================
+/* =========================================================
    删除作品
-===================================================== */
+========================================================= */
 
-window.deleteWork =
-async function(id){
+async function deleteWork(id){
 
-    if(!isAdmin()){
+    if(!currentUser){
+
+        openLogin();
+
         return;
+
     }
 
+
     const work =
-        works.find(
+        allWorks.find(
             item =>
-            String(item.id) ===
-            String(id)
+                String(item.id) ===
+                String(id)
         );
 
+
     if(!work){
+
         return;
+
     }
 
 
     const confirmed =
         confirm(
-            "确定删除作品「" +
-            work.title +
-            "」吗？"
+            `确定要删除「${work.title}」吗？\n\n删除数据库记录后，这个作品将不会继续显示。`
         );
 
+
     if(!confirmed){
+
         return;
+
     }
 
 
@@ -2461,17 +2847,24 @@ async function(id){
             error
         } =
         await supabaseClient
-        .from("works")
-        .delete()
-        .eq(
-            "id",
-            id
-        );
+            .from("works")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
 
 
         if(error){
+
             throw error;
+
         }
+
+
+        showToast(
+            "作品删除成功"
+        );
 
 
         await loadWorks();
@@ -2480,64 +2873,45 @@ async function(id){
     }catch(error){
 
         console.error(
-            "Delete work error:",
+            "删除失败:",
             error
         );
 
-        alert(
+
+        showToast(
             "删除失败：" +
             (
                 error.message ||
-                error
-            )
+                "未知错误"
+            ),
+            true
         );
+
     }
-};
+
+}
 
 
-/* =====================================================
-   关闭 Modal
-===================================================== */
-
-document
-.querySelectorAll(
-    "[data-close]"
-)
-.forEach(function(button){
-
-    button.addEventListener(
-        "click",
-        function(){
-
-            const id =
-                this.dataset.close;
-
-            const modal =
-                document.getElementById(
-                    id
-                );
-
-            closeModal(modal);
-
-        }
-    );
-
-});
-
-
-/* 点击遮罩关闭 */
+/* =========================================================
+   点击遮罩关闭
+========================================================= */
 
 document
 .querySelectorAll(".modal")
-.forEach(function(modal){
+.forEach(modal => {
 
     modal.addEventListener(
         "click",
-        function(event){
+        event => {
 
-            if(event.target === modal){
+            if(
+                event.target ===
+                modal
+            ){
 
-                closeModal(modal);
+                modal.classList.remove(
+                    "show"
+                );
 
             }
 
@@ -2547,42 +2921,35 @@ document
 });
 
 
-/* ESC 关闭 */
+/* =========================================================
+   启动
+========================================================= */
 
-document.addEventListener(
-    "keydown",
-    function(event){
+(async function(){
 
-        if(event.key !== "Escape"){
-            return;
-        }
+    console.log(
+        "================================="
+    );
 
-        document
-        .querySelectorAll(".modal.show")
-        .forEach(function(modal){
+    console.log(
+        "WFL Portfolio"
+    );
 
-            closeModal(modal);
+    console.log(
+        "Supabase URL:",
+        SUPABASE_URL
+    );
 
-        });
+    console.log(
+        "================================="
+    );
 
-    }
-);
-
-
-/* =====================================================
-   初始化
-===================================================== */
-
-async function init(){
 
     await checkSession();
 
     await loadWorks();
 
-}
-
-
-init();
+})();
 
 </script>
 
