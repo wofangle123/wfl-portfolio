@@ -1,15 +1,57 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="WFL · 3D GAME ART PORTFOLIO">
-<meta name="theme-color" content="#0b0b0d">
-<title>WFL · 3D GAME ART PORTFOLIO</title>
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<meta
+    name="description"
+    content="WFL · 3D GAME ART PORTFOLIO"
+>
+
+<meta
+    name="theme-color"
+    content="#09090b"
+>
+
+<title>
+WFL · 3D GAME ART PORTFOLIO
+</title>
+
+
+<!-- =========================================================
+     SUPABASE
+========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+<!-- =========================================================
+     THREE.JS
+========================================================= -->
+
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+    }
+}
+</script>
+
+
 <style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
 *{
     box-sizing:border-box;
 }
@@ -20,8 +62,8 @@ html{
 
 body{
     margin:0;
-    background:#0b0b0d;
-    color:#f4f4f5;
+    background:#09090b;
+    color:#f5f5f5;
     font-family:
         Inter,
         system-ui,
@@ -49,924 +91,2179 @@ a{
     text-decoration:none;
 }
 
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
 :root{
-    --bg:#0b0b0d;
-    --panel:#121216;
-    --panel2:#18181d;
-    --line:#2a2a31;
-    --text:#f4f4f5;
-    --muted:#a1a1aa;
-    --danger:#ff5b5b;
-    --success:#63d58b;
+
+    --bg:#09090b;
+
+    --panel:#111114;
+
+    --panel2:#16161a;
+
+    --panel3:#1b1b20;
+
+    --line:#292a30;
+
+    --line2:#34353d;
+
+    --text:#f5f5f5;
+
+    --muted:#9999a3;
+
+    --muted2:#707078;
+
+    --success:#67d991;
+
+    --danger:#ff6666;
+
+    --accent:#ffffff;
+
 }
 
-/* =========================
+
+/* =========================================================
    HEADER
-========================= */
+========================================================= */
 
 .header{
+
     position:sticky;
+
     top:0;
-    z-index:50;
-    background:rgba(11,11,13,.88);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.07);
+
+    z-index:100;
+
+    height:72px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.07);
+
+    background:
+        rgba(9,9,11,.86);
+
+    backdrop-filter:
+        blur(18px);
+
 }
 
 .header-inner{
-    max-width:1280px;
+
+    max-width:1320px;
+
+    height:100%;
+
     margin:auto;
-    min-height:72px;
-    padding:0 24px;
+
+    padding:
+        0 24px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
     gap:20px;
+
 }
 
 .logo{
-    font-size:17px;
+
+    font-size:16px;
+
     font-weight:800;
+
     letter-spacing:.12em;
+
     white-space:nowrap;
+
 }
 
 .logo span{
-    color:#8e8e98;
+
+    color:#777780;
+
 }
 
 .nav{
+
     display:flex;
-    align-items:center;
-    gap:26px;
+
+    gap:28px;
+
 }
 
 .nav a{
-    color:#a7a7b0;
-    font-size:14px;
+
+    color:#9999a3;
+
+    font-size:13px;
+
     transition:.2s;
+
 }
 
 .nav a:hover{
+
     color:#fff;
+
 }
 
 .admin-login-btn{
-    border:1px solid #33343b;
-    background:#17171b;
+
+    border:
+        1px solid
+        #33343b;
+
+    background:#151519;
+
     color:#eee;
+
     border-radius:9px;
-    padding:9px 14px;
-    font-size:13px;
+
+    padding:
+        8px 13px;
+
+    font-size:12px;
+
 }
 
 .admin-login-btn:hover{
-    background:#222229;
+
+    background:#202025;
+
 }
 
-/* =========================
+
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero{
-    max-width:1280px;
+
+    max-width:1320px;
+
     margin:auto;
-    padding:110px 24px 95px;
+
+    padding:
+        110px 24px
+        90px;
+
 }
 
 .eyebrow{
-    color:#8d8d97;
-    font-size:12px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
+
     margin-bottom:18px;
+
+    color:#74747d;
+
+    font-size:11px;
+
+    letter-spacing:.2em;
+
+    text-transform:uppercase;
+
 }
 
 .hero h1{
-    max-width:900px;
+
     margin:0;
-    font-size:clamp(48px,8vw,96px);
-    line-height:.96;
-    letter-spacing:-.055em;
+
+    max-width:950px;
+
+    font-size:
+        clamp(
+            48px,
+            8vw,
+            100px
+        );
+
+    line-height:.94;
+
+    letter-spacing:-.06em;
+
     font-weight:800;
+
 }
 
 .hero h1 span{
-    color:#85858d;
+
+    color:#74747d;
+
 }
 
 .hero p{
-    max-width:680px;
-    margin:28px 0 0;
-    color:#a7a7b0;
-    font-size:17px;
+
+    max-width:720px;
+
+    margin:
+        30px 0 0;
+
+    color:#9999a3;
+
+    font-size:16px;
+
 }
 
 .hero-meta{
+
     display:flex;
+
     flex-wrap:wrap;
-    gap:10px;
-    margin-top:30px;
+
+    gap:9px;
+
+    margin-top:28px;
+
 }
 
 .tag{
-    border:1px solid #292a30;
-    background:#111115;
-    color:#bdbdc5;
+
+    padding:
+        6px 11px;
+
+    border:
+        1px solid
+        #292a30;
+
     border-radius:999px;
-    padding:7px 12px;
-    font-size:12px;
+
+    background:#101013;
+
+    color:#aaaab2;
+
+    font-size:11px;
+
 }
 
-/* =========================
+
+/* =========================================================
    SECTION
-========================= */
+========================================================= */
 
 .section{
-    max-width:1280px;
+
+    max-width:1320px;
+
     margin:auto;
-    padding:35px 24px 95px;
+
+    padding:
+        35px 24px
+        100px;
+
 }
 
 .section-head{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:flex-end;
+
     gap:20px;
+
     margin-bottom:28px;
+
 }
 
 .section-kicker{
-    color:#777781;
-    font-size:11px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
+
     margin-bottom:7px;
+
+    color:#6e6e77;
+
+    font-size:10px;
+
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
+
 }
 
 .section-title{
+
     margin:0;
+
     font-size:34px;
-    letter-spacing:-.03em;
+
+    letter-spacing:-.035em;
+
 }
 
 .section-desc{
-    margin:8px 0 0;
-    color:#85858e;
-    font-size:14px;
+
+    margin:
+        8px 0 0;
+
+    color:#777780;
+
+    font-size:13px;
+
 }
 
-/* =========================
+
+/* =========================================================
    CONNECTION
-========================= */
+========================================================= */
 
 .connection{
+
     display:flex;
+
     align-items:center;
+
     gap:8px;
-    color:#888891;
-    font-size:12px;
+
+    color:#777780;
+
+    font-size:11px;
+
 }
 
 .connection-dot{
+
     width:7px;
+
     height:7px;
+
     border-radius:50%;
-    background:#666;
+
+    background:#555;
+
 }
 
-.connection.online .connection-dot{
-    background:var(--success);
+.connection.online
+.connection-dot{
+
+    background:
+        var(--success);
+
 }
 
-.connection.error .connection-dot{
-    background:var(--danger);
+.connection.error
+.connection-dot{
+
+    background:
+        var(--danger);
+
 }
 
-/* =========================
+
+/* =========================================================
    FILTERS
-========================= */
+========================================================= */
 
 .filters{
+
     display:flex;
+
     flex-wrap:wrap;
+
     gap:8px;
+
     margin-bottom:26px;
+
 }
 
 .filter-btn{
-    border:1px solid #292a30;
-    background:#111115;
-    color:#8e8e98;
+
+    border:
+        1px solid
+        #292a30;
+
+    background:#111114;
+
+    color:#888891;
+
     border-radius:9px;
-    padding:9px 15px;
-    font-size:13px;
+
+    padding:
+        9px 15px;
+
+    font-size:12px;
+
     transition:.2s;
+
 }
 
 .filter-btn:hover{
+
     color:#fff;
-    border-color:#44454e;
+
+    border-color:#41424a;
+
 }
 
 .filter-btn.active{
-    background:#f4f4f5;
-    color:#0b0b0d;
-    border-color:#f4f4f5;
+
+    background:#f5f5f5;
+
+    color:#09090b;
+
+    border-color:#f5f5f5;
+
 }
 
-/* =========================
+
+/* =========================================================
    GALLERY
-   重点：
-   不再固定图片比例
-   不再裁剪图片
-========================= */
+========================================================= */
 
 .gallery{
+
     column-count:3;
+
     column-gap:20px;
+
 }
 
 .work-card{
+
     display:inline-block;
+
     width:100%;
-    margin:0 0 20px;
+
+    margin:
+        0 0 20px;
+
     break-inside:avoid;
+
     overflow:hidden;
-    border:1px solid #24252b;
+
+    border:
+        1px solid
+        #24252b;
+
     border-radius:14px;
-    background:#111115;
+
+    background:#111114;
+
     transition:
         transform .25s,
         border-color .25s,
         box-shadow .25s;
+
 }
 
 .work-card:hover{
-    transform:translateY(-3px);
-    border-color:#3b3c44;
-    box-shadow:0 16px 45px rgba(0,0,0,.28);
+
+    transform:
+        translateY(-3px);
+
+    border-color:#41424a;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.3);
+
 }
+
+
+/* =========================================================
+   RENDER IMAGE
+========================================================= */
 
 .work-image-container{
+
     position:relative;
+
     overflow:hidden;
-    background:#101014;
+
+    background:#0d0d10;
+
     cursor:zoom-in;
+
 }
-
-/*
-   核心修改：
-
-   原来的：
-   aspect-ratio:16/10;
-   object-fit:cover;
-
-   会把作品裁切。
-
-   现在：
-   height:auto;
-   aspect-ratio:auto;
-   object-fit:contain;
-
-   图片按照原始比例完整显示。
-*/
 
 .work-image{
+
     width:100%;
+
     height:auto;
+
     aspect-ratio:auto;
+
     object-fit:contain;
+
     display:block;
-    background:#111;
-    transition:transform .35s;
+
+    background:#0d0d10;
+
+    transition:
+        transform .35s;
+
 }
 
-.work-card:hover .work-image{
-    transform:scale(1.015);
+.work-card:hover
+.work-image{
+
+    transform:
+        scale(1.015);
+
 }
 
 .image-hover{
+
     position:absolute;
+
     inset:0;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    background:rgba(0,0,0,.34);
+
     opacity:0;
+
+    background:
+        rgba(0,0,0,.35);
+
     transition:.25s;
+
     pointer-events:none;
+
 }
 
-.work-card:hover .image-hover{
+.work-card:hover
+.image-hover{
+
     opacity:1;
+
 }
 
 .image-hover span{
-    border:1px solid rgba(255,255,255,.35);
-    background:rgba(15,15,18,.75);
-    backdrop-filter:blur(8px);
+
+    padding:
+        8px 14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.35);
+
     border-radius:999px;
-    padding:8px 14px;
-    font-size:12px;
+
+    background:
+        rgba(15,15,18,.8);
+
+    backdrop-filter:
+        blur(8px);
+
     color:#fff;
+
+    font-size:11px;
+
 }
 
+
+/* =========================================================
+   WORK INFO
+========================================================= */
+
 .work-info{
-    padding:16px 17px 17px;
+
+    padding:
+        16px 17px 18px;
+
 }
 
 .work-title{
+
     margin:0;
+
     font-size:16px;
+
     font-weight:700;
-    letter-spacing:-.01em;
+
 }
 
 .work-category{
+
     display:inline-block;
+
     margin-top:7px;
-    color:#85858e;
-    font-size:11px;
-    border:1px solid #292a30;
+
+    padding:
+        3px 8px;
+
+    border:
+        1px solid
+        #292a30;
+
     border-radius:999px;
-    padding:3px 8px;
+
+    color:#85858e;
+
+    font-size:10px;
+
 }
 
 .work-desc{
-    margin:10px 0 0;
-    color:#85858e;
-    font-size:13px;
-    line-height:1.65;
-}
 
-.admin-actions{
-    display:flex;
-    gap:8px;
-    margin-top:14px;
-}
+    margin:
+        10px 0 0;
 
-.small-btn{
-    border:1px solid #303139;
-    background:#18181d;
-    color:#ddd;
-    border-radius:8px;
-    padding:7px 11px;
+    color:#81818a;
+
     font-size:12px;
+
+    line-height:1.7;
+
 }
 
-.small-btn:hover{
-    background:#23242a;
+
+/* =========================================================
+   3D PREVIEW SECTION
+========================================================= */
+
+.work-preview{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        minmax(0,1fr);
+
+    min-height:420px;
+
+    border-top:
+        1px solid
+        #222329;
+
+    background:#0c0c0f;
+
 }
 
-.small-btn.delete{
-    color:#ff7777;
+
+/* =========================================================
+   RENDER SIDE
+========================================================= */
+
+.render-side{
+
+    position:relative;
+
+    min-width:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#0b0b0e;
+
+    overflow:hidden;
+
 }
 
-/* =========================
-   STATE
-========================= */
+.render-side img{
 
-.state{
-    padding:60px 20px;
+    width:100%;
+
+    height:100%;
+
+    max-height:520px;
+
+    object-fit:contain;
+
+    display:block;
+
+}
+
+
+/* =========================================================
+   3D SIDE
+========================================================= */
+
+.model-side{
+
+    position:relative;
+
+    min-width:0;
+
+    min-height:420px;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            #25252b 0%,
+            #17171c 38%,
+            #0b0b0e 100%
+        );
+
+    overflow:hidden;
+
+}
+
+
+/* Blender-like grid */
+
+.model-side::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.14;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.08)
+            1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.08)
+            1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent,
+            black 20%,
+            black 80%,
+            transparent
+        );
+
+}
+
+
+/* 3D canvas */
+
+.model-canvas{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    display:block;
+
+}
+
+
+/* =========================================================
+   MODEL HEADER
+========================================================= */
+
+.model-toolbar{
+
+    position:absolute;
+
+    top:14px;
+
+    left:14px;
+
+    right:14px;
+
+    z-index:10;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    pointer-events:none;
+
+}
+
+.model-badge{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    padding:
+        6px 9px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    border-radius:7px;
+
+    background:
+        rgba(12,12,15,.72);
+
+    backdrop-filter:
+        blur(10px);
+
+    color:#bcbcc4;
+
+    font-size:9px;
+
+    letter-spacing:.08em;
+
+}
+
+.model-badge-dot{
+
+    width:6px;
+
+    height:6px;
+
+    border-radius:50%;
+
+    background:#79d99a;
+
+    box-shadow:
+        0 0 8px
+        rgba(121,217,154,.7);
+
+}
+
+.model-controls{
+
+    display:flex;
+
+    gap:5px;
+
+    pointer-events:auto;
+
+}
+
+.model-control{
+
+    width:30px;
+
+    height:30px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    border-radius:7px;
+
+    background:
+        rgba(12,12,15,.72);
+
+    color:#bbb;
+
+    font-size:12px;
+
+}
+
+.model-control:hover{
+
+    background:
+        rgba(255,255,255,.1);
+
+    color:#fff;
+
+}
+
+
+/* =========================================================
+   MODEL LOADING
+========================================================= */
+
+.model-loading{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:8;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        rgba(9,9,11,.72);
+
+    backdrop-filter:
+        blur(5px);
+
+}
+
+.model-loading.hidden{
+
+    display:none;
+
+}
+
+.loader{
+
+    width:26px;
+
+    height:26px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.15);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:
+        spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+.model-loading-text{
+
+    margin-top:10px;
+
+    color:#888891;
+
+    font-size:10px;
+
+}
+
+
+/* =========================================================
+   MODEL EMPTY
+========================================================= */
+
+.model-empty{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:5;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
     text-align:center;
-    border:1px dashed #292a30;
-    border-radius:14px;
-    color:#777781;
-    background:#101014;
+
+    padding:30px;
+
+    color:#707078;
+
 }
 
-.state.error{
-    color:#ff8a8a;
+.model-empty strong{
+
+    color:#aaaab2;
+
+    font-size:13px;
+
+    font-weight:600;
+
 }
 
-/* =========================
+.model-empty span{
+
+    display:block;
+
+    max-width:270px;
+
+    margin-top:8px;
+
+    font-size:10px;
+
+    line-height:1.7;
+
+}
+
+
+/* =========================================================
+   MODEL FOOTER
+========================================================= */
+
+.model-footer{
+
+    position:absolute;
+
+    bottom:14px;
+
+    left:14px;
+
+    right:14px;
+
+    z-index:10;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    pointer-events:none;
+
+}
+
+.model-hint{
+
+    padding:
+        6px 9px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:6px;
+
+    background:
+        rgba(10,10,13,.65);
+
+    color:#686870;
+
+    font-size:9px;
+
+}
+
+.model-file{
+
+    color:#777780;
+
+    font-size:9px;
+
+}
+
+
+/* =========================================================
+   WORK CARD WITH MODEL
+========================================================= */
+
+.work-card.has-model{
+
+    overflow:hidden;
+
+}
+
+.work-card.has-model
+.work-info{
+
+    padding-bottom:19px;
+
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.file-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-top:14px;
+
+}
+
+.file-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:6px;
+
+    min-height:32px;
+
+    padding:
+        7px 11px;
+
+    border:
+        1px solid
+        #303139;
+
+    border-radius:8px;
+
+    background:#18181d;
+
+    color:#ccc;
+
+    font-size:10px;
+
+}
+
+.file-btn:hover{
+
+    background:#23242a;
+
+    color:#fff;
+
+}
+
+
+/* =========================================================
    ADMIN
-========================= */
+========================================================= */
 
 .admin-panel{
+
     display:none;
+
     margin-bottom:24px;
+
     padding:18px;
-    border:1px solid #2d2e35;
-    background:#121216;
+
+    border:
+        1px solid
+        #2d2e35;
+
     border-radius:14px;
+
+    background:#121216;
+
 }
 
 .admin-panel.show{
+
     display:block;
+
 }
 
 .admin-panel-top{
+
     display:flex;
-    align-items:center;
+
     justify-content:space-between;
+
+    align-items:center;
+
     gap:15px;
+
 }
 
 .admin-label{
-    font-size:13px;
+
     color:#aaaab2;
+
+    font-size:12px;
+
 }
 
 .admin-status{
-    color:#777781;
-    font-size:12px;
+
     margin-top:3px;
+
+    color:#707078;
+
+    font-size:10px;
+
 }
 
-/* =========================
+
+/* =========================================================
    BUTTONS
-========================= */
+========================================================= */
 
 .primary-btn{
+
     border:0;
+
     border-radius:9px;
-    padding:10px 15px;
-    background:#f4f4f5;
-    color:#0b0b0d;
+
+    padding:
+        10px 15px;
+
+    background:#f5f5f5;
+
+    color:#09090b;
+
     font-weight:700;
-    font-size:13px;
+
+    font-size:12px;
+
 }
 
 .primary-btn:hover{
+
     opacity:.88;
+
 }
 
 .primary-btn:disabled{
-    opacity:.5;
+
+    opacity:.45;
+
     cursor:not-allowed;
+
 }
 
 .secondary-btn{
-    border:1px solid #303139;
-    background:#18181d;
-    color:#ddd;
+
+    border:
+        1px solid
+        #303139;
+
     border-radius:9px;
-    padding:10px 15px;
-    font-size:13px;
+
+    padding:
+        10px 15px;
+
+    background:#18181d;
+
+    color:#ddd;
+
+    font-size:12px;
+
 }
 
-/* =========================
+
+/* =========================================================
+   ADMIN ACTIONS
+========================================================= */
+
+.admin-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:14px;
+
+}
+
+.small-btn{
+
+    border:
+        1px solid
+        #303139;
+
+    border-radius:8px;
+
+    padding:
+        7px 11px;
+
+    background:#18181d;
+
+    color:#ddd;
+
+    font-size:11px;
+
+}
+
+.small-btn:hover{
+
+    background:#23242a;
+
+}
+
+.small-btn.delete{
+
+    color:#ff7777;
+
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+.state{
+
+    padding:60px 20px;
+
+    text-align:center;
+
+    border:
+        1px dashed
+        #292a30;
+
+    border-radius:14px;
+
+    background:#101013;
+
+    color:#777780;
+
+}
+
+.state.error{
+
+    color:#ff8585;
+
+}
+
+
+/* =========================================================
    ABOUT
-========================= */
+========================================================= */
 
 .about-grid{
+
     display:grid;
-    grid-template-columns:1.15fr .85fr;
+
+    grid-template-columns:
+        1.15fr .85fr;
+
     gap:20px;
+
 }
 
 .about-card{
-    border:1px solid #24252b;
-    background:#111115;
-    border-radius:14px;
+
     padding:27px;
+
+    border:
+        1px solid
+        #24252b;
+
+    border-radius:14px;
+
+    background:#111114;
+
 }
 
 .about-card h3{
-    margin:0 0 12px;
-    font-size:20px;
+
+    margin:
+        0 0 12px;
+
+    font-size:19px;
+
 }
 
 .about-card p{
+
     margin:0;
-    color:#8d8d96;
-    font-size:14px;
+
+    color:#85858e;
+
+    font-size:13px;
+
     line-height:1.9;
+
 }
 
 .skills{
+
     display:flex;
+
     flex-wrap:wrap;
-    gap:9px;
+
+    gap:8px;
+
     margin-top:18px;
+
 }
 
 .skill{
-    border:1px solid #292a30;
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid
+        #292a30;
+
     border-radius:8px;
-    padding:7px 10px;
-    color:#aaaab2;
-    font-size:12px;
+
     background:#151519;
+
+    color:#aaaab2;
+
+    font-size:10px;
+
 }
 
-/* =========================
+
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 .footer{
-    max-width:1280px;
+
+    max-width:1320px;
+
     margin:auto;
-    padding:30px 24px 50px;
-    border-top:1px solid #202126;
-    color:#66666f;
-    font-size:12px;
+
+    padding:
+        30px 24px
+        50px;
+
+    border-top:
+        1px solid
+        #202126;
+
     display:flex;
+
     justify-content:space-between;
+
     gap:20px;
+
+    color:#606068;
+
+    font-size:10px;
+
 }
 
-/* =========================
+
+/* =========================================================
    MODAL
-========================= */
+========================================================= */
 
 .modal{
+
     position:fixed;
+
     inset:0;
-    z-index:100;
+
+    z-index:500;
+
     display:none;
+
     align-items:center;
+
     justify-content:center;
+
     padding:20px;
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(12px);
+
+    background:
+        rgba(0,0,0,.76);
+
+    backdrop-filter:
+        blur(12px);
+
 }
 
 .modal.show{
+
     display:flex;
+
 }
 
 .modal-box{
-    width:min(560px,100%);
+
+    width:
+        min(620px,100%);
+
     max-height:90vh;
+
     overflow:auto;
-    border:1px solid #303139;
+
+    border:
+        1px solid
+        #303139;
+
     border-radius:16px;
-    background:#111115;
-    box-shadow:0 30px 100px rgba(0,0,0,.55);
+
+    background:#111114;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.55);
+
 }
 
 .modal-head{
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-    gap:15px;
-    padding:19px 20px;
-    border-bottom:1px solid #24252b;
+
+    padding:
+        19px 20px;
+
+    border-bottom:
+        1px solid
+        #24252b;
+
 }
 
 .modal-head h3{
+
     margin:0;
-    font-size:17px;
+
+    font-size:16px;
+
 }
 
 .close-btn{
+
     width:34px;
+
     height:34px;
-    border:1px solid #303139;
+
+    border:
+        1px solid
+        #303139;
+
     border-radius:8px;
+
     background:#18181d;
+
     color:#aaaab2;
+
     font-size:18px;
+
 }
 
 .modal-body{
+
     padding:20px;
+
 }
 
 .form-group{
+
     margin-bottom:15px;
+
 }
 
 .form-group label{
+
     display:block;
+
     margin-bottom:7px;
+
     color:#9999a2;
-    font-size:12px;
+
+    font-size:11px;
+
 }
 
 .form-control{
+
     width:100%;
-    border:1px solid #2d2e35;
-    background:#0d0d10;
-    color:#eee;
+
+    border:
+        1px solid
+        #2d2e35;
+
     border-radius:9px;
-    padding:11px 12px;
+
     outline:none;
+
+    padding:
+        11px 12px;
+
+    background:#0d0d10;
+
+    color:#eee;
+
 }
 
 .form-control:focus{
+
     border-color:#555761;
+
 }
 
 textarea.form-control{
-    min-height:110px;
+
+    min-height:105px;
+
     resize:vertical;
+
 }
 
 .modal-actions{
+
     display:flex;
+
     justify-content:flex-end;
+
     gap:9px;
+
     margin-top:20px;
+
 }
 
-/* =========================
-   FILE UPLOAD
-========================= */
+
+/* =========================================================
+   FILE DROP
+========================================================= */
 
 .file-drop{
+
     position:relative;
-    border:1px dashed #3a3b44;
-    border-radius:11px;
+
     padding:22px;
+
+    border:
+        1px dashed
+        #3a3b44;
+
+    border-radius:11px;
+
     text-align:center;
-    color:#7d7d86;
+
     background:#0d0d10;
+
+    color:#7d7d86;
+
     transition:.2s;
+
 }
 
 .file-drop.dragover{
+
     border-color:#fff;
+
     background:#151519;
+
     color:#ddd;
+
 }
 
 .file-drop input{
+
     position:absolute;
+
     inset:0;
+
     width:100%;
+
     height:100%;
+
     opacity:0;
+
     cursor:pointer;
+
 }
 
-.preview{
+.file-preview{
+
     margin-top:12px;
+
     display:none;
+
 }
 
-.preview img{
+.file-preview img{
+
     width:100%;
-    max-height:260px;
+
+    max-height:250px;
+
     object-fit:contain;
+
     border-radius:9px;
+
     background:#08080a;
+
 }
 
-/* =========================
-   FULLSCREEN IMAGE VIEWER
-========================= */
+.selected-file{
+
+    margin-top:8px;
+
+    color:#777780;
+
+    font-size:10px;
+
+}
+
+
+/* =========================================================
+   VIEWER
+========================================================= */
 
 .viewer{
+
     position:fixed;
+
     inset:0;
-    z-index:200;
+
+    z-index:800;
+
     display:none;
-    background:rgba(0,0,0,.96);
+
+    background:
+        rgba(0,0,0,.97);
+
 }
 
 .viewer.show{
+
     display:flex;
+
 }
 
 .viewer-image-wrap{
+
     flex:1;
+
     min-width:0;
+
     min-height:0;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    padding:70px 90px 85px;
+
+    padding:
+        70px 90px
+        85px;
+
 }
 
 .viewer-image{
+
     max-width:100%;
+
     max-height:100%;
+
     width:auto;
+
     height:auto;
+
     object-fit:contain;
-    user-select:none;
-    -webkit-user-drag:none;
+
 }
 
 .viewer-top{
+
     position:absolute;
+
     top:0;
+
     left:0;
+
     right:0;
+
+    z-index:5;
+
     height:65px;
+
+    padding:
+        0 22px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-    padding:0 22px;
-    background:linear-gradient(
-        to bottom,
-        rgba(0,0,0,.7),
-        transparent
-    );
-    pointer-events:none;
-}
 
-.viewer-top > *{
-    pointer-events:auto;
-}
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.7),
+            transparent
+        );
 
-.viewer-title-wrap{
-    min-width:0;
 }
 
 .viewer-title{
-    font-size:15px;
+
+    font-size:14px;
+
     font-weight:700;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+
 }
 
 .viewer-meta{
-    color:#888891;
-    font-size:11px;
+
     margin-top:2px;
+
+    color:#777780;
+
+    font-size:10px;
+
 }
 
 .viewer-close{
+
     width:40px;
+
     height:40px;
-    border:1px solid #3a3b43;
+
+    border:
+        1px solid
+        #3a3b43;
+
     border-radius:10px;
-    background:rgba(20,20,24,.75);
+
+    background:
+        rgba(20,20,24,.75);
+
     color:#fff;
+
     font-size:22px;
+
 }
 
 .viewer-nav{
+
     position:absolute;
+
     top:50%;
-    transform:translateY(-50%);
+
+    z-index:10;
+
     width:48px;
+
     height:58px;
-    border:1px solid #363740;
+
+    transform:
+        translateY(-50%);
+
+    border:
+        1px solid
+        #363740;
+
     border-radius:12px;
-    background:rgba(18,18,22,.75);
+
+    background:
+        rgba(18,18,22,.75);
+
     color:#fff;
+
     font-size:28px;
-    backdrop-filter:blur(8px);
+
 }
 
 .viewer-prev{
+
     left:20px;
+
 }
 
 .viewer-next{
+
     right:20px;
+
 }
 
 .viewer-bottom{
+
     position:absolute;
-    left:0;
-    right:0;
+
     bottom:0;
-    padding:16px 22px 20px;
+
+    left:0;
+
+    right:0;
+
+    padding:
+        16px 22px 20px;
+
     text-align:center;
+
     color:#66666f;
-    font-size:11px;
-    background:linear-gradient(
-        to top,
-        rgba(0,0,0,.7),
-        transparent
-    );
+
+    font-size:10px;
+
 }
 
-/* =========================
+
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast{
+
     position:fixed;
+
     right:20px;
+
     bottom:20px;
-    z-index:300;
+
+    z-index:1000;
+
     min-width:220px;
+
     max-width:380px;
-    padding:12px 15px;
-    border:1px solid #303139;
+
+    padding:
+        12px 15px;
+
+    border:
+        1px solid
+        #303139;
+
     border-radius:10px;
+
     background:#17171b;
+
     color:#eee;
-    font-size:13px;
-    box-shadow:0 15px 45px rgba(0,0,0,.4);
+
+    font-size:12px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.4);
+
     opacity:0;
-    transform:translateY(12px);
+
+    transform:
+        translateY(12px);
+
     pointer-events:none;
+
     transition:.25s;
+
 }
 
 .toast.show{
+
     opacity:1;
-    transform:translateY(0);
+
+    transform:
+        translateY(0);
+
 }
 
 .toast.success{
+
     border-color:#315c43;
+
 }
 
 .toast.error{
+
     border-color:#673737;
+
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 
-@media(max-width:1000px){
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
 
     .gallery{
+
         column-count:2;
+
+    }
+
+}
+
+@media(max-width:850px){
+
+    .work-preview{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .render-side{
+
+        min-height:350px;
+
+    }
+
+    .model-side{
+
+        min-height:420px;
+
     }
 
     .about-grid{
+
         grid-template-columns:1fr;
+
     }
+
 }
 
 @media(max-width:650px){
 
     .header-inner{
-        padding:0 16px;
+
+        padding:
+            0 16px;
+
     }
 
     .nav{
+
         display:none;
+
     }
 
     .hero{
-        padding:75px 18px 65px;
+
+        padding:
+            75px 18px
+            65px;
+
     }
 
     .section{
-        padding:30px 18px 70px;
+
+        padding:
+            30px 18px
+            70px;
+
     }
 
     .hero h1{
-        font-size:48px;
-    }
 
-    .hero p{
-        font-size:15px;
+        font-size:48px;
+
     }
 
     .gallery{
+
         column-count:1;
+
     }
 
     .section-head{
-        align-items:flex-start;
+
         flex-direction:column;
+
+        align-items:flex-start;
+
     }
 
     .admin-panel-top{
-        align-items:flex-start;
+
         flex-direction:column;
+
+        align-items:flex-start;
+
     }
 
     .footer{
-        padding-left:18px;
-        padding-right:18px;
+
+        padding:
+            30px 18px
+            50px;
+
         flex-direction:column;
+
     }
 
     .viewer-image-wrap{
-        padding:65px 15px 70px;
+
+        padding:
+            65px 15px
+            70px;
+
     }
 
     .viewer-prev{
+
         left:8px;
+
     }
 
     .viewer-next{
+
         right:8px;
+
     }
 
     .viewer-nav{
+
         width:40px;
+
         height:50px;
+
     }
 
-    .viewer-top{
-        padding:0 12px;
-    }
 }
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        scroll-behavior:auto !important;
+
+        animation:none !important;
+
+        transition:none !important;
+
+    }
+
+}
+
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header class="header">
 
     <div class="header-inner">
 
-        <a class="logo" href="#">
-            WFL <span>· 3D GAME ART</span>
+        <a
+            class="logo"
+            href="#"
+        >
+
+            WFL
+            <span>
+                · 3D GAME ART
+            </span>
+
         </a>
 
+
         <nav class="nav">
-            <a href="#works">作品</a>
-            <a href="#about">关于我</a>
-            <a href="#contact">联系</a>
+
+            <a href="#works">
+                作品
+            </a>
+
+            <a href="#about">
+                关于我
+            </a>
+
+            <a href="#contact">
+                联系
+            </a>
+
         </nav>
+
 
         <button
             class="admin-login-btn"
@@ -980,11 +2277,16 @@ textarea.form-control{
 </header>
 
 
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
 <main>
 
-<!-- =========================
+
+<!-- =========================================================
      HERO
-========================= -->
+========================================================= -->
 
 <section class="hero">
 
@@ -992,14 +2294,25 @@ textarea.form-control{
         3D GAME ART PORTFOLIO
     </div>
 
+
     <h1>
-        WFL <span>· DIGITAL WORLDS.</span>
+
+        WFL
+        <span>
+            · DIGITAL WORLDS.
+        </span>
+
     </h1>
 
+
     <p>
-        3D 游戏美术作品集，记录角色、场景、道具与个人建模练习。
-        这里展示我的建模学习过程、游戏美术作品与持续成长。
+
+        3D 游戏美术作品集。
+        展示角色、场景、道具以及 Blender
+        建模作品，并提供实时 3D 模型预览。
+
     </p>
+
 
     <div class="hero-meta">
 
@@ -1016,7 +2329,7 @@ textarea.form-control{
         </span>
 
         <span class="tag">
-            Props
+            Hard Surface
         </span>
 
         <span class="tag">
@@ -1028,9 +2341,9 @@ textarea.form-control{
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      WORKS
-========================= -->
+========================================================= -->
 
 <section
     class="section"
@@ -1050,17 +2363,24 @@ textarea.form-control{
             </h2>
 
             <p class="section-desc">
-                点击任意作品即可查看完整原图，不再强制裁切作品比例。
+
+                左侧展示最终渲染图，
+                右侧实时预览 3D 模型。
+                支持鼠标旋转、缩放与查看材质。
+
             </p>
 
         </div>
+
 
         <div
             class="connection"
             id="connection"
         >
 
-            <span class="connection-dot"></span>
+            <span
+                class="connection-dot"
+            ></span>
 
             <span id="connectionText">
                 正在连接作品库…
@@ -1071,123 +2391,130 @@ textarea.form-control{
     </div>
 
 
-    <!-- ADMIN -->
+<!-- =========================================================
+     ADMIN PANEL
+========================================================= -->
 
-    <div
-        class="admin-panel"
-        id="adminPanel"
-    >
+<div
+    class="admin-panel"
+    id="adminPanel"
+>
 
-        <div class="admin-panel-top">
+    <div class="admin-panel-top">
 
-            <div>
+        <div>
 
-                <div class="admin-label">
-                    管理员模式
-                </div>
-
-                <div
-                    class="admin-status"
-                    id="adminStatus"
-                >
-                    已登录，可以上传、编辑和删除作品。
-                </div>
-
+            <div class="admin-label">
+                管理员模式
             </div>
 
             <div
-                style="
+                class="admin-status"
+                id="adminStatus"
+            >
+                可以上传、编辑、删除作品。
+            </div>
+
+        </div>
+
+
+        <div
+            style="
                 display:flex;
                 gap:8px;
                 flex-wrap:wrap;
-                "
+            "
+        >
+
+            <button
+                class="primary-btn"
+                id="addWorkBtn"
             >
+                ＋ 上传作品
+            </button>
 
-                <button
-                    class="primary-btn"
-                    id="addWorkBtn"
-                >
-                    ＋ 上传作品
-                </button>
 
-                <button
-                    class="secondary-btn"
-                    id="logoutBtn"
-                >
-                    退出登录
-                </button>
-
-            </div>
+            <button
+                class="secondary-btn"
+                id="logoutBtn"
+            >
+                退出登录
+            </button>
 
         </div>
 
     </div>
 
+</div>
 
-    <!-- FILTER -->
 
-    <div
-        class="filters"
-        id="filters"
+<!-- =========================================================
+     FILTER
+========================================================= -->
+
+<div
+    class="filters"
+    id="filters"
+>
+
+    <button
+        class="filter-btn active"
+        data-category="全部"
     >
+        全部
+    </button>
 
-        <button
-            class="filter-btn active"
-            data-category="全部"
-        >
-            全部
-        </button>
-
-        <button
-            class="filter-btn"
-            data-category="角色"
-        >
-            角色
-        </button>
-
-        <button
-            class="filter-btn"
-            data-category="场景"
-        >
-            场景
-        </button>
-
-        <button
-            class="filter-btn"
-            data-category="道具"
-        >
-            道具
-        </button>
-
-        <button
-            class="filter-btn"
-            data-category="其他"
-        >
-            其他
-        </button>
-
-    </div>
-
-
-    <div
-        id="galleryState"
-        class="state"
+    <button
+        class="filter-btn"
+        data-category="角色"
     >
-        正在加载作品…
-    </div>
+        角色
+    </button>
+
+    <button
+        class="filter-btn"
+        data-category="场景"
+    >
+        场景
+    </button>
+
+    <button
+        class="filter-btn"
+        data-category="道具"
+    >
+        道具
+    </button>
+
+    <button
+        class="filter-btn"
+        data-category="其他"
+    >
+        其他
+    </button>
+
+</div>
 
 
-    <div
-        id="gallery"
-        class="gallery"
-    ></div>
+<div
+    id="galleryState"
+    class="state"
+>
+    正在加载作品…
+</div>
+
+
+<div
+    id="gallery"
+    class="gallery"
+></div>
+
 
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      ABOUT
-========================= -->
+========================================================= -->
 
 <section
     class="section"
@@ -1220,11 +2547,17 @@ textarea.form-control{
             </h3>
 
             <p>
-                我是一名正在学习和成长中的 3D 游戏美术创作者。
-                目前主要使用 Blender 进行 3D 建模、道具制作、
-                场景制作以及游戏美术相关练习。
+
+                我是一名正在学习和成长中的
+                3D 游戏美术创作者。
+                目前主要使用 Blender 进行
+                3D 建模、道具制作、场景制作
+                以及游戏美术相关练习。
+
                 这个网站用于整理自己的作品，
-                并持续记录从练习到完整作品的过程。
+                同时让访客能够直接查看
+                我的最终渲染效果与实时 3D 模型。
+
             </p>
 
         </div>
@@ -1235,6 +2568,7 @@ textarea.form-control{
             <h3>
                 Skills
             </h3>
+
 
             <div class="skills">
 
@@ -1263,7 +2597,7 @@ textarea.form-control{
                 </span>
 
                 <span class="skill">
-                    Texturing
+                    PBR
                 </span>
 
                 <span class="skill">
@@ -1278,12 +2612,13 @@ textarea.form-control{
 
 </section>
 
+
 </main>
 
 
-<!-- =========================
+<!-- =========================================================
      FOOTER
-========================= -->
+========================================================= -->
 
 <footer
     class="footer"
@@ -1295,15 +2630,15 @@ textarea.form-control{
     </span>
 
     <span>
-        Built for showcasing 3D work.
+        Blender · 3D Game Art · Portfolio
     </span>
 
 </footer>
 
 
-<!-- =========================
+<!-- =========================================================
      LOGIN MODAL
-========================= -->
+========================================================= -->
 
 <div
     class="modal"
@@ -1375,6 +2710,7 @@ textarea.form-control{
                         取消
                     </button>
 
+
                     <button
                         class="primary-btn"
                         type="submit"
@@ -1393,9 +2729,9 @@ textarea.form-control{
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      WORK MODAL
-========================= -->
+========================================================= -->
 
 <div
     class="modal"
@@ -1424,6 +2760,9 @@ textarea.form-control{
 
             <form id="workForm">
 
+
+                <!-- TITLE -->
+
                 <div class="form-group">
 
                     <label>
@@ -1439,6 +2778,8 @@ textarea.form-control{
 
                 </div>
 
+
+                <!-- CATEGORY -->
 
                 <div class="form-group">
 
@@ -1472,6 +2813,8 @@ textarea.form-control{
                 </div>
 
 
+                <!-- DESCRIPTION -->
+
                 <div class="form-group">
 
                     <label>
@@ -1482,57 +2825,152 @@ textarea.form-control{
                         class="form-control"
                         id="workDescription"
                         maxlength="1000"
-                        placeholder="简单介绍模型、制作过程或使用的软件…"
+                        placeholder="介绍模型、制作过程、软件等…"
                     ></textarea>
 
                 </div>
 
 
+                <!-- RENDER -->
+
                 <div class="form-group">
 
                     <label>
-                        作品图片
+                        最终渲染图
                     </label>
 
                     <div
                         class="file-drop"
-                        id="fileDrop"
+                        id="renderDrop"
                     >
 
                         <input
                             type="file"
-                            id="workFile"
+                            id="renderFile"
                             accept="image/*"
                         >
 
                         <div>
-                            点击选择图片，或直接拖拽图片到这里
+                            点击选择 Render 图片
                         </div>
 
                         <div
                             style="
-                            margin-top:6px;
-                            font-size:11px;
-                            color:#5f5f68;
+                                margin-top:6px;
+                                color:#5f5f68;
+                                font-size:10px;
                             "
                         >
-                            支持 JPG / PNG / WEBP 等常见图片格式
+                            JPG / PNG / WEBP
                         </div>
 
                     </div>
 
 
                     <div
-                        class="preview"
-                        id="preview"
+                        class="file-preview"
+                        id="renderPreview"
                     >
 
                         <img
-                            id="previewImg"
-                            alt="预览"
+                            id="renderPreviewImg"
+                            alt="Render Preview"
                         >
 
                     </div>
+
+                    <div
+                        class="selected-file"
+                        id="renderFileName"
+                    ></div>
+
+                </div>
+
+
+                <!-- GLB -->
+
+                <div class="form-group">
+
+                    <label>
+                        3D 模型预览文件
+                    </label>
+
+                    <div
+                        class="file-drop"
+                        id="modelDrop"
+                    >
+
+                        <input
+                            type="file"
+                            id="modelFile"
+                            accept=".glb,.gltf,model/gltf-binary,model/gltf+json"
+                        >
+
+                        <div>
+                            点击选择 .GLB / .GLTF
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:6px;
+                                color:#5f5f68;
+                                font-size:10px;
+                            "
+                        >
+                            推荐使用 .glb，网页端将实时加载模型
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="selected-file"
+                        id="modelFileName"
+                    ></div>
+
+                </div>
+
+
+                <!-- BLEND -->
+
+                <div class="form-group">
+
+                    <label>
+                        Blender 源文件
+                    </label>
+
+                    <div
+                        class="file-drop"
+                        id="blendDrop"
+                    >
+
+                        <input
+                            type="file"
+                            id="blendFile"
+                            accept=".blend"
+                        >
+
+                        <div>
+                            点击选择 .BLEND 源文件
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:6px;
+                                color:#5f5f68;
+                                font-size:10px;
+                            "
+                        >
+                            访客可以通过作品页面下载源文件
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="selected-file"
+                        id="blendFileName"
+                    ></div>
 
                 </div>
 
@@ -1547,6 +2985,7 @@ textarea.form-control{
                         取消
                     </button>
 
+
                     <button
                         class="primary-btn"
                         type="submit"
@@ -1557,6 +2996,7 @@ textarea.form-control{
 
                 </div>
 
+
             </form>
 
         </div>
@@ -1566,9 +3006,9 @@ textarea.form-control{
 </div>
 
 
-<!-- =========================
-     FULLSCREEN VIEWER
-========================= -->
+<!-- =========================================================
+     IMAGE VIEWER
+========================================================= -->
 
 <div
     class="viewer"
@@ -1577,7 +3017,7 @@ textarea.form-control{
 
     <div class="viewer-top">
 
-        <div class="viewer-title-wrap">
+        <div>
 
             <div
                 class="viewer-title"
@@ -1605,7 +3045,6 @@ textarea.form-control{
     <button
         class="viewer-nav viewer-prev"
         id="viewerPrev"
-        aria-label="上一张"
     >
         ‹
     </button>
@@ -1628,22 +3067,23 @@ textarea.form-control{
     <button
         class="viewer-nav viewer-next"
         id="viewerNext"
-        aria-label="下一张"
     >
         ›
     </button>
 
 
     <div class="viewer-bottom">
-        ESC 关闭 · ← / → 切换作品 · 手机端可左右滑动
+
+        ESC 关闭 · ← / → 切换作品
+
     </div>
 
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      TOAST
-========================= -->
+========================================================= -->
 
 <div
     class="toast"
@@ -1651,10 +3091,28 @@ textarea.form-control{
 ></div>
 
 
-<script>
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script type="module">
+
+import * as THREE
+from "three";
+
+import {
+    OrbitControls
+}
+from "three/addons/controls/OrbitControls.js";
+
+import {
+    GLTFLoader
+}
+from "three/addons/loaders/GLTFLoader.js";
+
 
 /* =========================================================
-   SUPABASE CONFIG
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1684,23 +3142,40 @@ let currentUser = null;
 
 let editingWork = null;
 
+let selectedRenderFile = null;
+
+let selectedModelFile = null;
+
+let selectedBlendFile = null;
+
 let viewerWorks = [];
 
 let viewerIndex = 0;
-
-let selectedFile = null;
 
 let toastTimer = null;
 
 
 /* =========================================================
-   HELPER
+   THREE MODEL VIEWERS
+========================================================= */
+
+const modelViewers = new Map();
+
+
+/* =========================================================
+   DOM HELPER
 ========================================================= */
 
 function $(id){
+
     return document.getElementById(id);
+
 }
 
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
 
 function escapeHtml(value){
 
@@ -1714,64 +3189,107 @@ function escapeHtml(value){
 }
 
 
-function showToast(message,type=""){
+/* =========================================================
+   TOAST
+========================================================= */
 
-    const el = $("toast");
+function showToast(
+    message,
+    type=""
+){
 
-    el.textContent = message;
+    const el =
+        $("toast");
+
+    el.textContent =
+        message;
 
     el.className =
-        "toast show " + type;
+        "toast show " +
+        type;
 
-    clearTimeout(toastTimer);
+    clearTimeout(
+        toastTimer
+    );
 
-    toastTimer = setTimeout(()=>{
-        el.className = "toast";
-    },3000);
+    toastTimer =
+        setTimeout(
+            ()=>{
+                el.className =
+                    "toast";
+            },
+            3200
+        );
 
 }
 
 
-function setConnection(type,text){
+/* =========================================================
+   CONNECTION
+========================================================= */
 
-    const el = $("connection");
+function setConnection(
+    type,
+    text
+){
+
+    const el =
+        $("connection");
 
     el.className =
-        "connection " + (type || "");
+        "connection " +
+        (type || "");
 
-    $("connectionText").textContent =
+    $("connectionText")
+        .textContent =
         text;
 
 }
 
 
+/* =========================================================
+   MODAL
+========================================================= */
+
 function openModal(id){
 
-    $(id).classList.add("show");
+    $(id)
+        .classList
+        .add("show");
 
 }
 
 
 function closeModal(id){
 
-    $(id).classList.remove("show");
+    $(id)
+        .classList
+        .remove("show");
 
 }
 
 
 /* =========================================================
-   WORK FILTER
+   FILTER
 ========================================================= */
 
 function getVisibleWorks(){
 
-    if(currentCategory === "全部"){
-        return [...allWorks];
+    if(
+        currentCategory ===
+        "全部"
+    ){
+
+        return [
+            ...allWorks
+        ];
+
     }
 
     return allWorks.filter(
         work =>
-            work.category === currentCategory
+            work.category ===
+            currentCategory
     );
 
 }
@@ -1780,62 +3298,20 @@ function getVisibleWorks(){
 function updateFilters(){
 
     document
-        .querySelectorAll(".filter-btn")
-        .forEach(btn => {
+        .querySelectorAll(
+            ".filter-btn"
+        )
+        .forEach(
+            btn => {
 
-            btn.classList.toggle(
-                "active",
-                btn.dataset.category === currentCategory
-            );
+                btn.classList.toggle(
+                    "active",
+                    btn.dataset.category ===
+                    currentCategory
+                );
 
-        });
-
-}
-
-
-/* =========================================================
-   RENDER WORKS
-========================================================= */
-
-function renderWorks(){
-
-    const gallery =
-        $("gallery");
-
-    const state =
-        $("galleryState");
-
-    const works =
-        getVisibleWorks();
-
-    gallery.innerHTML = "";
-
-
-    if(!works.length){
-
-        state.className =
-            "state";
-
-        state.textContent =
-            allWorks.length
-                ? "这个分类暂时还没有作品。"
-                : "暂无作品，请管理员登录后上传。";
-
-        state.style.display =
-            "block";
-
-        return;
-    }
-
-
-    state.style.display =
-        "none";
-
-
-    gallery.innerHTML =
-        works.map(
-            createWorkCard
-        ).join("");
+            }
+        );
 
 }
 
@@ -1844,46 +3320,79 @@ function renderWorks(){
    CREATE WORK CARD
 ========================================================= */
 
-function createWorkCard(work){
+function createWorkCard(
+    work
+){
 
-    const description =
-        work.description
-            ? escapeHtml(work.description)
-            : "";
-
-    const category =
+    const id =
         escapeHtml(
-            work.category || "其他"
+            work.id
         );
 
     const title =
         escapeHtml(
-            work.title || "未命名作品"
+            work.title ||
+            "未命名作品"
         );
 
-    const image =
+    const category =
         escapeHtml(
-            work.image_url || ""
+            work.category ||
+            "其他"
         );
 
-    const id =
-        escapeHtml(work.id);
+    const description =
+        work.description
+            ? escapeHtml(
+                work.description
+            )
+            : "";
+
+    const imageUrl =
+        escapeHtml(
+            work.image_url ||
+            ""
+        );
+
+    const modelUrl =
+        escapeHtml(
+            work.model_url ||
+            ""
+        );
+
+    const blendUrl =
+        escapeHtml(
+            work.blend_url ||
+            ""
+        );
+
+
+    const hasModel =
+        !!modelUrl;
 
 
     return `
 
-        <article class="work-card">
+        <article
+            class="work-card ${
+                hasModel
+                    ? "has-model"
+                    : ""
+            }"
+        >
+
+
+            <!-- RENDER IMAGE -->
 
             <div
                 class="work-image-container"
                 data-work-id="${id}"
-                onclick="openImageViewer(this.dataset.workId)"
-                title="点击查看完整作品"
+                onclick="window.openImageViewer(this.dataset.workId)"
             >
 
                 <img
                     class="work-image"
-                    src="${image}"
+                    src="${imageUrl}"
                     alt="${title}"
                     loading="lazy"
                 >
@@ -1891,7 +3400,7 @@ function createWorkCard(work){
                 <div class="image-hover">
 
                     <span>
-                        查看完整作品
+                        查看完整渲染图
                     </span>
 
                 </div>
@@ -1899,13 +3408,162 @@ function createWorkCard(work){
             </div>
 
 
-            <div class="work-info">
+            ${
+                hasModel
+                    ? `
 
-                <h3 class="work-title">
+                        <!--
+                            RENDER + 3D PREVIEW
+                        -->
+
+                        <div
+                            class="work-preview"
+                        >
+
+
+                            <!-- LEFT -->
+
+                            <div
+                                class="render-side"
+                            >
+
+                                <img
+                                    src="${imageUrl}"
+                                    alt="${title} Render"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <!-- RIGHT -->
+
+                            <div
+                                class="model-side"
+                                data-model-url="${modelUrl}"
+                                data-work-id="${id}"
+                            >
+
+                                <div
+                                    class="model-toolbar"
+                                >
+
+                                    <div
+                                        class="model-badge"
+                                    >
+
+                                        <span
+                                            class="model-badge-dot"
+                                        ></span>
+
+                                        MATERIAL PREVIEW
+
+                                    </div>
+
+
+                                    <div
+                                        class="model-controls"
+                                    >
+
+                                        <button
+                                            class="model-control"
+                                            data-model-reset="${id}"
+                                            title="重置视角"
+                                        >
+                                            ⟳
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+
+                                <canvas
+                                    class="model-canvas"
+                                    id="model-canvas-${id}"
+                                ></canvas>
+
+
+                                <div
+                                    class="model-loading"
+                                    id="model-loading-${id}"
+                                >
+
+                                    <div
+                                        class="loader"
+                                    ></div>
+
+                                    <div
+                                        class="model-loading-text"
+                                    >
+                                        正在加载 3D 模型…
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="model-empty"
+                                    id="model-empty-${id}"
+                                    style="display:none;"
+                                >
+
+                                    <strong>
+                                        3D Preview
+                                    </strong>
+
+                                    <span>
+                                        无法加载当前模型。
+                                        请确认上传的是有效的
+                                        .glb / .gltf 文件。
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="model-footer"
+                                >
+
+                                    <div
+                                        class="model-hint"
+                                    >
+                                        拖动旋转 · 滚轮缩放
+                                    </div>
+
+                                    <div
+                                        class="model-file"
+                                    >
+                                        GLB / PBR
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `
+                    : ""
+            }
+
+
+            <!-- INFO -->
+
+            <div
+                class="work-info"
+            >
+
+                <h3
+                    class="work-title"
+                >
                     ${title}
                 </h3>
 
-                <span class="work-category">
+
+                <span
+                    class="work-category"
+                >
                     ${category}
                 </span>
 
@@ -1913,7 +3571,9 @@ function createWorkCard(work){
                 ${
                     description
                         ? `
-                            <p class="work-desc">
+                            <p
+                                class="work-desc"
+                            >
                                 ${description}
                             </p>
                         `
@@ -1922,9 +3582,57 @@ function createWorkCard(work){
 
 
                 ${
+                    modelUrl ||
+                    blendUrl
+                        ? `
+
+                            <div
+                                class="file-actions"
+                            >
+
+                                ${
+                                    modelUrl
+                                        ? `
+                                            <button
+                                                class="file-btn"
+                                                data-open-model="${id}"
+                                            >
+                                                ◈ 查看 3D 模型
+                                            </button>
+                                        `
+                                        : ""
+                                }
+
+
+                                ${
+                                    blendUrl
+                                        ? `
+                                            <a
+                                                class="file-btn"
+                                                href="${blendUrl}"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >
+                                                ↓ 下载 .blend
+                                            </a>
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        `
+                        : ""
+                }
+
+
+                ${
                     currentUser
                         ? `
-                            <div class="admin-actions">
+
+                            <div
+                                class="admin-actions"
+                            >
 
                                 <button
                                     class="small-btn"
@@ -1933,6 +3641,7 @@ function createWorkCard(work){
                                 >
                                     编辑
                                 </button>
+
 
                                 <button
                                     class="small-btn delete"
@@ -1943,6 +3652,7 @@ function createWorkCard(work){
                                 </button>
 
                             </div>
+
                         `
                         : ""
                 }
@@ -1957,6 +3667,85 @@ function createWorkCard(work){
 
 
 /* =========================================================
+   RENDER
+========================================================= */
+
+function renderWorks(){
+
+    /*
+        先释放旧的 Three.js viewer
+    */
+
+    modelViewers.forEach(
+        viewer => {
+
+            viewer.dispose();
+
+        }
+    );
+
+    modelViewers.clear();
+
+
+    const gallery =
+        $("gallery");
+
+    const state =
+        $("galleryState");
+
+    const works =
+        getVisibleWorks();
+
+
+    gallery.innerHTML =
+        "";
+
+
+    if(!works.length){
+
+        state.style.display =
+            "block";
+
+        state.className =
+            "state";
+
+        state.textContent =
+            allWorks.length
+                ? "这个分类暂时没有作品。"
+                : "暂无作品，请管理员登录后上传。";
+
+        return;
+
+    }
+
+
+    state.style.display =
+        "none";
+
+
+    gallery.innerHTML =
+        works
+            .map(
+                createWorkCard
+            )
+            .join("");
+
+
+    /*
+        延迟初始化模型，
+        避免页面第一次渲染卡顿
+    */
+
+    requestAnimationFrame(
+        ()=>{
+            initializeVisibleModels();
+        }
+    );
+
+}
+
+
+/* =========================================================
    LOAD WORKS
 ========================================================= */
 
@@ -1964,18 +3753,8 @@ async function loadWorks(){
 
     if(!supabaseClient){
 
-        $("galleryState").className =
-            "state error";
-
-        $("galleryState").textContent =
-            "Supabase 初始化失败。";
-
-        setConnection(
-            "error",
-            "连接失败"
-        );
-
         return;
+
     }
 
 
@@ -1988,37 +3767,42 @@ async function loadWorks(){
     const {
         data,
         error
-    } = await supabaseClient
-
-        .from("works")
-
-        .select("*")
-
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
+    } =
+        await supabaseClient
+            .from("works")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
 
 
     if(error){
 
         console.error(error);
 
-        $("galleryState").className =
+
+        $("galleryState")
+            .className =
             "state error";
 
-        $("galleryState").textContent =
+
+        $("galleryState")
+            .textContent =
             "作品加载失败：" +
             error.message;
+
 
         setConnection(
             "error",
             "作品库连接失败"
         );
 
+
         return;
+
     }
 
 
@@ -2033,6 +3817,888 @@ async function loadWorks(){
         "online",
         `${allWorks.length} 个作品`
     );
+
+}
+
+
+/* =========================================================
+   THREE MATERIAL PREVIEW
+========================================================= */
+
+function initializeVisibleModels(){
+
+    const elements =
+        document.querySelectorAll(
+            ".model-side[data-model-url]"
+        );
+
+
+    elements.forEach(
+        element => {
+
+            const url =
+                element.dataset.modelUrl;
+
+            const workId =
+                element.dataset.workId;
+
+
+            if(
+                !url ||
+                modelViewers.has(workId)
+            ){
+
+                return;
+
+            }
+
+
+            const canvas =
+                element.querySelector(
+                    ".model-canvas"
+                );
+
+
+            if(!canvas){
+
+                return;
+
+            }
+
+
+            try{
+
+                const viewer =
+                    createModelViewer(
+                        canvas,
+                        url,
+                        workId
+                    );
+
+
+                modelViewers.set(
+                    workId,
+                    viewer
+                );
+
+
+            }catch(error){
+
+                console.error(
+                    "3D viewer error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE THREE VIEWER
+========================================================= */
+
+function createModelViewer(
+    canvas,
+    modelUrl,
+    workId
+){
+
+    const container =
+        canvas.parentElement;
+
+
+    const scene =
+        new THREE.Scene();
+
+
+    /*
+        深色 Blender Material Preview
+        风格背景
+    */
+
+    scene.background =
+        new THREE.Color(
+            0x101014
+        );
+
+
+    const camera =
+        new THREE.PerspectiveCamera(
+            35,
+            1,
+            0.01,
+            1000
+        );
+
+
+    camera.position.set(
+        2.7,
+        1.8,
+        3.2
+    );
+
+
+    /*
+        Renderer
+    */
+
+    const renderer =
+        new THREE.WebGLRenderer({
+
+            canvas,
+
+            antialias:true,
+
+            alpha:false,
+
+            powerPreference:
+                "high-performance"
+
+        });
+
+
+    renderer.setPixelRatio(
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        )
+    );
+
+
+    renderer.outputColorSpace =
+        THREE.SRGBColorSpace;
+
+
+    /*
+        接近 Blender 的 Filmic / ACES
+    */
+
+    renderer.toneMapping =
+        THREE.ACESFilmicToneMapping;
+
+
+    renderer.toneMappingExposure =
+        1.05;
+
+
+    renderer.shadowMap.enabled =
+        true;
+
+
+    renderer.shadowMap.type =
+        THREE.PCFSoftShadowMap;
+
+
+    /*
+        Orbit Controls
+    */
+
+    const controls =
+        new OrbitControls(
+            camera,
+            canvas
+        );
+
+
+    controls.enableDamping =
+        true;
+
+    controls.dampingFactor =
+        .06;
+
+    controls.enablePan =
+        true;
+
+    controls.screenSpacePanning =
+        true;
+
+    controls.minDistance =
+        .25;
+
+    controls.maxDistance =
+        30;
+
+    controls.target.set(
+        0,
+        0,
+        0
+    );
+
+
+    /*
+        Blender-like lighting
+    */
+
+    const ambient =
+        new THREE.HemisphereLight(
+            0xffffff,
+            0x303038,
+            2.2
+        );
+
+    scene.add(
+        ambient
+    );
+
+
+    /*
+        主光源
+    */
+
+    const keyLight =
+        new THREE.DirectionalLight(
+            0xffffff,
+            3.0
+        );
+
+    keyLight.position.set(
+        4,
+        6,
+        5
+    );
+
+    keyLight.castShadow =
+        true;
+
+    keyLight.shadow.mapSize.width =
+        1024;
+
+    keyLight.shadow.mapSize.height =
+        1024;
+
+    scene.add(
+        keyLight
+    );
+
+
+    /*
+        左侧填充光
+    */
+
+    const fillLight =
+        new THREE.DirectionalLight(
+            0xbfd7ff,
+            1.5
+        );
+
+    fillLight.position.set(
+        -4,
+        2,
+        3
+    );
+
+    scene.add(
+        fillLight
+    );
+
+
+    /*
+        后方轮廓光
+    */
+
+    const rimLight =
+        new THREE.DirectionalLight(
+            0xffd8c0,
+            1.3
+        );
+
+    rimLight.position.set(
+        2,
+        3,
+        -5
+    );
+
+    scene.add(
+        rimLight
+    );
+
+
+    /*
+        Ground
+    */
+
+    const ground =
+        new THREE.Mesh(
+
+            new THREE.PlaneGeometry(
+                30,
+                30
+            ),
+
+            new THREE.ShadowMaterial({
+                opacity:.18
+            })
+
+        );
+
+
+    ground.rotation.x =
+        -Math.PI / 2;
+
+
+    ground.position.y =
+        -1.15;
+
+
+    ground.receiveShadow =
+        true;
+
+
+    scene.add(
+        ground
+    );
+
+
+    /*
+        GLTF LOADER
+    */
+
+    const loader =
+        new GLTFLoader();
+
+
+    let loadedObject =
+        null;
+
+
+    loader.load(
+
+        modelUrl,
+
+
+        gltf => {
+
+            loadedObject =
+                gltf.scene;
+
+
+            scene.add(
+                loadedObject
+            );
+
+
+            /*
+                处理模型材质
+            */
+
+            loadedObject.traverse(
+                object => {
+
+                    if(
+                        object.isMesh
+                    ){
+
+                        object.castShadow =
+                            true;
+
+                        object.receiveShadow =
+                            true;
+
+
+                        if(
+                            object.material
+                        ){
+
+                            const materials =
+                                Array.isArray(
+                                    object.material
+                                )
+                                    ? object.material
+                                    : [
+                                        object.material
+                                    ];
+
+
+                            materials.forEach(
+                                material => {
+
+                                    /*
+                                        保留 GLB 的 PBR
+                                        参数
+                                    */
+
+                                    if(
+                                        "roughness"
+                                        in material
+                                    ){
+
+                                        material.roughness =
+                                            Math.max(
+                                                .05,
+                                                Math.min(
+                                                    1,
+                                                    material.roughness
+                                                )
+                                            );
+
+                                    }
+
+
+                                    if(
+                                        "metalness"
+                                        in material
+                                    ){
+
+                                        material.metalness =
+                                            Math.max(
+                                                0,
+                                                Math.min(
+                                                    1,
+                                                    material.metalness
+                                                )
+                                            );
+
+                                    }
+
+
+                                    material.needsUpdate =
+                                        true;
+
+                                }
+                            );
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /*
+                自动计算模型尺寸
+            */
+
+            const box =
+                new THREE.Box3()
+                    .setFromObject(
+                        loadedObject
+                    );
+
+
+            const size =
+                box.getSize(
+                    new THREE.Vector3()
+                );
+
+
+            const center =
+                box.getCenter(
+                    new THREE.Vector3()
+                );
+
+
+            const maxSize =
+                Math.max(
+                    size.x,
+                    size.y,
+                    size.z
+                );
+
+
+            /*
+                模型居中
+            */
+
+            loadedObject.position.x -=
+                center.x;
+
+            loadedObject.position.y -=
+                center.y;
+
+            loadedObject.position.z -=
+                center.z;
+
+
+            /*
+                自动缩放
+            */
+
+            const targetSize =
+                2.4;
+
+
+            const scale =
+                targetSize /
+                Math.max(
+                    maxSize,
+                    .001
+                );
+
+
+            loadedObject.scale.setScalar(
+                scale
+            );
+
+
+            /*
+                重新计算模型位置
+            */
+
+            loadedObject.position.y =
+                0;
+
+
+            /*
+                Camera
+            */
+
+            camera.position.set(
+                2.8,
+                1.8,
+                3.5
+            );
+
+
+            controls.target.set(
+                0,
+                0,
+                0
+            );
+
+
+            controls.update();
+
+
+            /*
+                隐藏 loading
+            */
+
+            const loading =
+                $(
+                    `model-loading-${workId}`
+                );
+
+
+            if(loading){
+
+                loading.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            /*
+                Reset button
+            */
+
+            const resetButton =
+                document.querySelector(
+                    `[data-model-reset="${workId}"]`
+                );
+
+
+            if(resetButton){
+
+                resetButton.onclick =
+                    event => {
+
+                        event.stopPropagation();
+
+                        camera.position.set(
+                            2.8,
+                            1.8,
+                            3.5
+                        );
+
+                        controls.target.set(
+                            0,
+                            0,
+                            0
+                        );
+
+                        controls.update();
+
+                    };
+
+            }
+
+
+        },
+
+
+        progress => {
+
+            if(
+                progress.total
+            ){
+
+                const percent =
+                    Math.round(
+                        progress.loaded /
+                        progress.total *
+                        100
+                    );
+
+
+                const text =
+                    container.querySelector(
+                        ".model-loading-text"
+                    );
+
+
+                if(text){
+
+                    text.textContent =
+                        `正在加载 3D 模型 ${percent}%`;
+
+                }
+
+            }
+
+        },
+
+
+        error => {
+
+            console.error(
+                "GLB load error:",
+                error
+            );
+
+
+            const loading =
+                $(
+                    `model-loading-${workId}`
+                );
+
+
+            const empty =
+                $(
+                    `model-empty-${workId}`
+                );
+
+
+            if(loading){
+
+                loading.classList.add(
+                    "hidden"
+                );
+
+            }
+
+
+            if(empty){
+
+                empty.style.display =
+                    "flex";
+
+            }
+
+        }
+
+    );
+
+
+    /*
+        Resize
+    */
+
+    function resize(){
+
+        const width =
+            container.clientWidth;
+
+        const height =
+            container.clientHeight;
+
+
+        if(
+            width <= 0 ||
+            height <= 0
+        ){
+
+            return;
+
+        }
+
+
+        camera.aspect =
+            width /
+            height;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+            width,
+            height,
+            false
+        );
+
+    }
+
+
+    resize();
+
+
+    /*
+        ResizeObserver
+    */
+
+    const resizeObserver =
+        new ResizeObserver(
+            resize
+        );
+
+
+    resizeObserver.observe(
+        container
+    );
+
+
+    /*
+        Animation
+    */
+
+    let animationFrame;
+
+
+    function animate(){
+
+        animationFrame =
+            requestAnimationFrame(
+                animate
+            );
+
+
+        controls.update();
+
+
+        renderer.render(
+            scene,
+            camera
+        );
+
+    }
+
+
+    animate();
+
+
+    /*
+        Dispose
+    */
+
+    function dispose(){
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+
+        resizeObserver.disconnect();
+
+
+        controls.dispose();
+
+
+        scene.traverse(
+            object => {
+
+                if(
+                    object.geometry
+                ){
+
+                    object.geometry.dispose();
+
+                }
+
+
+                if(
+                    object.material
+                ){
+
+                    const materials =
+                        Array.isArray(
+                            object.material
+                        )
+                            ? object.material
+                            : [
+                                object.material
+                            ];
+
+
+                    materials.forEach(
+                        material => {
+
+                            if(
+                                material.map
+                            ){
+
+                                material.map.dispose();
+
+                            }
+
+                            if(
+                                material.normalMap
+                            ){
+
+                                material.normalMap.dispose();
+
+                            }
+
+                            if(
+                                material.roughnessMap
+                            ){
+
+                                material.roughnessMap.dispose();
+
+                            }
+
+                            if(
+                                material.metalnessMap
+                            ){
+
+                                material.metalnessMap.dispose();
+
+                            }
+
+                            material.dispose();
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+
+        renderer.dispose();
+
+    }
+
+
+    return {
+
+        reset(){
+
+            camera.position.set(
+                2.8,
+                1.8,
+                3.5
+            );
+
+            controls.target.set(
+                0,
+                0,
+                0
+            );
+
+            controls.update();
+
+        },
+
+        dispose
+
+    };
 
 }
 
@@ -2054,24 +4720,32 @@ async function checkSession(){
 
     if(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         return;
+
     }
 
 
     await handleUser(
-        data.session?.user || null
+        data.session?.user ||
+        null
     );
 
 
     supabaseClient
         .auth
         .onAuthStateChange(
-            async (_event,session)=>{
+            async (
+                _event,
+                session
+            ) => {
 
                 await handleUser(
-                    session?.user || null
+                    session?.user ||
+                    null
                 );
 
             }
@@ -2080,19 +4754,24 @@ async function checkSession(){
 }
 
 
-async function handleUser(user){
+async function handleUser(
+    user
+){
 
     if(
         user &&
-        user.id === ADMIN_UID
+        user.id ===
+        ADMIN_UID
     ){
 
         currentUser =
             user;
 
+
         $("adminPanel")
             .classList
             .add("show");
+
 
         $("adminLoginBtn")
             .textContent =
@@ -2103,9 +4782,11 @@ async function handleUser(user){
         currentUser =
             null;
 
+
         $("adminPanel")
             .classList
             .remove("show");
+
 
         $("adminLoginBtn")
             .textContent =
@@ -2130,12 +4811,16 @@ async function login(){
             .value
             .trim();
 
+
     const password =
         $("loginPassword")
             .value;
 
 
-    if(!email || !password){
+    if(
+        !email ||
+        !password
+    ){
 
         showToast(
             "请输入邮箱和密码",
@@ -2143,6 +4828,7 @@ async function login(){
         );
 
         return;
+
     }
 
 
@@ -2155,6 +4841,7 @@ async function login(){
             .signInWithPassword({
 
                 email,
+
                 password
 
             });
@@ -2169,17 +4856,20 @@ async function login(){
         );
 
         return;
+
     }
 
 
     if(
         !data.user ||
-        data.user.id !== ADMIN_UID
+        data.user.id !==
+        ADMIN_UID
     ){
 
         await supabaseClient
             .auth
             .signOut();
+
 
         showToast(
             "该账号没有管理员权限",
@@ -2187,6 +4877,7 @@ async function login(){
         );
 
         return;
+
     }
 
 
@@ -2218,16 +4909,6 @@ async function logout(){
         null;
 
 
-    $("adminPanel")
-        .classList
-        .remove("show");
-
-
-    $("adminLoginBtn")
-        .textContent =
-        "管理员登录";
-
-
     renderWorks();
 
 
@@ -2239,7 +4920,7 @@ async function logout(){
 
 
 /* =========================================================
-   WORK FORM
+   RESET FORM
 ========================================================= */
 
 function resetWorkForm(){
@@ -2247,28 +4928,64 @@ function resetWorkForm(){
     editingWork =
         null;
 
-    selectedFile =
+    selectedRenderFile =
         null;
 
+    selectedModelFile =
+        null;
+
+    selectedBlendFile =
+        null;
+
+
     $("workForm").reset();
+
 
     $("workCategory").value =
         "角色";
 
-    $("workModalTitle").textContent =
+
+    $("workModalTitle")
+        .textContent =
         "上传作品";
 
-    $("saveWorkBtn").textContent =
+
+    $("saveWorkBtn")
+        .textContent =
         "保存作品";
 
-    $("preview").style.display =
+
+    $("renderPreview")
+        .style
+        .display =
         "none";
 
-    $("previewImg").src =
+
+    $("renderPreviewImg")
+        .src =
+        "";
+
+
+    $("renderFileName")
+        .textContent =
+        "";
+
+
+    $("modelFileName")
+        .textContent =
+        "";
+
+
+    $("blendFileName")
+        .textContent =
         "";
 
 }
 
+
+/* =========================================================
+   OPEN CREATE
+========================================================= */
 
 function openCreateWork(){
 
@@ -2279,6 +4996,7 @@ function openCreateWork(){
         );
 
         return;
+
     }
 
 
@@ -2292,55 +5010,97 @@ function openCreateWork(){
 }
 
 
-function openEditWork(work){
+/* =========================================================
+   EDIT
+========================================================= */
+
+function openEditWork(
+    work
+){
 
     if(!currentUser){
 
         return;
+
     }
 
 
     editingWork =
         work;
 
-    selectedFile =
+
+    selectedRenderFile =
+        null;
+
+    selectedModelFile =
+        null;
+
+    selectedBlendFile =
         null;
 
 
-    $("workModalTitle").textContent =
+    $("workModalTitle")
+        .textContent =
         "编辑作品";
 
 
-    $("saveWorkBtn").textContent =
+    $("saveWorkBtn")
+        .textContent =
         "保存修改";
 
 
-    $("workTitle").value =
-        work.title || "";
+    $("workTitle")
+        .value =
+        work.title ||
+        "";
 
 
-    $("workCategory").value =
-        work.category || "其他";
+    $("workCategory")
+        .value =
+        work.category ||
+        "其他";
 
 
-    $("workDescription").value =
-        work.description || "";
+    $("workDescription")
+        .value =
+        work.description ||
+        "";
 
 
     if(work.image_url){
 
-        $("preview").style.display =
+        $("renderPreview")
+            .style
+            .display =
             "block";
 
-        $("previewImg").src =
+
+        $("renderPreviewImg")
+            .src =
             work.image_url;
 
-    }else{
-
-        $("preview").style.display =
-            "none";
-
     }
+
+
+    $("renderFileName")
+        .textContent =
+        work.image_url
+            ? "当前已有渲染图"
+            : "";
+
+
+    $("modelFileName")
+        .textContent =
+        work.model_url
+            ? "当前已有 3D 模型，可选择新文件替换"
+            : "当前没有 3D 模型";
+
+
+    $("blendFileName")
+        .textContent =
+        work.blend_url
+            ? "当前已有 .blend 源文件，可选择新文件替换"
+            : "当前没有 .blend 源文件";
 
 
     openModal(
@@ -2351,18 +5111,25 @@ function openEditWork(work){
 
 
 /* =========================================================
-   FILE
+   FILE HANDLER
 ========================================================= */
 
-function handleSelectedFile(file){
+function handleRenderFile(
+    file
+){
 
     if(!file){
 
         return;
+
     }
 
 
-    if(!file.type.startsWith("image/")){
+    if(
+        !file.type.startsWith(
+            "image/"
+        )
+    ){
 
         showToast(
             "请选择图片文件",
@@ -2370,11 +5137,17 @@ function handleSelectedFile(file){
         );
 
         return;
+
     }
 
 
-    selectedFile =
+    selectedRenderFile =
         file;
+
+
+    $("renderFileName")
+        .textContent =
+        file.name;
 
 
     const reader =
@@ -2382,12 +5155,16 @@ function handleSelectedFile(file){
 
 
     reader.onload =
-        e => {
+        event => {
 
-            $("previewImg").src =
-                e.target.result;
+            $("renderPreviewImg")
+                .src =
+                event.target.result;
 
-            $("preview").style.display =
+
+            $("renderPreview")
+                .style
+                .display =
                 "block";
 
         };
@@ -2400,31 +5177,202 @@ function handleSelectedFile(file){
 }
 
 
+function handleModelFile(
+    file
+){
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    const name =
+        file.name
+            .toLowerCase();
+
+
+    if(
+        !name.endsWith(".glb") &&
+        !name.endsWith(".gltf")
+    ){
+
+        showToast(
+            "3D 模型必须是 .glb 或 .gltf",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedModelFile =
+        file;
+
+
+    $("modelFileName")
+        .textContent =
+        file.name;
+
+}
+
+
+function handleBlendFile(
+    file
+){
+
+    if(!file){
+
+        return;
+
+    }
+
+
+    if(
+        !file.name
+            .toLowerCase()
+            .endsWith(".blend")
+    ){
+
+        showToast(
+            "请选择 .blend 文件",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    selectedBlendFile =
+        file;
+
+
+    $("blendFileName")
+        .textContent =
+        file.name;
+
+}
+
+
 /* =========================================================
-   UPLOAD IMAGE
+   GENERIC DROP
 ========================================================= */
 
-async function uploadImage(file){
+function setupDropZone(
+    dropId,
+    inputId,
+    handler
+){
 
-    const ext =
-        (
-            file.name
-                .split(".")
-                .pop() ||
-            "jpg"
-        )
-        .toLowerCase();
+    const drop =
+        $(dropId);
+
+    const input =
+        $(inputId);
 
 
-    const safeExt =
-        ext.replace(
-            /[^a-z0-9]/g,
-            ""
-        ) || "jpg";
+    input.addEventListener(
+        "change",
+        event => {
+
+            handler(
+                event.target.files?.[0]
+            );
+
+        }
+    );
+
+
+    [
+        "dragenter",
+        "dragover"
+    ].forEach(
+        eventName => {
+
+            drop.addEventListener(
+                eventName,
+                event => {
+
+                    event.preventDefault();
+
+                    drop.classList.add(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    [
+        "dragleave",
+        "drop"
+    ].forEach(
+        eventName => {
+
+            drop.addEventListener(
+                eventName,
+                event => {
+
+                    event.preventDefault();
+
+                    drop.classList.remove(
+                        "dragover"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    drop.addEventListener(
+        "drop",
+        event => {
+
+            handler(
+                event.dataTransfer
+                    .files?.[0]
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPLOAD FILE
+========================================================= */
+
+async function uploadFile(
+    file,
+    folder
+){
+
+    if(!file){
+
+        return null;
+
+    }
+
+
+    const originalName =
+        file.name
+            .replace(
+                /[^a-zA-Z0-9._-]/g,
+                "_"
+            );
 
 
     const filePath =
-        `${Date.now()}-${crypto.randomUUID()}.${safeExt}`;
+        `${folder}/${Date.now()}-${crypto.randomUUID()}-${originalName}`;
 
 
     const {
@@ -2437,9 +5385,17 @@ async function uploadImage(file){
                 filePath,
                 file,
                 {
-                    cacheControl:"3600",
-                    upsert:false,
-                    contentType:file.type
+
+                    cacheControl:
+                        "3600",
+
+                    upsert:
+                        false,
+
+                    contentType:
+                        file.type ||
+                        "application/octet-stream"
+
                 }
             );
 
@@ -2471,7 +5427,9 @@ async function uploadImage(file){
    SAVE WORK
 ========================================================= */
 
-async function saveWork(event){
+async function saveWork(
+    event
+){
 
     event.preventDefault();
 
@@ -2484,6 +5442,7 @@ async function saveWork(event){
         );
 
         return;
+
     }
 
 
@@ -2512,18 +5471,38 @@ async function saveWork(event){
         );
 
         return;
+
     }
 
 
-    const saveBtn =
+    /*
+        新作品必须有 Render
+    */
+
+    if(
+        !editingWork &&
+        !selectedRenderFile
+    ){
+
+        showToast(
+            "请上传最终渲染图",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const saveButton =
         $("saveWorkBtn");
 
 
-    saveBtn.disabled =
+    saveButton.disabled =
         true;
 
 
-    saveBtn.textContent =
+    saveButton.textContent =
         editingWork
             ? "保存中…"
             : "上传中…";
@@ -2536,11 +5515,56 @@ async function saveWork(event){
             "";
 
 
-        if(selectedFile){
+        let modelUrl =
+            editingWork?.model_url ||
+            "";
+
+
+        let blendUrl =
+            editingWork?.blend_url ||
+            "";
+
+
+        /*
+            Render
+        */
+
+        if(selectedRenderFile){
 
             imageUrl =
-                await uploadImage(
-                    selectedFile
+                await uploadFile(
+                    selectedRenderFile,
+                    "renders"
+                );
+
+        }
+
+
+        /*
+            GLB
+        */
+
+        if(selectedModelFile){
+
+            modelUrl =
+                await uploadFile(
+                    selectedModelFile,
+                    "models"
+                );
+
+        }
+
+
+        /*
+            BLEND
+        */
+
+        if(selectedBlendFile){
+
+            blendUrl =
+                await uploadFile(
+                    selectedBlendFile,
+                    "blend"
                 );
 
         }
@@ -2549,7 +5573,7 @@ async function saveWork(event){
         if(!imageUrl){
 
             throw new Error(
-                "请上传作品图片"
+                "没有找到渲染图"
             );
 
         }
@@ -2563,7 +5587,14 @@ async function saveWork(event){
 
             description,
 
-            image_url:imageUrl
+            image_url:
+                imageUrl,
+
+            model_url:
+                modelUrl || null,
+
+            blend_url:
+                blendUrl || null
 
         };
 
@@ -2575,7 +5606,9 @@ async function saveWork(event){
             } =
                 await supabaseClient
                     .from("works")
-                    .update(payload)
+                    .update(
+                        payload
+                    )
                     .eq(
                         "id",
                         editingWork.id
@@ -2634,7 +5667,10 @@ async function saveWork(event){
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         showToast(
             "保存失败：" +
@@ -2644,10 +5680,11 @@ async function saveWork(event){
 
     }finally{
 
-        saveBtn.disabled =
+        saveButton.disabled =
             false;
 
-        saveBtn.textContent =
+
+        saveButton.textContent =
             editingWork
                 ? "保存修改"
                 : "保存作品";
@@ -2661,18 +5698,21 @@ async function saveWork(event){
    DELETE
 ========================================================= */
 
-async function deleteWork(id){
+async function deleteWork(
+    id
+){
 
     if(!currentUser){
 
         return;
+
     }
 
 
     const work =
         allWorks.find(
-            w =>
-                String(w.id) ===
+            item =>
+                String(item.id) ===
                 String(id)
         );
 
@@ -2680,18 +5720,20 @@ async function deleteWork(id){
     if(!work){
 
         return;
+
     }
 
 
-    const ok =
+    const confirmed =
         confirm(
-            `确定删除作品「${work.title || "未命名作品"}」吗？`
+            `确定删除「${work.title || "未命名作品"}」吗？`
         );
 
 
-    if(!ok){
+    if(!confirmed){
 
         return;
+
     }
 
 
@@ -2716,6 +5758,7 @@ async function deleteWork(id){
         );
 
         return;
+
     }
 
 
@@ -2734,7 +5777,8 @@ async function deleteWork(id){
    IMAGE VIEWER
 ========================================================= */
 
-function openImageViewer(id){
+window.openImageViewer =
+function(id){
 
     viewerWorks =
         getVisibleWorks();
@@ -2742,8 +5786,8 @@ function openImageViewer(id){
 
     const index =
         viewerWorks.findIndex(
-            w =>
-                String(w.id) ===
+            work =>
+                String(work.id) ===
                 String(id)
         );
 
@@ -2751,6 +5795,7 @@ function openImageViewer(id){
     if(index < 0){
 
         return;
+
     }
 
 
@@ -2758,7 +5803,7 @@ function openImageViewer(id){
         index;
 
 
-    updateViewer();
+    updateImageViewer();
 
 
     $("viewer")
@@ -2769,10 +5814,10 @@ function openImageViewer(id){
     document.body.style.overflow =
         "hidden";
 
-}
+};
 
 
-function closeViewer(){
+function closeImageViewer(){
 
     $("viewer")
         .classList
@@ -2785,11 +5830,12 @@ function closeViewer(){
 }
 
 
-function updateViewer(){
+function updateImageViewer(){
 
     if(!viewerWorks.length){
 
         return;
+
     }
 
 
@@ -2799,42 +5845,34 @@ function updateViewer(){
         ];
 
 
-    $("viewerImage").src =
-        work.image_url || "";
+    $("viewerImage")
+        .src =
+        work.image_url ||
+        "";
 
 
-    $("viewerImage").alt =
-        work.title || "";
-
-
-    $("viewerTitle").textContent =
+    $("viewerTitle")
+        .textContent =
         work.title ||
         "未命名作品";
 
 
-    $("viewerMeta").textContent =
+    $("viewerMeta")
+        .textContent =
         `${work.category || "其他"} · ${viewerIndex + 1} / ${viewerWorks.length}`;
-
-
-    $("viewerPrev").style.display =
-        viewerWorks.length > 1
-            ? "block"
-            : "none";
-
-
-    $("viewerNext").style.display =
-        viewerWorks.length > 1
-            ? "block"
-            : "none";
 
 }
 
 
 function viewerPrev(){
 
-    if(viewerWorks.length < 2){
+    if(
+        viewerWorks.length <
+        2
+    ){
 
         return;
+
     }
 
 
@@ -2847,16 +5885,20 @@ function viewerPrev(){
         viewerWorks.length;
 
 
-    updateViewer();
+    updateImageViewer();
 
 }
 
 
 function viewerNext(){
 
-    if(viewerWorks.length < 2){
+    if(
+        viewerWorks.length <
+        2
+    ){
 
         return;
+
     }
 
 
@@ -2868,18 +5910,21 @@ function viewerNext(){
         viewerWorks.length;
 
 
-    updateViewer();
+    updateImageViewer();
 
 }
 
 
 /* =========================================================
-   EVENTS
+   INIT EVENTS
 ========================================================= */
 
 function initEvents(){
 
-    /* 管理员登录 */
+
+    /*
+        Login
+    */
 
     $("adminLoginBtn")
         .addEventListener(
@@ -2889,7 +5934,9 @@ function initEvents(){
                 if(currentUser){
 
                     document
-                        .querySelector("#works")
+                        .querySelector(
+                            "#works"
+                        )
                         .scrollIntoView({
                             behavior:"smooth"
                         });
@@ -2906,14 +5953,12 @@ function initEvents(){
         );
 
 
-    /* 登录 */
-
     $("loginForm")
         .addEventListener(
             "submit",
-            e => {
+            event => {
 
-                e.preventDefault();
+                event.preventDefault();
 
                 login();
 
@@ -2921,7 +5966,9 @@ function initEvents(){
         );
 
 
-    /* 登出 */
+    /*
+        Logout
+    */
 
     $("logoutBtn")
         .addEventListener(
@@ -2930,7 +5977,9 @@ function initEvents(){
         );
 
 
-    /* 新建作品 */
+    /*
+        Add work
+    */
 
     $("addWorkBtn")
         .addEventListener(
@@ -2939,7 +5988,9 @@ function initEvents(){
         );
 
 
-    /* 保存作品 */
+    /*
+        Save work
+    */
 
     $("workForm")
         .addEventListener(
@@ -2948,98 +5999,48 @@ function initEvents(){
         );
 
 
-    /* 文件选择 */
+    /*
+        Upload fields
+    */
 
-    $("workFile")
-        .addEventListener(
-            "change",
-            e => {
-
-                handleSelectedFile(
-                    e.target.files?.[0]
-                );
-
-            }
-        );
-
-
-    /* 文件拖拽 */
-
-    const drop =
-        $("fileDrop");
-
-
-    [
-        "dragenter",
-        "dragover"
-    ].forEach(
-        type => {
-
-            drop.addEventListener(
-                type,
-                e => {
-
-                    e.preventDefault();
-
-                    drop.classList.add(
-                        "dragover"
-                    );
-
-                }
-            );
-
-        }
+    setupDropZone(
+        "renderDrop",
+        "renderFile",
+        handleRenderFile
     );
 
 
-    [
-        "dragleave",
-        "drop"
-    ].forEach(
-        type => {
-
-            drop.addEventListener(
-                type,
-                e => {
-
-                    e.preventDefault();
-
-                    drop.classList.remove(
-                        "dragover"
-                    );
-
-                }
-            );
-
-        }
+    setupDropZone(
+        "modelDrop",
+        "modelFile",
+        handleModelFile
     );
 
 
-    drop.addEventListener(
-        "drop",
-        e => {
-
-            handleSelectedFile(
-                e.dataTransfer.files?.[0]
-            );
-
-        }
+    setupDropZone(
+        "blendDrop",
+        "blendFile",
+        handleBlendFile
     );
 
 
-    /* 分类 */
+    /*
+        Filters
+    */
 
     document
-        .querySelectorAll(".filter-btn")
+        .querySelectorAll(
+            ".filter-btn"
+        )
         .forEach(
-            btn => {
+            button => {
 
-                btn.addEventListener(
+                button.addEventListener(
                     "click",
                     ()=>{
 
                         currentCategory =
-                            btn.dataset.category;
+                            button.dataset.category;
 
                         updateFilters();
 
@@ -3052,80 +6053,130 @@ function initEvents(){
         );
 
 
-    /* 编辑 / 删除 */
+    /*
+        Gallery actions
+    */
 
     $("gallery")
         .addEventListener(
             "click",
-            e => {
+            event => {
 
-                const btn =
-                    e.target.closest(
+
+                /*
+                    Edit / Delete
+                */
+
+                const actionButton =
+                    event.target.closest(
                         "[data-action]"
                     );
 
 
-                if(!btn){
+                if(actionButton){
+
+                    const id =
+                        actionButton.dataset.id;
+
+
+                    const work =
+                        allWorks.find(
+                            item =>
+                                String(
+                                    item.id
+                                ) ===
+                                String(id)
+                        );
+
+
+                    if(
+                        actionButton.dataset.action ===
+                        "edit"
+                    ){
+
+                        if(work){
+
+                            openEditWork(
+                                work
+                            );
+
+                        }
+
+                    }
+
+
+                    if(
+                        actionButton.dataset.action ===
+                        "delete"
+                    ){
+
+                        deleteWork(
+                            id
+                        );
+
+                    }
+
 
                     return;
-                }
-
-
-                const id =
-                    btn.dataset.id;
-
-
-                const work =
-                    allWorks.find(
-                        w =>
-                            String(w.id) ===
-                            String(id)
-                    );
-
-
-                if(
-                    btn.dataset.action ===
-                    "edit" &&
-                    work
-                ){
-
-                    openEditWork(
-                        work
-                    );
 
                 }
 
 
-                if(
-                    btn.dataset.action ===
-                    "delete"
-                ){
+                /*
+                    3D model button
+                */
 
-                    deleteWork(
-                        id
+                const modelButton =
+                    event.target.closest(
+                        "[data-open-model]"
                     );
 
+
+                if(modelButton){
+
+                    const id =
+                        modelButton.dataset.openModel;
+
+
+                    const modelElement =
+                        document.querySelector(
+                            `.model-side[data-work-id="${id}"]`
+                        );
+
+
+                    if(modelElement){
+
+                        modelElement.scrollIntoView({
+                            behavior:"smooth",
+                            block:"center"
+                        });
+
+                    }
+
                 }
+
 
             }
         );
 
 
-    /* Modal 关闭 */
+    /*
+        Close buttons
+    */
 
     document
         .querySelectorAll(
             "[data-close]"
         )
         .forEach(
-            btn => {
+            button => {
 
-                btn.addEventListener(
+                button.addEventListener(
                     "click",
                     ()=>{
 
                         closeModal(
-                            btn.dataset.close
+                            button.dataset.close
                         );
 
                     }
@@ -3135,7 +6186,9 @@ function initEvents(){
         );
 
 
-    /* 点击遮罩关闭 */
+    /*
+        Click modal backdrop
+    */
 
     document
         .querySelectorAll(
@@ -3146,10 +6199,10 @@ function initEvents(){
 
                 modal.addEventListener(
                     "click",
-                    e => {
+                    event => {
 
                         if(
-                            e.target ===
+                            event.target ===
                             modal
                         ){
 
@@ -3166,12 +6219,14 @@ function initEvents(){
         );
 
 
-    /* Viewer */
+    /*
+        Image viewer
+    */
 
     $("viewerClose")
         .addEventListener(
             "click",
-            closeViewer
+            closeImageViewer
         );
 
 
@@ -3192,16 +6247,14 @@ function initEvents(){
     $("viewer")
         .addEventListener(
             "click",
-            e => {
+            event => {
 
                 if(
-                    e.target ===
-                    $("viewer") ||
-                    e.target ===
-                    $("viewerImageWrap")
+                    event.target ===
+                    $("viewer")
                 ){
 
-                    closeViewer();
+                    closeImageViewer();
 
                 }
 
@@ -3209,11 +6262,14 @@ function initEvents(){
         );
 
 
-    /* 键盘 */
+    /*
+        Keyboard
+    */
 
     document.addEventListener(
         "keydown",
-        e => {
+        event => {
+
 
             if(
                 $("viewer")
@@ -3222,17 +6278,17 @@ function initEvents(){
             ){
 
                 if(
-                    e.key ===
+                    event.key ===
                     "Escape"
                 ){
 
-                    closeViewer();
+                    closeImageViewer();
 
                 }
 
 
                 if(
-                    e.key ===
+                    event.key ===
                     "ArrowLeft"
                 ){
 
@@ -3242,7 +6298,7 @@ function initEvents(){
 
 
                 if(
-                    e.key ===
+                    event.key ===
                     "ArrowRight"
                 ){
 
@@ -3252,11 +6308,12 @@ function initEvents(){
 
 
                 return;
+
             }
 
 
             if(
-                e.key ===
+                event.key ===
                 "Escape"
             ){
 
@@ -3274,7 +6331,9 @@ function initEvents(){
     );
 
 
-    /* 手机触摸滑动 */
+    /*
+        Mobile swipe
+    */
 
     let touchStartX =
         0;
@@ -3286,13 +6345,15 @@ function initEvents(){
     $("viewerImageWrap")
         .addEventListener(
             "touchstart",
-            e => {
+            event => {
 
                 const touch =
-                    e.changedTouches[0];
+                    event.changedTouches[0];
+
 
                 touchStartX =
                     touch.clientX;
+
 
                 touchStartY =
                     touch.clientY;
@@ -3307,14 +6368,16 @@ function initEvents(){
     $("viewerImageWrap")
         .addEventListener(
             "touchend",
-            e => {
+            event => {
 
                 const touch =
-                    e.changedTouches[0];
+                    event.changedTouches[0];
+
 
                 const dx =
                     touch.clientX -
                     touchStartX;
+
 
                 const dy =
                     touch.clientY -
@@ -3322,7 +6385,8 @@ function initEvents(){
 
 
                 if(
-                    Math.abs(dx) > 50 &&
+                    Math.abs(dx) >
+                    50 &&
                     Math.abs(dx) >
                     Math.abs(dy)
                 ){
@@ -3345,6 +6409,7 @@ function initEvents(){
             }
         );
 
+
 }
 
 
@@ -3356,7 +6421,9 @@ async function init(){
 
     try{
 
-        if(!window.supabase){
+        if(
+            !window.supabase
+        ){
 
             throw new Error(
                 "Supabase SDK 加载失败"
@@ -3366,10 +6433,11 @@ async function init(){
 
 
         supabaseClient =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_PUBLISHABLE_KEY
-            );
+            window.supabase
+                .createClient(
+                    SUPABASE_URL,
+                    SUPABASE_PUBLISHABLE_KEY
+                );
 
 
         initEvents();
@@ -3383,7 +6451,9 @@ async function init(){
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
 
         setConnection(
@@ -3392,11 +6462,13 @@ async function init(){
         );
 
 
-        $("galleryState").className =
+        $("galleryState")
+            .className =
             "state error";
 
 
-        $("galleryState").textContent =
+        $("galleryState")
+            .textContent =
             "网站初始化失败：" +
             error.message;
 
@@ -3410,4 +6482,5 @@ init();
 </script>
 
 </body>
+
 </html>
