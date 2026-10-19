@@ -1,500 +1,388 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- 首次启用后台主页内容编辑：请执行随附的 site_content_setup.sql。作品表 works 与 portfolio-images 桶保持原样。 -->
+<!-- 首次启用后台主页内容编辑：请执行 site_content_setup.sql。works 表与 portfolio-images 桶保持原样。 -->
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10110f">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
 <title>WFL — 3D Game Art Portfolio</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap');
-:root{--bg:#101010;--panel:#171717;--panel2:#20201f;--line:#363432;--text:#eeeae4;--muted:#a19b93;--accent:#B8F3D0;--orange:#8FDDB6;--mono:'DM Mono',monospace;--sans:'Noto Sans SC',sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E")}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.wrap{width:min(1420px,calc(100% - 64px));margin:auto;position:relative;z-index:1}.mono{font-family:var(--mono);letter-spacing:.08em}.eyebrow{font:11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";width:22px;height:1px;background:var(--accent)}.topbar{height:76px;position:sticky;top:0;z-index:50;background:#10110fe8;backdrop-filter:blur(18px);border-bottom:1px solid #ffffff12}.topbar-inner{height:100%;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:13px;font:500 13px var(--mono);letter-spacing:.12em}.brand-mark{width:34px;height:34px;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:500;transform:rotate(-8deg)}.brand small{display:block;color:var(--muted);font-size:9px;margin-top:4px;letter-spacing:.16em}.nav{display:flex;align-items:center;gap:30px;color:#c5c5bb;font:11px var(--mono);letter-spacing:.1em}.nav a{transition:color .2s}.nav a:hover{color:var(--accent)}.nav button{border:1px solid #ffffff2a;background:transparent;color:var(--text);padding:10px 14px;font:10px var(--mono);letter-spacing:.1em}.nav button:hover{background:var(--accent);color:#111;border-color:var(--accent)}.hero{padding:75px 0 60px;position:relative;overflow:hidden}.hero:after{content:"WFL";position:absolute;right:-1vw;top:20px;font:900 clamp(180px,29vw,440px)/.9 var(--sans);letter-spacing:-.1em;color:#ffffff04;pointer-events:none}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:5vw;align-items:center;position:relative;z-index:1}.hero-copy{padding:25px 0}.hero h1{font-size:clamp(48px,7.2vw,105px);line-height:.98;letter-spacing:-.075em;font-weight:600;margin:30px 0 24px}.hero h1 span{color:var(--accent);display:block}.hero-lead{max-width:520px;color:#b5b6ac;font-size:15px;line-height:2;letter-spacing:.02em}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{border:1px solid var(--line);background:transparent;color:var(--text);padding:13px 17px;font-size:12px;transition:.25s}.btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}.btn.primary{background:var(--accent);border-color:var(--accent);color:#151610;font-weight:600}.btn.primary:hover{background:#e3ff9a}.hero-art{min-height:430px;position:relative;border:1px solid #ffffff1c;background:radial-gradient(ellipse at 60% 40%,#4d5438 0,#25271f 30%,#161713 65%);overflow:hidden;display:flex;align-items:center;justify-content:center}.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #B8F3D030;border-radius:50%;width:72%;aspect-ratio:1;animation:orbit 30s linear infinite}.hero-art:after{width:95%;animation-direction:reverse;animation-duration:45s}.art-grid{position:absolute;inset:0;background-image:linear-gradient(#ffffff0b 1px,transparent 1px),linear-gradient(90deg,#ffffff0b 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(transparent,#000,transparent)}.art-core{width:44%;aspect-ratio:1;border:1px solid #B8F3D088;display:grid;place-items:center;transform:rotate(45deg);box-shadow:0 0 80px #B8F3D015,inset 0 0 50px #B8F3D010;animation:float 6s ease-in-out infinite}.art-core span{font:900 clamp(44px,8vw,90px) var(--sans);color:var(--accent);transform:rotate(-45deg);letter-spacing:-.12em}.art-note{position:absolute;font:10px var(--mono);letter-spacing:.12em;color:#c8c9bd}.art-note.tl{top:20px;left:20px}.art-note.br{bottom:20px;right:20px;text-align:right}.hero-meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:54px;padding-top:22px;gap:20px}.metric strong{font:500 25px var(--mono);display:block;color:var(--text)}.metric span{display:block;font-size:11px;color:var(--muted);margin-top:7px}.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:13px 0;color:#7e8075;font:10px var(--mono);letter-spacing:.17em;white-space:nowrap}.ticker-track{display:flex;gap:36px;width:max-content;animation:marquee 32s linear infinite}.ticker b{color:var(--accent);font-weight:400}.section{padding:100px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:32px}.section-kicker{font:10px var(--mono);letter-spacing:.15em;color:var(--muted);margin-bottom:13px}.section h2{font-size:clamp(32px,4.4vw,58px);font-weight:500;letter-spacing:-.06em;margin:0;line-height:1.1}.section h2 em{font-style:normal;color:var(--accent)}.section-intro{max-width:420px;color:var(--muted);font-size:12px;line-height:1.9}.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin:30px 0}.filter{background:transparent;border:1px solid var(--line);color:#aeb0a5;padding:9px 15px;font-size:11px;transition:.2s}.filter.active,.filter:hover{background:var(--accent);border-color:var(--accent);color:#171811}.gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.work-card{grid-column:span 4;min-width:0;cursor:pointer;animation:rise .7s both;animation-delay:calc(var(--i,0)*70ms)}.work-card:nth-child(5n+1){grid-column:span 7}.work-card:nth-child(5n+1) .work-image{aspect-ratio:1.42}.work-card:nth-child(5n+2){grid-column:span 5}.work-card:nth-child(5n+2) .work-image{aspect-ratio:1.42}.work-image{position:relative;aspect-ratio:1.16;background:#20211c;overflow:hidden;border:1px solid #ffffff10}.work-image img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s}.work-card:hover .work-image img{transform:scale(1.045);filter:brightness(.78)}.work-image:after{content:"↗";position:absolute;right:14px;top:14px;width:36px;height:36px;display:grid;place-items:center;background:var(--accent);color:#171811;font-size:19px;opacity:0;transform:translate(-5px,5px);transition:.25s}.work-card:hover .work-image:after{opacity:1;transform:none}.work-index{position:absolute;left:14px;bottom:14px;font:10px var(--mono);color:#fff;background:#10110fbf;padding:7px 9px;z-index:1}.work-info{display:grid;grid-template-columns:1fr auto;gap:8px;padding:16px 2px 20px;border-bottom:1px solid var(--line)}.work-category{font:9px var(--mono);letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:7px}.work-title{font-size:17px;font-weight:500;letter-spacing:-.03em}.work-description{font-size:11px;color:var(--muted);line-height:1.7;margin-top:7px;max-width:430px}.work-arrow{color:#77796f;font-size:20px;align-self:center}.empty{grid-column:1/-1;border:1px dashed var(--line);padding:65px 20px;text-align:center;color:var(--muted);font-size:13px;line-height:2}.empty b{display:block;font:12px var(--mono);color:var(--accent);margin-bottom:8px}.about-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:8vw}.about-sticky{align-self:start;position:sticky;top:115px}.about-sticky .big-mark{font-size:clamp(75px,12vw,160px);font-weight:900;letter-spacing:-.12em;line-height:.9;color:var(--accent);margin:28px 0}.about-sticky p{color:var(--muted);font-size:12px;line-height:2;max-width:300px}.about-content .manifesto{font-size:clamp(24px,3vw,40px);line-height:1.55;letter-spacing:-.045em;font-weight:400;margin:0 0 45px}.manifesto mark{background:transparent;color:var(--accent)}.about-text{color:#b5b6ac;font-size:13px;line-height:2.2;max-width:650px}.editable-hint{font:10px var(--mono);color:#77796f;margin-top:16px}.timeline{margin-top:48px;border-top:1px solid var(--line)}.timeline-item{display:grid;grid-template-columns:115px 1fr;gap:25px;padding:22px 0;border-bottom:1px solid var(--line)}.timeline-date{font:10px var(--mono);color:var(--accent);padding-top:4px}.timeline-item h3{font-size:14px;font-weight:500;margin:0 0 7px}.timeline-item p{font-size:11px;line-height:1.9;color:var(--muted);margin:0}.skills-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}.skill-panel{border:1px solid var(--line);padding:28px;background:var(--panel)}.skill-panel h3{font-size:14px;font-weight:500;margin:0 0 22px}.skill-row{margin:18px 0}.skill-label{display:flex;justify-content:space-between;font-size:11px;color:#c5c6bc;margin-bottom:9px}.skill-label span:last-child{font:10px var(--mono);color:var(--muted)}.skill-track{height:3px;background:#34352e}.skill-fill{height:100%;width:var(--level);background:var(--accent);transform-origin:left;animation:barIn 1.3s ease both}.tags{display:flex;flex-wrap:wrap;gap:8px}.tag{border:1px solid var(--line);padding:9px 11px;color:#bfc0b5;font-size:11px}.process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.process-card{background:var(--bg);padding:28px;min-height:190px;transition:background .25s}.process-card:hover{background:var(--panel)}.process-no{font:11px var(--mono);color:var(--accent)}.process-card h3{font-size:17px;font-weight:500;margin:28px 0 10px}.process-card p{font-size:11px;color:var(--muted);line-height:1.9;margin:0}.contact{padding:70px 0 90px}.contact-box{border:1px solid #4c503d;background:linear-gradient(115deg,#1c1e17,#141510);padding:clamp(28px,6vw,75px);position:relative;overflow:hidden}.contact-box:after{content:"LET'S MAKE";position:absolute;right:-20px;bottom:-30px;font:900 clamp(60px,13vw,170px)/1 var(--sans);letter-spacing:-.08em;color:#ffffff05;pointer-events:none}.contact-box h2{font-size:clamp(35px,6vw,76px);letter-spacing:-.07em;line-height:1.08;margin:20px 0}.contact-box h2 span{color:var(--accent)}.contact-box p{color:var(--muted);font-size:12px;line-height:2;max-width:480px}.contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.footer{border-top:1px solid var(--line);padding:22px 0 30px;color:#77796f;font:10px var(--mono);letter-spacing:.07em}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.modal-backdrop{display:none;position:fixed;inset:0;z-index:100;background:#050605e8;backdrop-filter:blur(16px);padding:20px;overflow:auto}.modal-backdrop.show{display:grid;place-items:center}.modal{width:min(1100px,100%);background:#141510;border:1px solid #ffffff20;position:relative;max-height:94vh;overflow:auto}.modal-close{position:absolute;right:14px;top:14px;z-index:5;width:38px;height:38px;border:1px solid #ffffff30;background:#111;color:#fff;font-size:20px}.detail-grid{display:grid;grid-template-columns:1.25fr .75fr;min-height:550px}.detail-view{min-height:450px;background:radial-gradient(ellipse,#282a22,#0c0d0b);position:relative;display:grid;place-items:center;overflow:hidden}.detail-view img{max-height:70vh;width:100%;height:100%;object-fit:contain;padding:25px}.model-canvas{position:absolute;inset:0;width:100%;height:100%;display:none}.viewer-tools{position:absolute;left:16px;bottom:16px;display:flex;gap:7px;z-index:3}.viewer-tools button{background:#10110fd9;color:#ddd;border:1px solid #ffffff2a;padding:8px 10px;font-size:10px}.detail-info{padding:45px 30px;align-self:center}.detail-info .work-category{margin-bottom:14px}.detail-info h2{font-size:clamp(25px,4vw,42px);font-weight:500;letter-spacing:-.05em;margin:0 0 20px}.detail-info p{font-size:12px;color:var(--muted);line-height:2.1;white-space:pre-wrap}.detail-meta{border-top:1px solid var(--line);margin-top:28px;padding-top:16px;font:10px var(--mono);color:#77796f}.login-box{width:min(430px,100%);padding:34px}.login-box h2{font-size:27px;margin:0 0 8px}.login-box p{color:var(--muted);font-size:12px;line-height:1.8;margin:0 0 24px}.form-group{margin:16px 0}.form-group label{display:block;font-size:11px;color:#bfc0b5;margin-bottom:8px}.field{width:100%;background:#0e0f0c;border:1px solid var(--line);padding:12px;color:var(--text);font-size:12px}.field:focus{border-color:var(--accent);outline:none}.form-actions{display:flex;gap:10px;margin-top:22px}.admin-modal{display:none;position:fixed;inset:0;z-index:120;background:#050605ed;backdrop-filter:blur(15px);overflow:auto;padding:22px}.admin-modal.show{display:block}.admin-panel{max-width:1100px;margin:20px auto;background:#141510;border:1px solid #ffffff20}.admin-head{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:20px 24px;border-bottom:1px solid var(--line)}.admin-head h2{font-size:18px;margin:0}.admin-head small{display:block;color:var(--muted);font-size:10px;margin-top:6px}.admin-body{padding:25px}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}.file-box{border:1px dashed #4a4b41;padding:15px;margin-top:10px}.file-box strong{font-size:12px}.file-box p,.file-status{font-size:10px;color:var(--muted);line-height:1.8;overflow-wrap:anywhere}.admin-list{margin-top:34px}.admin-work-row{display:grid;grid-template-columns:65px 1fr auto;gap:14px;align-items:center;border-top:1px solid var(--line);padding:12px 0}.admin-work-thumb{width:65px;height:52px;object-fit:cover;background:#222}.admin-work-name{font-size:12px}.admin-work-category{font-size:10px;color:var(--muted);margin-top:5px}.admin-work-actions{display:flex;gap:6px}.admin-work-actions button{padding:8px 10px;font-size:10px}.toast{position:fixed;z-index:200;bottom:25px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#20221a;border:1px solid #555844;color:#fff;padding:12px 18px;font-size:12px;transition:.25s;max-width:calc(100% - 30px)}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{border-color:var(--orange)}.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s,transform .8s}.reveal.visible{opacity:1;transform:none}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}@keyframes marquee{to{transform:translateX(-50%)}}@keyframes rise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(max-width:850px){.wrap{width:calc(100% - 34px)}.nav{gap:13px}.nav a{display:none}.hero{padding-top:40px}.hero-grid{grid-template-columns:1fr}.hero-art{min-height:300px}.hero h1{font-size:clamp(54px,13vw,90px)}.hero-meta{margin-top:35px}.section{padding:70px 0}.section-head{align-items:start;flex-direction:column}.about-layout{grid-template-columns:1fr;gap:30px}.about-sticky{position:static}.about-sticky .big-mark{font-size:90px;margin:15px 0}.skills-layout{grid-template-columns:1fr}.process-grid{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}.detail-view{min-height:45vh}.detail-info{padding:28px}.work-card,.work-card:nth-child(n){grid-column:span 6}.work-card:nth-child(n) .work-image{aspect-ratio:1.05}.admin-grid{grid-template-columns:1fr}}
-@media(max-width:520px){.wrap{width:calc(100% - 28px)}.topbar{height:65px}.brand{font-size:11px}.nav button{padding:9px}.hero-meta{gap:12px}.metric strong{font-size:20px}.metric span{font-size:10px}.work-card,.work-card:nth-child(n){grid-column:1/-1}.work-card:nth-child(n) .work-image{aspect-ratio:1.25}.timeline-item{grid-template-columns:80px 1fr;gap:12px}.admin-modal{padding:8px}.admin-head{padding:15px;align-items:flex-start}.admin-head>div:last-child{display:flex;flex-direction:column}.admin-body{padding:15px}.admin-work-row{grid-template-columns:50px 1fr}.admin-work-thumb{width:50px;height:45px}.admin-work-actions{grid-column:2}.footer-inner{flex-direction:column}.hero-art{min-height:260px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
-
-/* ================= WFL EDITORIAL / ARC GALLERY REDESIGN ================= */
-:root{--bg:#0a0a0a;--panel:#111;--panel2:#171717;--line:#30302e;--text:#f2f2f0;--muted:#888;--accent:#B8F3D0;--orange:#ff794f;--mono:'DM Mono',monospace;--sans:'Noto Sans SC',Inter,sans-serif}
-html{scroll-behavior:smooth;scroll-padding-top:70px}body{background:#0a0a0a;color:#f2f2f0;font-family:var(--sans)}body:before{opacity:.06}.wrap{width:min(1540px,calc(100% - 9vw))}.topbar{height:66px;background:#0a0a0ae8;border-bottom:1px solid #ffffff18}.brand-mark{border-color:#B8F3D0;color:#B8F3D0;transform:none}.brand{font-size:11px}.nav{gap:clamp(12px,2.2vw,32px);font-size:10px}.nav a:hover{color:#B8F3D0}.nav button{border-color:#B8F3D04d}.nav button:hover{background:#B8F3D0;color:#0a0a0a;border-color:#B8F3D0}.hero{padding:clamp(55px,8vw,120px) 0 60px;min-height:calc(100vh - 66px);display:flex;align-items:center}.hero:after{font-family:Impact,'Arial Narrow',sans-serif;color:#ffffff04;right:-.04em;top:5%;letter-spacing:-.08em}.hero-grid{grid-template-columns:1.08fr .92fr;gap:5vw}.eyebrow,.section-kicker{font:10px var(--mono);letter-spacing:.16em;color:#888}.eyebrow:before{background:#B8F3D0}.hero h1{font-family:Impact,'Arial Narrow',var(--sans);font-size:clamp(66px,10vw,154px);font-weight:900;letter-spacing:-.045em;line-height:.82;margin:35px 0 28px;text-transform:uppercase}.hero h1 span{color:#B8F3D0}.hero-lead{font-size:14px;color:#a4a4a0;max-width:470px;line-height:2}.btn{border-color:#3a3a38;color:#f2f2f0}.btn:hover{border-color:#B8F3D0;color:#B8F3D0}.btn.primary{background:#B8F3D0;border-color:#B8F3D0;color:#0a0a0a}.btn.primary:hover{background:#a3e8d0}.hero-art{min-height:clamp(320px,42vw,620px);border:1px solid #ffffff1b;background:radial-gradient(ellipse at 50% 45%,#252e2b 0,#111 45%,#090909 75%)}.hero-art:before,.hero-art:after{border-color:#B8F3D026}.art-core{border-color:#B8F3D08a;box-shadow:0 0 80px #B8F3D012,inset 0 0 50px #B8F3D010}.art-core span{color:#B8F3D0}.hero-meta{border-color:#343432}.metric strong{font-size:22px}.ticker{border-color:#ffffff20;color:#777;padding:12px 0}.ticker b{color:#B8F3D0}.section{padding:clamp(76px,10vw,145px) 0}.section-head{align-items:end;margin-bottom:40px}.section h2{font-family:Impact,'Arial Narrow',var(--sans);font-size:clamp(48px,7vw,100px);font-weight:900;letter-spacing:-.025em;line-height:.88;text-transform:uppercase}.section h2 em{color:#B8F3D0}.section-intro{font-size:12px;max-width:360px;color:#888;line-height:2}.arc-masthead{display:flex;justify-content:space-between;padding:0 0 18px;border-bottom:1px solid #ffffff28;font:10px var(--mono);letter-spacing:.13em;color:#777;margin-bottom:24px}.arc-section{padding:clamp(28px,4vh,46px) 0 70px;overflow:hidden;min-height:calc(100svh - 66px);background:#0a0a0a}.arc-section .section-head{margin-bottom:22px}.arc-section .section-head h2{font-size:clamp(54px,8.2vw,118px)}.arc-section .section-intro{max-width:480px}.arc-section .section-head h2{font-size:clamp(58px,8.5vw,120px)}.filter-row{margin:22px 0 30px;gap:7px}.filter{font-size:10px;padding:9px 13px;border-color:#343432;color:#999}.filter.active,.filter:hover{background:#B8F3D0;border-color:#B8F3D0;color:#090a09}.arc-stage{position:relative;height:clamp(490px,59vw,720px);overflow:hidden;perspective:1500px;isolation:isolate;margin:0 calc((100vw - min(1540px,91vw))/ -2);padding:0 4vw;touch-action:pan-y;cursor:grab;user-select:none}.arc-stage.dragging{cursor:grabbing}.arc-floor{position:absolute;z-index:-1;left:-15%;right:-15%;height:65%;bottom:-6%;transform:perspective(460px) rotateX(61deg);transform-origin:bottom center;background-image:linear-gradient(#b9d6ca22 1px,transparent 1px),linear-gradient(90deg,#b9d6ca22 1px,transparent 1px);background-size:55px 55px;mask-image:linear-gradient(to top,transparent 0%,#000 30%,#000 68%,transparent 100%);opacity:.55}.arc-floor:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 15%,transparent 0%,#0a0a0a 75%)}.arc-gallery{position:absolute;inset:0;display:block;perspective:1500px;transform-style:preserve-3d;overflow:visible}.arc-gallery .work-card{position:absolute;left:50%;top:4%;width:clamp(260px,30vw,430px);height:auto;grid-column:auto;transform-origin:center 58%;transform-style:preserve-3d;transition:transform .62s cubic-bezier(.16,1,.3,1),opacity .5s,filter .5s;animation:none;margin:0;will-change:transform;cursor:pointer}.arc-gallery .work-card:nth-child(n){grid-column:auto}.arc-gallery .work-image,.arc-gallery .work-card:nth-child(n) .work-image{aspect-ratio:.84;background:#f2f2f0;border:1px solid #ffffff5e;padding:0;box-shadow:0 18px 60px #0008,0 0 1px #fff;overflow:hidden}.arc-gallery .work-image img{width:100%;height:100%;object-fit:cover;background:#f2f2f0;user-select:none;pointer-events:none}.arc-gallery .work-image:after{content:'↗';background:#B8F3D0;color:#080a09;width:40px;height:40px;right:14px;top:14px}.arc-gallery .work-index{left:14px;bottom:14px;background:#0a0a0acc;color:#eee;font:10px var(--mono)}.arc-gallery .work-info{padding:17px 1px 15px;border-bottom:1px solid #ffffff24;grid-template-columns:1fr auto}.arc-gallery .work-category{color:#B8F3D0;font-size:9px}.arc-gallery .work-title{font-family:Impact,'Arial Narrow',var(--sans);font-size:clamp(18px,2vw,26px);letter-spacing:-.01em;color:#f2f2f0;line-height:1}.arc-gallery .work-description{font-size:10px;color:#888;line-height:1.7;margin-top:7px}.arc-gallery .work-arrow{color:#B8F3D0}.arc-instruction{position:absolute;bottom:23px;left:4.5vw;display:flex;flex-direction:column;gap:7px;color:#777;font:9px var(--mono);letter-spacing:.13em;pointer-events:none}.arc-instruction span+span{font-family:var(--sans);letter-spacing:.04em}.arc-count{position:absolute;bottom:25px;right:4.5vw;display:flex;align-items:baseline;gap:10px;font-family:var(--mono);color:#777}.arc-count b{font-size:32px;color:#B8F3D0;font-weight:400}.arc-count i{font-style:normal;color:#555}.arc-count span{font-size:12px}.about-layout{grid-template-columns:.72fr 1.28fr;gap:8vw}.about-sticky .big-mark{font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(100px,16vw,220px);letter-spacing:-.06em;color:#f2f2f0}.about-sticky .big-mark span{color:#ff794f!important}.about-content .manifesto{font-size:clamp(28px,4vw,58px);line-height:1.22;letter-spacing:-.055em;font-weight:700;margin:0 0 35px}.manifesto mark{color:#B8F3D0}.about-text{color:#aaa;font-size:13px;line-height:2.2}.timeline{border-color:#30302e}.timeline-item{border-color:#30302e}.timeline-date{color:#B8F3D0}.skill-panel{background:#111;border-color:#30302e}.skill-track{background:#343432}.skill-fill{background:#B8F3D0}.tag{border-color:#343432;color:#aaa}.process-grid{border-color:#343432;background:#343432}.process-card{background:#0a0a0a}.process-no{color:#B8F3D0}.process-card:hover{background:#151715}.contact-box{background:#111;border-color:#343432}.contact-box h2{font-family:Impact,'Arial Narrow',var(--sans);font-size:clamp(50px,8vw,110px);line-height:.88;letter-spacing:-.025em}.contact-box h2 span{color:#B8F3D0}.contact-box:after{color:#ffffff05}.editable-hint a{color:#B8F3D0}.footer{border-color:#30302e}.reveal{transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
-/* Fixed editorial folios */
-.fixed-label{position:fixed;z-index:60;font:9px/1.65 var(--mono);letter-spacing:.12em;color:#b9b9b4;pointer-events:none;text-transform:uppercase;text-shadow:0 1px 8px #000}.fixed-label span{color:#777;font-family:var(--sans);letter-spacing:.04em}.fixed-tl{top:15px;left:18px}.fixed-tr{top:15px;right:18px;text-align:right}.fixed-bl{bottom:15px;left:18px}.fixed-br{bottom:15px;right:18px;text-align:right}.custom-cursor{position:fixed;z-index:180;left:0;top:0;width:74px;height:74px;border-radius:50%;background:#f2f2f0;color:#0a0a0a;display:grid;place-items:center;font:10px var(--mono);letter-spacing:.12em;pointer-events:none;transform:translate(-50%,-50%) scale(0);transition:transform .28s cubic-bezier(.16,1,.3,1),background .25s,color .25s;mix-blend-mode:difference}.custom-cursor.visible{transform:translate(-50%,-50%) scale(1)}.custom-cursor.large{transform:translate(-50%,-50%) scale(1.25);background:#B8F3D0;mix-blend-mode:normal}.float-tools{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:70;display:flex;align-items:center;flex-direction:column;gap:8px}.float-rail{writing-mode:vertical-rl;transform:rotate(180deg);padding:16px 9px;background:#ff794f;color:#101010;font:9px var(--mono);letter-spacing:.13em;min-height:110px;display:flex;align-items:center;justify-content:center}.float-circle{width:39px;height:39px;border-radius:50%;border:1px solid #ffffff42;background:#111;color:#f2f2f0;display:grid;place-items:center;font-size:17px;transition:background .25s,color .25s}.float-circle:hover{background:#B8F3D0;color:#0a0a0a}.page-transition{position:fixed;inset:0;background:#050505;z-index:300;display:grid;place-items:center;color:#B8F3D0;font:11px var(--mono);letter-spacing:.2em;transform:scaleY(0);transform-origin:bottom;transition:transform .65s cubic-bezier(.16,1,.3,1);pointer-events:none}.page-transition.show{transform:scaleY(1)}
-@media(max-width:900px){.wrap{width:calc(100% - 36px)}.arc-section{padding:26px 0 55px;min-height:auto}.fixed-label{display:none}.float-tools{right:8px;gap:6px}.float-rail{min-height:78px;padding:11px 7px;font-size:8px}.float-circle{width:34px;height:34px}.hero{padding:55px 0 45px;min-height:auto}.hero-grid{grid-template-columns:1fr;gap:34px}.hero h1{font-size:clamp(62px,14vw,112px)}.hero-art{min-height:310px}.hero-meta{margin-top:35px}.arc-stage{height:620px;margin:0 -18px;padding:0}.arc-gallery .work-card{width:min(68vw,350px);top:6%}.arc-instruction{left:22px;bottom:22px}.arc-count{right:22px;bottom:22px}.section{padding:75px 0}.about-layout{grid-template-columns:1fr;gap:30px}.about-sticky{position:relative;top:auto}.about-sticky .big-mark{font-size:100px;margin:16px 0}.about-sticky p{max-width:500px}.section-head{display:block}.section-intro{margin-top:20px}.skills-layout{grid-template-columns:1fr}.nav{gap:12px}.nav a{display:none}.nav button{padding:9px 10px}.arc-masthead{font-size:8px}.contact{padding:45px 0 70px}}
-@media(max-width:520px){.hero h1{font-size:17vw}.hero-lead{font-size:12px}.hero-art{min-height:260px}.hero-meta{gap:8px}.metric strong{font-size:18px}.metric span{font-size:9px}.arc-stage{height:570px}.arc-gallery .work-card{width:76vw;top:5%}.arc-gallery .work-image,.arc-gallery .work-card:nth-child(n) .work-image{aspect-ratio:.9}.arc-gallery .work-title{font-size:21px}.arc-gallery .work-description{font-size:9px}.filter-row{gap:5px}.filter{padding:8px 9px;font-size:9px}.timeline-item{grid-template-columns:82px 1fr;gap:14px}.footer-inner{font-size:8px}.admin-grid{grid-template-columns:1fr}.admin-head{align-items:flex-start;flex-direction:column}.admin-body{padding:16px}.detail-grid{grid-template-columns:1fr}.detail-view{min-height:330px}.detail-info{padding:25px}.custom-cursor{display:none}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
-
-
-/* WFL water-motion gallery + robust 3D viewer */
-.arc-ripple-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.9;mix-blend-mode:screen}
-.arc-floor{z-index:0}.arc-gallery{z-index:2}.arc-stage:before{z-index:1}.arc-stage:after{z-index:1}
-.arc-stage{--wave-x:50%;--wave-y:45%;cursor:grab;}
-.arc-stage:before{content:"";position:absolute;inset:4% -8% 0;z-index:0;pointer-events:none;opacity:.62;background:radial-gradient(ellipse at var(--wave-x) var(--wave-y),#B8F3D01b 0%,transparent 25%),radial-gradient(ellipse at calc(var(--wave-x) + 9%) calc(var(--wave-y) + 8%),transparent 0 20%,#B8F3D00b 20.4% 20.7%,transparent 21%),radial-gradient(ellipse at calc(var(--wave-x) - 8%) calc(var(--wave-y) - 5%),transparent 0 30%,#B8F3D00a 30.2% 30.5%,transparent 31%);mix-blend-mode:screen;transition:opacity .35s}
-.arc-stage:after{content:"";position:absolute;left:-15%;right:-15%;bottom:0;height:44%;z-index:0;pointer-events:none;background:repeating-radial-gradient(ellipse at var(--wave-x) 110%,transparent 0 26px,#B8F3D00b 27px 28px,transparent 29px 48px);transform:perspective(420px) rotateX(53deg);transform-origin:bottom;mask-image:linear-gradient(to top,transparent,#000 25%,transparent 95%);opacity:.8}
-.arc-gallery{z-index:1;pointer-events:none}.arc-gallery .work-card{pointer-events:auto;transition:transform .16s linear,opacity .35s,filter .35s;will-change:transform;cursor:pointer}.arc-gallery .work-card .work-image{position:relative;isolation:isolate;box-shadow:0 22px 70px #0009,0 0 0 1px #ffffff18,inset 0 0 40px #fff2;transition:box-shadow .35s,border-color .35s}.arc-gallery .work-card .work-image:before{content:"";position:absolute;inset:-30% -80%;z-index:2;pointer-events:none;background:linear-gradient(105deg,transparent 40%,#ffffff26 48%,#ffffff04 53%,transparent 60%);transform:translateX(-45%) rotate(4deg);transition:transform .8s cubic-bezier(.16,1,.3,1)}.arc-gallery .work-card:hover .work-image:before{transform:translateX(45%) rotate(4deg)}.arc-gallery .work-card:hover .work-image{box-shadow:0 30px 90px #000b,0 0 0 1px #B8F3D07a,0 0 50px #B8F3D014}.arc-gallery .work-card .work-info{position:relative;z-index:2}.viewer-status{position:absolute;z-index:4;top:18px;left:18px;padding:9px 12px;background:#080908d9;border:1px solid #B8F3D04d;color:#B8F3D0;font:10px var(--mono);letter-spacing:.1em;max-width:calc(100% - 36px);pointer-events:none}.viewer-status:empty{display:none}.model-canvas{z-index:2;touch-action:none;outline:none}.detail-view img{position:relative;z-index:1;pointer-events:none}.viewer-tools{z-index:5}.detail-view:has(.model-canvas[style*="display: block"]) img{opacity:.04!important}
-@media(max-width:850px){.arc-gallery{pointer-events:none}.arc-gallery .work-card{transition:transform .18s linear,opacity .35s,filter .35s}.arc-stage:after{height:35%}}
-@media(prefers-reduced-motion:reduce){.arc-gallery .work-card,.arc-gallery .work-image:before{transition:none!important}}
-
-/* WFL VISUAL PASS — premium dark game-art portfolio, existing behavior preserved */
-:root{--bg:#101010;--panel:#171717;--panel2:#20201f;--line:#363432;--text:#eeeae4;--muted:#a19b93;--accent:#B8F3D0;--orange:#8FDDB6}
-body{background:radial-gradient(ellipse at 50% -20%,#28211d 0%,var(--bg) 48%);}
-body:before{opacity:.075}
-.topbar{background:rgba(15,15,15,.9);border-bottom-color:#B8F3D025}
-.brand-mark{transform:none;border-color:#B8F3D0;color:#B8F3D0;box-shadow:inset 0 0 0 4px #B8F3D00b}
-.nav{color:#bdb6ae}.nav a:hover{color:var(--accent)}
-.nav button{border-color:#B8F3D055}.nav button:hover{background:var(--accent);color:#15110f}
-.arc-section{padding-top:54px;overflow:hidden}
-.arc-masthead{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:13px 0 16px;border-top:1px solid #B8F3D045;border-bottom:1px solid var(--line);font:10px var(--mono);letter-spacing:.16em;color:#91877f}
-.arc-masthead b{color:var(--accent);font-weight:500}
-.section-head{margin-top:38px;margin-bottom:24px}
-.section-kicker{color:#8d8279}
-.section h2{font-size:clamp(38px,5.2vw,72px);font-weight:600;letter-spacing:-.075em}
-.section h2 em{color:var(--accent)}
-.section-intro{color:#aaa39a;max-width:460px}
-.filter-row{margin:24px 0 16px;gap:7px}
-.filter{border-color:#393633;color:#aaa39a;background:#151514;padding:10px 16px}
-.filter.active,.filter:hover{background:var(--accent);border-color:var(--accent);color:#17110e}
-.arc-stage{height:clamp(530px,57vw,760px);border-top:1px solid #B8F3D02b;border-bottom:1px solid #B8F3D02b;background:radial-gradient(ellipse at 50% 35%,#30251f 0%,#191716 42%,#101010 78%);}
-.arc-stage:before{opacity:.5;background:radial-gradient(ellipse at var(--wave-x) var(--wave-y),#B8F3D017 0%,transparent 27%),radial-gradient(ellipse at calc(var(--wave-x) + 9%) calc(var(--wave-y) + 8%),transparent 0 20%,#c9b6a10b 20.4% 20.7%,transparent 21%),radial-gradient(ellipse at calc(var(--wave-x) - 8%) calc(var(--wave-y) - 5%),transparent 0 30%,#B8F3D00a 30.2% 30.5%,transparent 31%)}
-.arc-stage:after{background:repeating-radial-gradient(ellipse at var(--wave-x) 110%,transparent 0 26px,#c9b6a10a 27px 28px,transparent 29px 48px);opacity:.7}
-.arc-ripple-canvas{opacity:.62}
-.arc-gallery .work-card .work-image{border-color:#ffffff1a;box-shadow:0 28px 75px #000b,0 0 0 1px #ffffff12,inset 0 0 40px #fff2}
-.arc-gallery .work-card:hover .work-image{box-shadow:0 30px 90px #000c,0 0 0 1px #B8F3D080,0 0 55px #B8F3D016}
-.arc-gallery .work-card:hover .work-image:after{background:var(--accent);color:#17110e}
-.arc-gallery .work-category,.work-category{color:var(--accent)}
-.arc-gallery .work-title{font-weight:500;letter-spacing:-.04em}
-.arc-instruction,.arc-count{color:#a89c92}
-.arc-count b{color:var(--accent)}
-.about-sticky .big-mark{color:#B8F3D0}
-.eyebrow,.process-no,.timeline-date,.skill-fill{color:var(--accent)}
-.eyebrow:before{background:var(--accent)}
-.skill-panel{background:linear-gradient(145deg,#191918,#131313);border-color:#3b3733}
-.skill-track{background:#34312e}.skill-fill{background:linear-gradient(90deg,#8d5a45,#B8F3D0)}
-.tag{border-color:#393633;background:#151514}
-.process-grid{background:#393633;border-color:#393633}.process-card{background:#111110}.process-card:hover{background:#1b1918}
-.contact-box{border-color:#684638;background:linear-gradient(115deg,#211916,#141312)}
-.contact-box h2 span{color:var(--accent)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#17110e}
-.btn.primary:hover{background:#dda084}
-.btn:hover{border-color:var(--accent);color:var(--accent)}
-.work-image:after{background:var(--accent);color:#17110e}
-.work-index{background:#101010d9;border:1px solid #ffffff1b}
-.modal,.admin-panel{background:#151413;border-color:#51443c}
-.detail-view{background:radial-gradient(ellipse,#30251f,#0c0c0c)}
-.field{background:#10100f}.field:focus{border-color:var(--accent)}
-.viewer-status{border-color:#B8F3D055;color:#d9a087}
-.float-circle{border-color:#8b5b47!important;color:#d9a087!important}
-::selection{background:#B8F3D0;color:#15110f}
-@media(max-width:850px){.arc-section{padding-top:30px}.arc-stage{height:620px}.arc-masthead{font-size:8px}.section-head{margin-top:28px}}
-@media(max-width:520px){.arc-stage{height:570px}.arc-masthead{letter-spacing:.08em}.filter{background:#151514}.section h2{font-size:42px}}
-
-/* === WFL EDITORIAL MONOCHROME / MINT ART DIRECTION === */
-:root{--bg:#090A09;--panel:#111311;--panel2:#191C19;--line:#343834;--text:#F5F5F0;--muted:#9A9F99;--accent:#B8F3D0;--orange:#B8F3D0;--mint:#B8F3D0;--mono:'DM Mono',monospace;--sans:'Noto Sans SC',sans-serif}
-body{background:#090A09;color:#F5F5F0;font-feature-settings:'kern';}
-body:before{opacity:.055}
-.wrap{width:min(1500px,calc(100% - 7vw))}
-.topbar{height:72px;background:rgba(9,10,9,.88);border-bottom:1px solid #ffffff20}
-.brand{font-size:12px;letter-spacing:.15em}.brand-mark{transform:none;border:1px solid var(--accent);font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800}
-.nav{gap:clamp(12px,2.2vw,32px);font-size:10px;color:#dedfd9}.nav button{border-color:#ffffff4a;border-radius:0}.nav button:hover{background:var(--accent);color:#090A09}
-.arc-section{padding-top:0}
-.editorial-hero{padding:clamp(45px,8vw,110px) 0 clamp(35px,5vw,68px);border-bottom:1px solid #ffffff30;position:relative;overflow:hidden}
-.editorial-hero:after{content:'WFL';position:absolute;right:-.04em;bottom:-.28em;font:900 clamp(190px,36vw,540px)/.75 'Barlow Condensed',sans-serif;letter-spacing:-.075em;color:#ffffff06;pointer-events:none;white-space:nowrap}
-.editorial-topline{display:flex;justify-content:space-between;gap:20px;color:#a6aaa4;font:10px var(--mono);letter-spacing:.16em;position:relative;z-index:1}
-.editorial-hero h1{position:relative;z-index:1;font:900 clamp(76px,15.8vw,230px)/.76 'Barlow Condensed','Noto Sans SC',sans-serif;letter-spacing:-.055em;margin:clamp(35px,6vw,78px) 0 clamp(35px,5vw,70px);text-transform:uppercase;max-width:1200px}
-.editorial-hero h1 span:not(.mint-dot){color:transparent;-webkit-text-stroke:1.5px #F5F5F0}
-.editorial-hero .mint-dot{color:var(--accent)}
-.editorial-bottom{display:flex;align-items:end;justify-content:space-between;gap:24px;position:relative;z-index:1}
-.editorial-bottom p{font-size:12px;line-height:2.05;color:#bfc3bd;margin:0}
-.editorial-jump{display:flex;align-items:center;gap:25px;font:10px var(--mono);letter-spacing:.14em;border-bottom:1px solid var(--accent);padding:0 0 12px;white-space:nowrap}
-.editorial-jump b{font-size:20px;color:var(--accent);font-weight:400}
-.arc-masthead{padding:15px 0;border-color:#ffffff2b;color:#9a9e98;font-size:9px}
-.arc-masthead b{color:var(--accent)}
-.section{padding:clamp(68px,9vw,125px) 0}
-.arc-section .section-head{margin-top:clamp(32px,5vw,66px);align-items:end}
-.section-kicker{font-size:10px;letter-spacing:.17em;color:#9b9f99}
-.section h2{font-size:clamp(42px,7vw,96px);font-weight:800;letter-spacing:-.065em;line-height:.95}
-.section h2 em{color:var(--accent);font-style:normal}
-.section-intro{font-size:12px;color:#a8ada7;max-width:440px}
-.filter-row{gap:7px;margin:28px 0 22px}.filter{border-radius:0;border-color:#ffffff2e;color:#c8ccc6;font-size:10px;letter-spacing:.04em;padding:10px 16px}.filter.active,.filter:hover{background:var(--accent);border-color:var(--accent);color:#0a0b0a}
-.arc-stage{background:radial-gradient(ellipse at 50% 38%,#202923 0%,#111411 38%,#090A09 78%);border-color:#ffffff28}
-.arc-stage:before{background:radial-gradient(ellipse at var(--wave-x) var(--wave-y),#B8F3D01b 0%,transparent 27%),radial-gradient(ellipse at calc(var(--wave-x) + 9%) calc(var(--wave-y) + 8%),transparent 0 20%,#B8F3D010 20.4% 20.7%,transparent 21%),radial-gradient(ellipse at calc(var(--wave-x) - 8%) calc(var(--wave-y) - 5%),transparent 0 30%,#B8F3D00c 30.2% 30.5%,transparent 31%)}
-.arc-stage:after{background:repeating-radial-gradient(ellipse at var(--wave-x) 110%,transparent 0 26px,#B8F3D010 27px 28px,transparent 29px 48px)}
-.arc-ripple-canvas{opacity:.75;mix-blend-mode:screen}
-.arc-gallery .work-card .work-image{border:1px solid #ffffff24;box-shadow:0 28px 75px #000b,0 0 0 1px #ffffff0a}
-.arc-gallery .work-card:hover .work-image{box-shadow:0 30px 90px #000c,0 0 0 1px #B8F3D0a0,0 0 55px #B8F3D01a}
-.work-category{color:var(--accent);font-size:10px;letter-spacing:.14em}.arc-gallery .work-title{font-size:clamp(20px,2vw,28px);font-weight:700;letter-spacing:-.045em}.work-description{font-size:11px;color:#a7aca6}.work-info{border-color:#ffffff26}
-.arc-instruction,.arc-count{color:#a4aaa3}.arc-count b{color:var(--accent)}
-.about-sticky .big-mark{font:900 clamp(100px,17vw,230px)/.72 'Barlow Condensed',sans-serif;letter-spacing:-.07em;color:var(--accent)}
-.about-content .manifesto{font-size:clamp(27px,4.3vw,58px);line-height:1.35;font-weight:500;letter-spacing:-.055em}.manifesto mark{color:var(--accent)}
-.about-text,.timeline-item p{color:#b4b9b2}.timeline,.timeline-item{border-color:#ffffff25}.timeline-date,.process-no{color:var(--accent)}
-.skill-panel{background:#101210;border-color:#ffffff28}.skill-panel h3,.process-card h3{font-weight:700}.skill-track{background:#2a2e2a}.skill-fill{background:var(--accent)}.tag{border-color:#ffffff2c;color:#d0d4ce}.process-grid{background:#343834;border-color:#343834}.process-card{background:#0d0f0d}.process-card:hover{background:#151a16}
-.contact-box{border:1px solid #B8F3D06b;background:linear-gradient(115deg,#151a16,#0c0e0c)}.contact-box h2{font:900 clamp(48px,9vw,120px)/.88 'Barlow Condensed','Noto Sans SC',sans-serif;letter-spacing:-.05em}.contact-box h2 span{color:var(--accent)}.contact-box p{color:#b8bdb7}.btn.primary{background:var(--accent);border-color:var(--accent);color:#090A09}.btn.primary:hover{background:#dcffea}.btn:hover{border-color:var(--accent);color:var(--accent)}
-.eyebrow{color:var(--accent)}.eyebrow:before{background:var(--accent)}
-.modal{background:#f1f1eb;color:#111310;border:1px solid #d5d8d1}.modal .detail-info{background:#f1f1eb;color:#111310}.modal .detail-info p{color:#4d524d}.modal .detail-meta{color:#777d76;border-color:#d2d6cf}.modal .work-category{color:#267d58}.modal-close{color:#151715}.viewer-tools button{background:#111510;color:#eff5ef;border-color:#6c756c}.viewer-status{background:#101510e8;border-color:#B8F3D06b;color:#B8F3D0}
-.footer{border-color:#ffffff25;color:#9da29c}.footer-inner{font:9px var(--mono);letter-spacing:.08em}
-.custom-cursor{border-color:var(--accent);color:var(--accent)}
-::selection{background:var(--accent);color:#090A09}
-@media(max-width:850px){.wrap{width:calc(100% - 32px)}.editorial-hero h1{font-size:clamp(70px,16vw,140px)}.editorial-topline{font-size:8px}.editorial-bottom{align-items:start;flex-direction:column}.nav{gap:12px}.nav a{font-size:9px}.about-layout{gap:40px}}
-@media(max-width:520px){.topbar{height:64px}.brand{font-size:10px}.brand-mark{width:30px;height:30px}.nav{gap:9px}.nav a:nth-child(3),.nav a:nth-child(4){display:none}.nav button{font-size:9px;padding:8px}.editorial-hero{padding-top:48px}.editorial-hero h1{font-size:17vw;line-height:.82;margin:48px 0}.editorial-topline{letter-spacing:.07em}.editorial-bottom p{font-size:11px}.arc-section .section-head{display:block}.arc-section .section-intro{margin-top:18px}.about-layout{grid-template-columns:1fr}.about-sticky{position:relative;top:auto}.about-sticky .big-mark{font-size:120px}.section{padding:68px 0}.contact-box{padding:28px 22px}}
-
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+:root{--bg:#0a0a0a;--ink:#f2f2f0;--paper:#f2f2f0;--mute:#8a8a86;--line:#2c2c2a;--mint:#B8F3D0;--disp:'Barlow Condensed','Noto Sans SC',Impact,sans-serif;--mono:'DM Mono',monospace;--sans:'Noto Sans SC',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.mono,.lbl{font:10px/1.7 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.lbl span{font-family:var(--sans);letter-spacing:.04em;text-transform:none;opacity:.8}
+.wrap{width:min(1500px,calc(100% - 7vw));margin:auto}
+/* fixed folios */
+.fx{position:fixed;z-index:60;pointer-events:none;mix-blend-mode:difference;color:#ddd}.fx.tl{top:14px;left:18px}.fx.tr{top:14px;right:56px;text-align:right}.fx.bl{bottom:14px;left:18px}.fx.br{bottom:14px;right:56px;text-align:right}
+.rail{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:8px;align-items:center;padding-right:8px}
+.rail .bar{writing-mode:vertical-rl;background:#ff9f1c;color:#111;font:9px var(--mono);letter-spacing:.14em;padding:16px 7px;min-height:100px;display:grid;place-items:center;margin-right:-8px}
+.rail .dot{width:34px;height:34px;border-radius:50%;border:1px solid #fff4;background:#111;color:#fff;display:grid;place-items:center}.rail .dot:hover{background:var(--mint);color:#000}
+.cursor{position:fixed;left:0;top:0;z-index:400;width:76px;height:76px;border-radius:50%;background:var(--paper);color:#0a0a0a;display:grid;place-items:center;font:10px var(--mono);letter-spacing:.14em;pointer-events:none;transform:translate(-50%,-50%) scale(0);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.cursor.on{transform:translate(-50%,-50%) scale(.55)}.cursor.big{transform:translate(-50%,-50%) scale(1)}
+/* top bar */
+.top{position:sticky;top:0;z-index:50;height:64px;background:#0a0a0ad9;backdrop-filter:blur(14px);border-bottom:1px solid #fff2}
+.top .wrap{height:100%;display:flex;align-items:center;justify-content:space-between}
+.brand{font:800 24px var(--disp);letter-spacing:.02em;display:flex;gap:12px;align-items:baseline}.brand small{font:10px var(--mono);letter-spacing:.14em;color:var(--mute)}
+.nav{display:flex;gap:28px;align-items:center;font:10px var(--mono);letter-spacing:.1em;color:#cfcfca}.nav a:hover{color:var(--mint)}
+.nav button{background:none;border:1px solid #fff4;color:var(--ink);padding:9px 13px;font:10px var(--mono);letter-spacing:.1em}.nav button:hover{background:var(--mint);color:#000;border-color:var(--mint)}
+.btn{border:1px solid #fff4;background:none;color:var(--ink);padding:12px 18px;font-size:12px;transition:.25s}.btn:hover{border-color:var(--mint);color:var(--mint)}.btn.pri{background:var(--mint);border-color:var(--mint);color:#0a0a0a;font-weight:700}.btn.pri:hover{color:#0a0a0a;background:#dcffea}
+/* 1 hero : WebGL 水波连廊 */
+#works{height:100svh;min-height:580px;position:relative;overflow:hidden;background:#000}
+.stage{position:absolute;inset:0;cursor:grab;user-select:none;touch-action:pan-y}.stage.drag{cursor:grabbing}
+#hc{width:100%;height:100%;display:block}
+.menu{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:65;display:flex;gap:22px;font:10px var(--mono);letter-spacing:.12em;color:#ddd;mix-blend-mode:difference;white-space:nowrap}.menu a:hover,.menu button:hover{color:var(--mint)}.menu button{background:none;border:0;color:inherit;font:inherit;letter-spacing:inherit;padding:0}
+.hintro{position:absolute;left:18px;top:64px;max-width:270px;font-size:11px;line-height:1.9;color:#8d8d89;margin:0;pointer-events:none}
+.cap{position:absolute;left:18px;bottom:52px;pointer-events:none;max-width:60vw}
+.cap h2{font:900 clamp(30px,4.4vw,64px)/.9 var(--disp);text-transform:uppercase;margin:6px 0;letter-spacing:-.01em}
+.cap div:last-child{font-size:13px;color:#aaa;max-width:420px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hbar{position:absolute;right:18px;bottom:52px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:46vw}.hbar button{background:#0008;backdrop-filter:blur(6px);border:1px solid #fff3;color:#bbb;padding:7px 11px;font:10px var(--mono);letter-spacing:.06em}.hbar button.on,.hbar button:hover{background:var(--mint);border-color:var(--mint);color:#000}
+.count{position:absolute;right:18px;bottom:90px;font:10px var(--mono);color:#777;pointer-events:none;display:none}
+/* 2 manifesto */
+#manifesto{background:#0f0f0f;min-height:100svh;padding:90px 0 0;position:relative;overflow:hidden;border-top:1px solid #fff2}
+.mf-top{display:flex;justify-content:space-between}
+.mf-grid{display:grid;grid-template-columns:1fr 1fr;gap:6vw;margin-top:9vh;align-items:start}
+.mf-grid h2{font:800 clamp(30px,4vw,58px)/1.2 var(--sans);letter-spacing:-.04em;margin:0}.mf-grid h2 mark{background:none;color:var(--mint);display:block}
+.mf-grid .tx{color:#b4b4af;font-size:13px;line-height:2.1;max-width:520px;white-space:pre-wrap;margin-left:auto}
+.mf-grid .aside{color:#777;font-size:11px;line-height:1.9;margin-top:18px;max-width:520px;margin-left:auto}
+.letters{font:900 clamp(70px,13.5vw,220px)/.84 var(--disp);text-transform:uppercase;letter-spacing:-.01em;margin:10vh 0 0;padding-bottom:3vh;cursor:default}
+.letters span{display:inline-block;will-change:transform}.letters span:nth-child(3n){color:#6d6d69}
+/* 3 skills */
+#skills{padding:120px 0;border-top:1px solid #fff2}
+#skills h2,.big{font:900 clamp(56px,9vw,150px)/.86 var(--disp);text-transform:uppercase;letter-spacing:-.02em;margin:0 0 70px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:3vw}.col{border-top:1px solid #fff3;padding-top:16px}
+.col h3{font:700 22px var(--sans);margin:22px 0 6px}.col h4{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:0 0 14px}.col p{font-size:12px;line-height:1.9;color:#a4a4a0;margin:0}
+.sk{margin:16px 0}.sk div:first-child{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px}.sk .tr{height:2px;background:#2d2d2b}.sk .fl{height:100%;background:var(--mint);width:var(--l)}
+.tl{display:grid;grid-template-columns:90px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid #fff2}.tl b{font:400 10px var(--mono);color:var(--mint);padding-top:4px}.tl h5{margin:0 0 5px;font-size:14px;font-weight:500}.tl p{font-size:11px}
+.tags{display:flex;flex-wrap:wrap;gap:7px}.tags span{border:1px solid #fff3;padding:8px 10px;font-size:11px;color:#c9c9c4}
+/* 4 footer / next */
+#contact{background:var(--paper);color:#0a0a0a;padding:90px 0 40px}
+#contact .lbl{color:#777}
+#contact .big{margin:40px 0 28px;font-size:clamp(60px,11vw,190px)}
+#contact p{max-width:520px;font-size:13px;line-height:2;color:#444}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}.cta .btn{border-color:#0a0a0a55;color:#0a0a0a}.cta .btn.pri{background:#0a0a0a;color:var(--paper);border-color:#0a0a0a}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid #0a0a0a33;margin-top:60px;padding-top:16px;color:#666}
+/* detail page */
+.ov{display:none;position:fixed;inset:0;z-index:200;overflow:auto}.ov.show{display:block}
+#detail{background:var(--paper);color:#0a0a0a}
+#detail .bar{display:flex;justify-content:space-between;padding:20px 4vw;position:sticky;top:0;background:#f2f2f0ee;backdrop-filter:blur(8px);z-index:3;color:#555}
+#detail .bar button{background:none;border:0;font:10px var(--mono);letter-spacing:.12em;color:#111}
+#detail h2{font:900 clamp(70px,15vw,250px)/.8 var(--disp);text-transform:uppercase;letter-spacing:-.025em;margin:3vh 4vw 4vh;word-break:break-word}
+.dmeta{display:grid;grid-template-columns:1.2fr 1.2fr auto;gap:4vw;padding:0 4vw 5vh;align-items:start}
+.dmeta .cat{font:700 clamp(22px,3vw,40px)/1.1 var(--sans)}.dmeta p{font-size:13px;line-height:2;color:#444;margin:0;white-space:pre-wrap}.dmeta .num{font:900 clamp(60px,8vw,120px)/.8 var(--disp);text-align:right}
+.view{position:relative;margin:0 4vw;height:min(78vh,820px);background:#e6e6e2;display:grid;place-items:center;overflow:hidden}
+.view img{width:100%;height:100%;object-fit:contain;padding:3vh}.view canvas{position:absolute;inset:0;width:100%;height:100%;display:none;touch-action:none;outline:none}
+.vst{position:absolute;z-index:3;top:14px;left:14px;background:#0a0a0ad9;color:var(--mint);font:10px var(--mono);letter-spacing:.1em;padding:8px 11px;pointer-events:none}.vst:empty{display:none}
+.vt{display:flex;gap:8px;padding:14px 4vw 60px}.vt button{background:none;border:1px solid #0a0a0a44;padding:9px 13px;font:10px var(--mono);letter-spacing:.08em}.vt button:hover{background:#0a0a0a;color:var(--paper)}
+#imgov{background:#050505f2;z-index:260}#imgov img{width:100%;height:100vh;object-fit:contain;padding:3vw}
+.x{position:fixed;right:18px;top:14px;z-index:270;width:40px;height:40px;border:1px solid #fff4;background:#111;color:#fff;font-size:20px}
+/* login/admin */
+.modal{display:none;position:fixed;inset:0;z-index:300;background:#050505ee;backdrop-filter:blur(14px);padding:20px;overflow:auto;place-items:center}.modal.show{display:grid}
+.box{width:min(430px,100%);background:#141414;border:1px solid #fff2;padding:32px;position:relative}.box h2{margin:8px 0}.box p{color:var(--mute);font-size:12px;line-height:1.8}
+.fg{margin:14px 0}.fg label{display:block;font-size:11px;color:#bbb;margin-bottom:7px}.fld{width:100%;background:#0b0b0b;border:1px solid var(--line);padding:11px;color:var(--ink);font-size:12px}.fld:focus{border-color:var(--mint);outline:none}
+.adm{display:none;position:fixed;inset:0;z-index:310;background:#050505f2;overflow:auto;padding:20px}.adm.show{display:block}
+.panel{max-width:1100px;margin:auto;background:#141414;border:1px solid #fff2}.ph{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 24px;border-bottom:1px solid var(--line)}.ph h2{font-size:17px;margin:0}.ph small{color:var(--mute);font-size:10px}
+.pb{padding:24px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}.fb{border:1px dashed #555;padding:14px;margin-top:10px}.fb p,.st{font-size:10px;color:var(--mute);line-height:1.8;overflow-wrap:anywhere}
+.row{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;border-top:1px solid var(--line);padding:11px 0}.row img{width:60px;height:48px;object-fit:cover}.row .btn{padding:7px 10px;font-size:10px}
+.toast{position:fixed;z-index:500;bottom:24px;left:50%;transform:translate(-50%,14px);opacity:0;pointer-events:none;background:#1c1c1c;border:1px solid #555;padding:12px 18px;font-size:12px;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.err{border-color:#ff794f}
+@media(max-width:850px){.fx,.rail .bar{display:none}.nav a{display:none}.works-head{flex-direction:column;align-items:start}.menu{display:none}.hbar{max-width:55vw;bottom:96px}.cap{bottom:48px}.hintro{display:none}.mf-grid,.cols,.g2,.dmeta{grid-template-columns:1fr}.mf-grid .tx,.mf-grid .aside{margin:0}.dmeta .num{text-align:left}.cursor{display:none}.rail{right:2px}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<header class="topbar"><div class="wrap topbar-inner">
-<a class="brand" href="#top"><span class="brand-mark">W</span><span>WFL / ART ARCHIVE<small>3D GAME ART · PORTFOLIO</small></span></a>
-<nav class="nav"><a href="#works">作品档案</a><a href="#about">关于创作</a><a href="#skills">技能矩阵</a><a href="#journey">创作履历</a><button id="loginBtn">管理入口 ↗</button></nav>
-</div></header>
+<div class="fx lbl tl">WFL / 3D GAME ART<br><span>精选作品 · 数字档案</span></div>
+<div class="fx lbl tr">SCROLL · DRAG · FLICK<br><span>滚动 / 拖拽 / 甩动浏览</span></div>
+<div class="fx lbl bl" id="fCase">CASE 00 / 00</div>
+<div class="fx lbl br" id="fVis">3D PROPS · ARCHIVE</div>
+<div class="rail"><a class="bar" href="#works">WFL — WORKS</a><a class="dot" href="#manifesto" aria-label="关于">↘</a><button class="dot" id="floatAdmin" aria-label="管理入口">+</button></div>
+<div class="cursor" id="cursor">VIEW</div>
+
+<nav class="menu"><a href="#works">WORKS</a><a href="#manifesto">ABOUT</a><a href="#skills">SKILLS</a><a href="#contact">CONTACT</a><button id="loginBtn">ADMIN ↗</button></nav>
+
 <main id="top">
+<section id="works"><div class="stage" id="stage"><canvas id="hc"></canvas>
+<p class="hintro" id="heroIntro"></p>
+<div class="cap"><div class="mono" id="capK">00 — ARCHIVE</div><h2 id="capT">Loading</h2><div id="capS"></div></div>
+<div class="hbar" id="filters"><button class="on" data-c="全部">全部</button><button data-c="角色">角色</button><button data-c="场景">场景</button><button data-c="道具">道具</button><button data-c="其他">其他</button></div>
+<div class="count"><b id="cur">01</b><span id="tot">00</span></div></div></section>
 
-<section class="section arc-section" id="works"><div class="wrap">
-<div class="editorial-hero reveal"><div class="editorial-topline"><span>INDEPENDENT 3D ARTIST / WFL</span><span>PORTFOLIO INDEX — 2026</span></div><h1>让想象<br><span>拥有形体</span><span class="mint-dot">。</span></h1><div class="editorial-bottom"><p>3D 游戏美术作品集<br>角色 / 生物 / 道具 / 机械 / 场景</p><a href="#gallery" class="editorial-jump">EXPLORE THE ARCHIVE <b>↘</b></a></div></div>
-<div class="arc-masthead"><span>WFL / 3D GAME ART ARCHIVE</span><span><b id="heroCount">00</b> ASSETS · SELECTED WORKS</span></div>
-<div class="section-head reveal"><div><div class="section-kicker">01 / SELECTED WORKS</div><h2>作品档案<em>。</em></h2></div><p class="section-intro" id="heroIntro">角色、场景、道具与风格化资产。这里展示从形体设计、结构搭建到材质呈现的持续探索。选择作品查看详情；支持的项目可直接在网页中旋转查看三维模型。</p></div>
-<div class="filter-row" id="filters"><button class="filter active" data-category="全部">全部作品 / ALL</button><button class="filter" data-category="角色">角色 / CHARACTER</button><button class="filter" data-category="场景">场景 / ENVIRONMENT</button><button class="filter" data-category="道具">道具 / PROP</button><button class="filter" data-category="其他">其他 / EXPERIMENT</button></div>
-<div class="arc-stage" id="arcStage"><div class="arc-floor"></div><canvas class="arc-ripple-canvas" id="arcRippleCanvas" aria-hidden="true"></canvas><div class="gallery arc-gallery" id="gallery"><div class="empty"><b>LOADING ARCHIVE...</b>正在整理作品档案</div></div><div class="arc-instruction"><span>DRAG · SCROLL · RIPPLE</span><span>拖拽 · 滚动 · 水波交互</span></div><div class="arc-count"><b id="arcCurrent">01</b><i>/</i><span id="arcTotal">00</span></div></div>
+<section id="manifesto"><div class="wrap">
+ <div class="mf-top lbl"><span>2/5</span><span>FOR PRODUCTS</span><span>MANIFESTO</span></div>
+ <div class="mf-grid"><h2 id="manifestoH"></h2><div><div class="tx" id="aboutText"></div><div class="aside" id="aboutAside"></div></div></div>
+ <div class="letters" id="letters" aria-label="Every asset deserves to be seen and understood"></div>
+ <div class="lbl" style="padding-bottom:30px">MOVE THE CURSOR THROUGH THE LETTERS · <span>用鼠标拨动字母</span></div>
 </div></section>
-<section class="section" id="about"><div class="wrap about-layout">
-<div class="about-sticky reveal"><div class="eyebrow">02 / THE ARTIST</div><div class="big-mark">WFL<span style="color:var(--orange)">.</span></div><p id="aboutAside">一个持续学习、持续制作的 3D 游戏美术创作者。用作品记录过程，让每次尝试都留下痕迹。</p><div class="editable-hint">PERSONAL STATEMENT / 后台可编辑</div></div>
-<div class="about-content reveal"><p class="manifesto" id="manifesto">让形体建立识别，<mark>让细节构建可信。</mark><br>从角色、道具到场景，每件资产都为它所属的世界提供线索。</p><div class="about-text" id="aboutText">这里记录不同方向的 3D 游戏美术实践，包括角色与生物、武器与道具、机械资产、环境元素及风格化造型。关注轮廓、比例、结构、材质与最终呈现，让每件作品既有清晰的视觉重点，也能自然融入它所处的游戏世界。<br><br>欢迎浏览作品、交流制作方法，或就游戏美术相关机会与我联系。</div>
-<div class="timeline" id="timeline"><div class="timeline-item"><div class="timeline-date">NOW — 2026</div><div><h3>持续创作 / Independent Practice</h3><p>围绕角色、道具、机械与环境资产进行练习，积累从参考分析、建模到材质和展示的完整流程。</p></div></div><div class="timeline-item"><div class="timeline-date">ONGOING</div><div><h3>技能迭代 / Learning by Making</h3><p>通过参考拆解、形体迭代与作品复盘，持续完善建模流程、视觉表达和审美判断。</p></div></div></div>
-</div></div></section>
-<section class="section" id="skills"><div class="wrap">
-<div class="section-head reveal"><div><div class="section-kicker">03 / TOOLKIT & PRACTICE</div><h2>技能矩阵<em>。</em></h2></div><p class="section-intro">技能不是静止的标签，而是正在积累的工具。以下内容可按真实掌握情况修改，不必为了好看而夸大。</p></div>
-<div class="skills-layout reveal"><div class="skill-panel"><h3>制作流程 / PRODUCTION</h3><div id="skillsList"></div></div><div class="skill-panel"><h3>软件与方向 / TOOLSET</h3><div class="tags"><span class="tag">Blender</span><span class="tag">Character Art</span><span class="tag">Creature Design</span><span class="tag">3D Props</span><span class="tag">Environment Assets</span><span class="tag">Hard Surface</span><span class="tag">Stylized Art</span><span class="tag">Materials & Lighting</span><span class="tag">Real-time Assets</span><span class="tag">Visual Storytelling</span><span class="tag">GLB Web Preview</span></div><p style="font-size:11px;line-height:2;color:var(--muted);margin-top:25px">建议根据真实经验更新技能项；如有具体项目流程、软件熟练度或作品拆解，可继续补充到这里。</p></div></div>
+
+<section id="skills"><div class="wrap">
+ <h2>Skills,<br>Practice &amp; Path</h2>
+ <div class="cols">
+  <div class="col"><div class="lbl">01 · 履历 <span>TIMELINE</span></div><h3>创作履历</h3><h4>Practice</h4><div id="timeline"></div></div>
+  <div class="col"><div class="lbl">02 · 技能 <span>SKILLS</span></div><h3>技能矩阵</h3><h4>Production</h4><div id="skillsList"></div></div>
+  <div class="col"><div class="lbl">03 · 工具 <span>TOOLSET</span></div><h3>软件与方向</h3><h4>Toolset</h4><div class="tags"><span>Blender</span><span>Character Art</span><span>Creature</span><span>3D Props</span><span>Environment</span><span>Hard Surface</span><span>Stylized</span><span>Materials &amp; Lighting</span><span>Real-time Assets</span><span>GLB Web Preview</span></div></div>
+ </div>
 </div></section>
-<section class="section" id="journey"><div class="wrap"><div class="section-head reveal"><div><div class="section-kicker">04 / WORKING PHILOSOPHY</div><h2>从想法到<em>成形。</em></h2></div><p class="section-intro">可以把这里作为项目履历、制作方法或个人创作原则的展示区。内容强调过程与判断，而不仅仅是结果。</p></div>
-<div class="process-grid reveal"><article class="process-card"><div class="process-no">STEP / 01</div><h3>观察与拆解</h3><p>从真实物体、概念设计或风格参考出发，分析轮廓、比例、结构与视觉层级。</p></article><article class="process-card"><div class="process-no">STEP / 02</div><h3>建模与验证</h3><p>根据作品类型选择合适的建模方式，在形体、细节、风格与可读性之间取得平衡。</p></article><article class="process-card"><div class="process-no">STEP / 03</div><h3>材质与呈现</h3><p>通过材质、灯光、构图与展示方式强化作品特点，让资产在静态呈现和实时查看中都清晰易读。</p></article></div>
+
+<section id="contact"><div class="wrap">
+ <div class="lbl" style="display:flex;justify-content:space-between"><span>NEXT CASE · 下一个项目</span><span>OPEN FOR CONVERSATION</span></div>
+ <div class="big">让下一个想法，<br>开始成形。</div>
+ <p id="contactText"></p>
+ <div class="cta"><a class="btn pri" id="emailLink" href="#">联系创作者 ↗</a><a class="btn" href="#works">返回作品档案 ↑</a></div>
+ <div class="foot lbl"><span>© 2026 WFL — 3D GAME ART ARCHIVE</span><a id="emailText" href="#">—</a><a href="#top">BACK TO TOP ↑</a></div>
 </div></section>
-<section class="contact"><div class="wrap"><div class="contact-box reveal"><div class="eyebrow">05 / OPEN FOR CONVERSATION</div><h2>让下一个想法，<br><span>开始成形。</span></h2><p id="contactText">欢迎交流角色、场景、道具、机械、生物、材质表现与其他 3D 游戏美术方向，也欢迎提出建议或讨论项目合作。作品持续更新中。</p><div class="contact-actions"><a class="btn primary" id="emailLink" href="mailto:your-email@example.com">联系创作者 ↗</a><a class="btn" href="#works">返回作品档案 ↑</a></div><div class="editable-hint">CONTACT EMAIL / <a id="emailText" href="mailto:your-email@example.com">your-email@example.com</a></div></div></div></section>
 </main>
-<footer class="footer"><div class="wrap footer-inner"><span>© 2026 WFL — 3D GAME ART ARCHIVE</span><span>MADE WITH PATIENCE · BUILT THROUGH PRACTICE</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 
-<div class="modal-backdrop" id="detailModal"><div class="modal"><button class="modal-close" id="detailClose">×</button><div class="detail-grid"><div class="detail-view" id="detailView"><img id="detailImage" alt=""><canvas class="model-canvas" id="modelCanvas"></canvas><div class="viewer-status" id="viewerStatus" aria-live="polite">PREPARING 3D VIEW…</div><div class="viewer-tools"><button id="rotateBtn">自动旋转：开</button><button id="wireBtn">线框显示</button><button id="fullImageBtn">查看大图</button></div></div><div class="detail-info"><div class="work-category" id="detailCategory"></div><h2 id="detailTitle"></h2><p id="detailDescription"></p><div class="detail-meta" id="detailMeta">WFL / DIGITAL ASSET</div></div></div></div></div>
-<div class="modal-backdrop" id="imageModal"><div class="modal" style="width:min(1200px,100%);background:#090a08"><button class="modal-close" id="imageClose">×</button><img id="fullscreenImage" alt="" style="width:100%;max-height:88vh;object-fit:contain;padding:25px"></div></div>
-<div class="modal-backdrop" id="loginModal"><div class="modal login-box"><button class="modal-close" id="loginCancel">×</button><div class="eyebrow">PRIVATE ACCESS</div><h2>管理入口</h2><p>登录后可以上传、编辑和删除作品。管理权限仍由原有 Supabase 账号控制。</p><form id="loginForm"><div class="form-group"><label for="loginEmail">邮箱地址 / EMAIL</label><input class="field" id="loginEmail" type="email" autocomplete="username" required placeholder="管理员邮箱"></div><div class="form-group"><label for="loginPassword">密码 / PASSWORD</label><input class="field" id="loginPassword" type="password" autocomplete="current-password" required placeholder="登录密码"></div><div class="form-actions"><button type="button" class="btn" id="loginCancel2">取消</button><button class="btn primary" type="submit" id="loginSubmit">登录管理后台 ↗</button></div></form></div></div>
-<div class="admin-modal" id="adminModal"><div class="admin-panel"><div class="admin-head"><div><h2>作品管理台 / WORKS CMS</h2><small>上传作品图片与 GLB 模型；作品保存在原有 Supabase 项目中。</small></div><div><button class="btn" id="logoutBtn">退出登录</button> <button class="btn" id="adminClose">关闭 ×</button></div></div><div class="admin-body">
-<div class="file-box" style="margin-bottom:28px">
-  <strong>主页内容编辑 / PROFILE & PRACTICE</strong>
-  <p>这里编辑的介绍、练习方式、创作履历和技能会保存到 Supabase，访客打开网站也能看到更新。首次使用需先执行随附 SQL 文件创建 site_content 表。</p>
-  <form id="profileForm">
-    <div class="admin-grid">
-      <div>
-        <div class="form-group"><label for="profileHeroIntro">首页简介</label><textarea class="field" id="profileHeroIntro" rows="3"></textarea></div>
-        <div class="form-group"><label for="profileAboutAside">个人定位短句</label><textarea class="field" id="profileAboutAside" rows="3"></textarea></div>
-        <div class="form-group"><label for="profileManifesto">创作宣言</label><textarea class="field" id="profileManifesto" rows="3"></textarea></div>
-        <div class="form-group"><label for="profileAboutText">关于我（支持换行）</label><textarea class="field" id="profileAboutText" rows="5"></textarea></div>
-        <div class="form-group"><label for="profileContactText">联系区域文案</label><textarea class="field" id="profileContactText" rows="3"></textarea></div>
-        <div class="form-group"><label for="profileEmail">联系邮箱</label><input class="field" id="profileEmail" type="email" placeholder="your@email.com"></div>
-      </div>
-      <div>
-        <div class="form-group"><label for="profileTimeline">创作履历 / 练习方式（每行一条：时间 | 标题 | 说明）</label><textarea class="field" id="profileTimeline" rows="10" placeholder="2026 — 至今 | 独立练习 | 持续制作游戏道具与硬表面资产&#10;持续进行 | 材质研究 | 练习材质、灯光与作品呈现"></textarea></div>
-        <div class="form-group"><label for="profileSkills">技能矩阵（每行一条：技能名称 | 进度 0-100）</label><textarea class="field" id="profileSkills" rows="7" placeholder="硬表面建模 | 72&#10;道具设计与结构拆解 | 66&#10;材质 / 灯光 / 渲染 | 58&#10;拓扑 / UV 工作流 | 52"></textarea></div>
-        <p class="file-status">提示：进度条建议填写真实的学习阶段，不必为了视觉效果夸大水平。保存后页面会立即更新。</p>
-      </div>
-    </div>
-    <div class="form-actions"><button class="btn primary" id="saveProfileBtn" type="submit">保存主页内容 ↗</button><button class="btn" id="resetProfileBtn" type="button">恢复默认文案</button></div>
-    <div class="file-status" id="profileStatus">正在读取主页内容…</div>
-  </form>
+<div class="ov" id="detail"><div class="bar mono"><span id="dCase">CASE</span><span id="dCat"></span><button id="dClose">← ALL WORKS · 返回</button></div>
+ <h2 id="dTitle"></h2>
+ <div class="dmeta"><div class="cat" id="dSub"></div><p id="dDesc"></p><div class="num" id="dNum">01<div class="mono" style="margin-top:8px;color:#666">VISUALS</div></div></div>
+ <div class="view" id="view"><img id="dImg" alt=""><canvas id="cv"></canvas><div class="vst" id="vst"></div></div>
+ <div class="vt"><button id="rotBtn">自动旋转：开</button><button id="wireBtn">线框显示</button><button id="fullBtn">查看大图</button></div>
 </div>
-<form id="workForm"><input type="hidden" id="editingId"><div class="admin-grid"><div><div class="form-group"><label for="workTitle">作品标题 *</label><input class="field" id="workTitle" required placeholder="例如：旧式手榴弹 / Old-fashioned Grenade"></div><div class="form-group"><label for="workCategory">作品分类</label><select class="field" id="workCategory"><option value="角色">角色</option><option value="场景">场景</option><option value="道具" selected>道具</option><option value="其他">其他</option></select></div><div class="form-group"><label for="workDescription">作品说明</label><textarea class="field" id="workDescription" rows="5" placeholder="灵感来源、建模流程、材质设计……"></textarea></div></div><div><div class="file-box"><strong>作品主图 / COVER IMAGE</strong><p>选择用于作品卡片和详情展示的图片。</p><input id="imageFile" type="file" accept="image/*" required class="field"><div class="file-status" id="imageStatus">未选择图片</div></div><div class="file-box"><strong>三维模型 / GLB (可选)</strong><p>上传 .glb 文件后，访客可以在作品详情中旋转查看模型。</p><input id="modelFile" type="file" accept=".glb,model/gltf-binary" class="field"><div class="file-status" id="modelStatus">未选择 GLB</div></div></div></div><div class="form-actions"><button type="button" class="btn" id="cancelEdit">重置表单</button><button type="submit" class="btn primary" id="saveWorkBtn">保存作品 ↗</button></div></form><div class="admin-list"><div class="eyebrow" style="margin-bottom:15px">已发布作品 / ARCHIVE</div><div id="adminList"></div></div></div></div></div>
-<div class="fixed-label fixed-tl">WFL / 3D GAME ART<br><span>精选作品 · DIGITAL ARCHIVE</span></div>
-<div class="fixed-label fixed-tr">SCROLL · DRAG · FLICK<br><span>滚动 / 拖拽 / 甩动浏览</span></div>
-<div class="fixed-label fixed-bl" id="fixedCase">CASE 01 / 06 · WORKS</div>
-<div class="fixed-label fixed-br" id="fixedVisuals">HARD SURFACE · 3D PROPS</div>
-<div class="custom-cursor" id="customCursor">VIEW</div>
-<div class="float-tools"><a class="float-rail" href="#works" aria-label="精选作品">WFL — WORKS</a><a class="float-circle" href="#about" aria-label="关于创作者">↘</a><button class="float-circle" id="floatAdmin" aria-label="管理入口">＋</button></div>
-<div class="page-transition" id="pageTransition"><span>WFL / NEXT CASE</span></div>
+<div class="ov" id="imgov"><button class="x" id="imgX">×</button><img id="fullImg" alt=""></div>
+
+<div class="modal" id="loginModal"><div class="box"><button class="x" style="position:absolute;right:12px;top:12px" id="loginX">×</button><div class="mono">PRIVATE ACCESS</div><h2>管理入口</h2><p>登录后可以上传、编辑和删除作品。管理权限仍由原有 Supabase 账号控制。</p>
+<form id="loginForm"><div class="fg"><label for="lEmail">邮箱地址 / EMAIL</label><input class="fld" id="lEmail" type="email" autocomplete="username" required placeholder="管理员邮箱"></div><div class="fg"><label for="lPass">密码 / PASSWORD</label><input class="fld" id="lPass" type="password" autocomplete="current-password" required placeholder="登录密码"></div><div style="display:flex;gap:10px;margin-top:20px"><button type="button" class="btn" id="loginCancel">取消</button><button class="btn pri" type="submit" id="loginSubmit">登录管理后台 ↗</button></div></form></div></div>
+
+<div class="adm" id="adm"><div class="panel"><div class="ph"><div><h2>作品管理台 / WORKS CMS</h2><small>上传作品图片与 GLB 模型；作品保存在原有 Supabase 项目中。</small></div><div><button class="btn" id="logoutBtn">退出登录</button> <button class="btn" id="admClose">关闭 ×</button></div></div><div class="pb">
+<div class="fb" style="margin:0 0 28px"><strong>主页内容编辑 / PROFILE &amp; PRACTICE</strong><p>这里编辑的内容保存到 Supabase site_content 表，访客刷新即可看到。首次使用需先执行 site_content_setup.sql。</p>
+<form id="profileForm"><div class="g2"><div>
+<div class="fg"><label for="pHero">首页简介</label><textarea class="fld" id="pHero" rows="3"></textarea></div>
+<div class="fg"><label for="pAside">个人定位短句</label><textarea class="fld" id="pAside" rows="3"></textarea></div>
+<div class="fg"><label for="pMani">创作宣言</label><textarea class="fld" id="pMani" rows="3"></textarea></div>
+<div class="fg"><label for="pAbout">关于我（支持换行）</label><textarea class="fld" id="pAbout" rows="5"></textarea></div>
+<div class="fg"><label for="pContact">联系区域文案</label><textarea class="fld" id="pContact" rows="3"></textarea></div>
+<div class="fg"><label for="pEmail">联系邮箱</label><input class="fld" id="pEmail" type="email" placeholder="your@email.com"></div></div><div>
+<div class="fg"><label for="pTime">创作履历（每行：时间 | 标题 | 说明）</label><textarea class="fld" id="pTime" rows="10"></textarea></div>
+<div class="fg"><label for="pSkill">技能矩阵（每行：技能名称 | 进度 0-100）</label><textarea class="fld" id="pSkill" rows="7"></textarea></div></div></div>
+<div style="display:flex;gap:10px;margin-top:18px"><button class="btn pri" id="saveProfile" type="submit">保存主页内容 ↗</button><button class="btn" id="resetProfile" type="button">恢复默认文案</button></div><div class="st" id="pStatus">正在读取主页内容…</div></form></div>
+<form id="workForm"><div class="g2"><div>
+<div class="fg"><label for="wTitle">作品标题 *</label><input class="fld" id="wTitle" required placeholder="例如：旧式手榴弹 / Old-fashioned Grenade"></div>
+<div class="fg"><label for="wCat">作品分类</label><select class="fld" id="wCat"><option>角色</option><option>场景</option><option selected>道具</option><option>其他</option></select></div>
+<div class="fg"><label for="wDesc">作品说明</label><textarea class="fld" id="wDesc" rows="5" placeholder="灵感来源、建模流程、材质设计……"></textarea></div></div><div>
+<div class="fb"><strong>作品主图 / COVER IMAGE</strong><p>用于作品卡片和详情展示。</p><input id="imgFile" type="file" accept="image/*" required class="fld"><div class="st" id="imgSt">未选择图片</div></div>
+<div class="fb"><strong>三维模型 / GLB (可选)</strong><p>上传 .glb 后，访客可在详情页旋转查看。</p><input id="glbFile" type="file" accept=".glb,model/gltf-binary" class="fld"><div class="st" id="glbSt">未选择 GLB</div></div></div></div>
+<div style="display:flex;gap:10px;margin-top:18px"><button type="button" class="btn" id="cancelEdit">重置表单</button><button type="submit" class="btn pri" id="saveWork">保存作品 ↗</button></div></form>
+<div style="margin-top:34px"><div class="mono" style="margin-bottom:12px">已发布作品 / ARCHIVE</div><div id="adminList"></div></div></div></div></div>
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-
+import {GLTFLoader} from "three/addons/loaders/GLTFLoader.js";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+import {RoomEnvironment} from "three/addons/environments/RoomEnvironment.js";
+/* ===== 原有 Supabase 配置（保持不变） ===== */
 const SUPABASE_URL="https://tktwfozyjmdkdetrrkif.supabase.co";
 const SUPABASE_KEY="sb_publishable_cJILto1EtvPpkHLkMlBoWw_h2rV1I-W";
 const BUCKET="portfolio-images";
 const ADMIN_UID="3cf62ecd-d066-44e2-ac80-65ef6b0ef79b";
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let works=[],currentCategory="全部",editingWorkId=null,currentWork=null;
-let renderer=null,scene=null,camera=null,controls=null,modelRoot=null,animationFrame=null,originalMaterials=[],wireframeMode=false,autoRotate=true,threeInitialized=false;
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
-const gallery=$("gallery"),toast=$("toast");
-function escapeHtml(v=""){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function showToast(message,isError=false){toast.textContent=message;toast.classList.toggle("error",isError);toast.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>toast.classList.remove("show"),3200)}
-function randomName(file){const ext=file.name.includes(".")?file.name.substring(file.name.lastIndexOf(".")):"";return `${Date.now()}_${Math.random().toString(36).substring(2,10)}${ext}`}
-function formatBytes(bytes){if(!bytes)return "0 B";const units=["B","KB","MB","GB"],i=Math.min(3,Math.floor(Math.log(bytes)/Math.log(1024)));return (bytes/Math.pow(1024,i)).toFixed(1)+" "+units[i]}
-async function loadWorks(){
- gallery.innerHTML='<div class="empty"><b>LOADING ARCHIVE...</b>正在整理作品档案</div>';
- const {data,error}=await supabaseClient.from("works").select("*").order("created_at",{ascending:false});
- if(error){console.error(error);gallery.innerHTML='<div class="empty"><b>ARCHIVE UNAVAILABLE</b>作品加载失败，请检查网络或 Supabase 配置。</div>';showToast("作品加载失败："+error.message,true);return}
- works=data||[];renderGallery();renderAdminList();if($("heroCount"))$("heroCount").textContent=String(works.length).padStart(2,"0");
-}
-function renderGallery(){
- const filtered=currentCategory==="全部"?works:works.filter(w=>w.category===currentCategory);
- if(!filtered.length){gallery.innerHTML='<div class="empty"><b>NO WORKS IN THIS FRAME</b>这个分类暂时没有作品。<br>新的形体，正在路上。</div>';gallery.classList.remove("has-works");updateArcGallery();return}
- gallery.classList.add("has-works");
- gallery.innerHTML=filtered.map((w,i)=>`<article class="work-card" data-id="${escapeHtml(w.id)}" style="--i:${i}"><div class="work-image"><img src="${escapeHtml(w.image_url)}" alt="${escapeHtml(w.title)}" loading="lazy" draggable="false"><span class="work-index">WFL / ${String(i+1).padStart(3,"0")}</span></div><div class="work-info"><div><div class="work-category">${escapeHtml(w.category||"其他")}${w.model_url?' · 3D VIEW':''}</div><div class="work-title">${escapeHtml(w.title)}</div><div class="work-description">${escapeHtml(w.description||"")}</div></div><span class="work-arrow">↗</span></div></article>`).join("");
- // Click handling is delegated to the stage: pointer capture during drag can retarget the click to the stage itself.
- arcIndex=Math.min(arcIndex,filtered.length-1);updateArcGallery();
-}
-$("filters").querySelectorAll("[data-category]").forEach(btn=>btn.addEventListener("click",()=>{currentCategory=btn.dataset.category;$("filters").querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b===btn));renderGallery()}));
-function openWork(id){
- currentWork=works.find(w=>String(w.id)===String(id));if(!currentWork)return;
- $("detailTitle").textContent=currentWork.title;$("detailCategory").textContent=currentWork.category||"其他";$("detailDescription").textContent=currentWork.description||"这件作品还没有添加说明。";$("detailMeta").textContent=`WFL / ${currentWork.model_url?"INTERACTIVE 3D ASSET":"DIGITAL ARTWORK"}`;
- const canvas=$("modelCanvas"),status=$("viewerStatus");
- $("detailImage").src=currentWork.image_url;$("detailImage").style.display="block";$("detailImage").style.opacity="1";canvas.style.display="none";$("fullImageBtn").style.display="inline-block";$("detailModal").classList.add("show");document.body.style.overflow="hidden";
- if(currentWork.model_url){
-   status.textContent="LOADING 3D MODEL · 正在载入模型…";status.style.display="block";canvas.style.display="block";
-   // Wait for the modal to become measurable before initializing WebGL.
-   requestAnimationFrame(()=>requestAnimationFrame(()=>loadModel(currentWork.model_url).then(()=>{status.textContent="DRAG TO ROTATE · 滚动缩放 · 拖拽旋转";setTimeout(()=>{if(status.textContent.startsWith("DRAG TO ROTATE"))status.style.display="none"},2600)}).catch(err=>{console.error("GLB load failed:",err);status.textContent="3D 加载失败：请检查 GLB 文件与存储桶公开权限";status.style.display="block";showToast("GLB 加载失败："+(err?.message||"请检查模型链接或存储权限"),true);canvas.style.display="none";$("detailImage").style.opacity="1";})));
- }else{status.style.display="none";$("detailImage").style.opacity="1";disposeModel()}
-}
-function closeDetail(){$("detailModal").classList.remove("show");document.body.style.overflow="";disposeModel();currentWork=null}
-$("detailClose").addEventListener("click",closeDetail);$("detailModal").addEventListener("click",e=>{if(e.target===$("detailModal"))closeDetail()});
-$("fullImageBtn").addEventListener("click",()=>{if(!currentWork)return;$("fullscreenImage").src=currentWork.image_url;$("imageModal").classList.add("show")});
-$("imageClose").addEventListener("click",()=>$("imageModal").classList.remove("show"));$("imageModal").addEventListener("click",e=>{if(e.target===$("imageModal"))$("imageModal").classList.remove("show")});
-async function initThree(){
- if(threeInitialized){resizeThreeViewer();return}
- const canvas=$("modelCanvas");
- renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;
- scene=new THREE.Scene();scene.background=null;camera=new THREE.PerspectiveCamera(35,1,.01,5000);camera.position.set(3,2.4,4);scene.add(new THREE.HemisphereLight(0xffffff,0x343528,2.2));
- const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,6,5);scene.add(key);const fill=new THREE.DirectionalLight(0xb8e9d8,1.6);fill.position.set(-4,1,4);scene.add(fill);const rim=new THREE.DirectionalLight(0xd5ff9a,2.2);rim.position.set(-4,2,-3);scene.add(rim);
- const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new RoomEnvironment(),.04).texture;pmrem.dispose();
- controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.065;controls.enableZoom=true;controls.zoomSpeed=.85;controls.enablePan=true;controls.autoRotate=autoRotate;controls.autoRotateSpeed=1.1;controls.minDistance=.01;controls.maxDistance=10000;
- if(window.ResizeObserver){new ResizeObserver(resizeThreeViewer).observe($("detailView"))}else window.addEventListener("resize",resizeThreeViewer);
- const animate=()=>{animationFrame=requestAnimationFrame(animate);if(controls){controls.autoRotate=autoRotate;controls.update()}if(renderer&&scene&&camera)renderer.render(scene,camera)};animate();threeInitialized=true;resizeThreeViewer();
-}
-function resizeThreeViewer(){if(!renderer||!camera)return;const box=$("detailView").getBoundingClientRect();const w=Math.max(1,box.width),h=Math.max(1,box.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-async function loadModel(url){
- await initThree();resizeThreeViewer();disposeLoadedModel();
- if(!url||typeof url!=="string")throw new Error("作品没有有效的 GLB 地址");
- const loader=new GLTFLoader();loader.setCrossOrigin("anonymous");
- let gltf;
- try{gltf=await loader.loadAsync(url)}catch(firstError){
-   // Give a clear error for failed storage URLs / CORS rather than silently leaving a blank canvas.
-   throw new Error(firstError?.message||"无法读取模型文件。请确认 Supabase Storage 中的 GLB 可公开访问。")
- }
- modelRoot=gltf.scene;scene.add(modelRoot);
- const box=new THREE.Box3().setFromObject(modelRoot),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());modelRoot.position.sub(center);
- const max=Math.max(size.x,size.y,size.z)||1;const fov=camera.fov*Math.PI/180;let distance=(max/2)/Math.tan(fov/2)*1.65;distance=Math.max(distance,.05);
- camera.position.set(distance*.85,distance*.55,distance);camera.near=Math.max(max/10000,.001);camera.far=Math.max(max*100,distance*20,100);camera.updateProjectionMatrix();controls.target.set(0,0,0);controls.minDistance=max*.08;controls.maxDistance=max*20;controls.update();
- modelRoot.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;originalMaterials.push({mesh:o,material:o.material});if(Array.isArray(o.material))o.material=o.material.map(m=>m.clone());else if(o.material)o.material=o.material.clone()}});
- wireframeMode=false;$("wireBtn").textContent="线框显示";resizeThreeViewer();
-}
-function disposeLoadedModel(){if(!modelRoot||!scene)return;scene.remove(modelRoot);modelRoot.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose())}});modelRoot=null;originalMaterials=[]}
-function disposeModel(){if(modelRoot)disposeLoadedModel();if(renderer&&scene){/* renderer is reused for the next model */}}
-$("rotateBtn").addEventListener("click",()=>{autoRotate=!autoRotate;$("rotateBtn").textContent="自动旋转："+(autoRotate?"开":"关")});
-$("wireBtn").addEventListener("click",()=>{if(!modelRoot)return;wireframeMode=!wireframeMode;modelRoot.traverse(o=>{if(o.isMesh){const mats=Array.isArray(o.material)?o.material:[o.material];mats.forEach(m=>{m.wireframe=wireframeMode})}});$("wireBtn").textContent=wireframeMode?"关闭线框":"线框显示"});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDetail();$("loginModal").classList.remove("show");$("imageModal").classList.remove("show");if($("adminModal").classList.contains("show"))closeAdmin()}});
-$("loginBtn").addEventListener("click",()=>$("loginModal").classList.add("show"));$("loginCancel").addEventListener("click",()=>$("loginModal").classList.remove("show"));$("loginCancel2").addEventListener("click",()=>$("loginModal").classList.remove("show"));
-$("loginModal").addEventListener("click",e=>{if(e.target===$("loginModal"))$("loginModal").classList.remove("show")});
-$("loginForm").addEventListener("submit",async e=>{e.preventDefault();const btn=$("loginSubmit");btn.disabled=true;btn.textContent="验证中…";try{const {data,error}=await supabaseClient.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(error)throw error;if(data.user?.id!==ADMIN_UID){await supabaseClient.auth.signOut();throw new Error("这个账号没有管理员权限")} $("loginModal").classList.remove("show");openAdmin();showToast("登录成功，欢迎回来")}catch(err){showToast("登录失败："+err.message,true)}finally{btn.disabled=false;btn.textContent="登录管理后台 ↗"}});
-async function openAdmin(){$("adminModal").classList.add("show");renderAdminList();await loadProfile();fillProfileForm()}
-function closeAdmin(){$("adminModal").classList.remove("show");resetForm()}
-$("adminClose").addEventListener("click",closeAdmin);
-$("logoutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();closeAdmin();showToast("已退出登录")});
-$("imageFile").addEventListener("change",e=>{$("imageStatus").textContent=e.target.files[0]?`已选择：${e.target.files[0].name} · ${formatBytes(e.target.files[0].size)}`:"未选择图片"});
-$("modelFile").addEventListener("change",e=>{$("modelStatus").textContent=e.target.files[0]?`已选择：${e.target.files[0].name} · ${formatBytes(e.target.files[0].size)}`:"未选择 GLB"});
-async function uploadFile(file,folder){if(!file)return null;const path=`${folder}/${randomName(file)}`;const {error}=await supabaseClient.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream",cacheControl:"31536000"});if(error)throw error;return supabaseClient.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
-$("workForm").addEventListener("submit",saveWork);
-async function saveWork(e){
- e.preventDefault();const btn=$("saveWorkBtn");btn.disabled=true;
- try{
-  const title=$("workTitle").value.trim(),category=$("workCategory").value,description=$("workDescription").value.trim(),imageFile=$("imageFile").files[0],modelFile=$("modelFile").files[0];
-  if(!title)throw new Error("请输入作品标题");
-  const old=editingWorkId?works.find(w=>String(w.id)===String(editingWorkId)):null;
-  let imageUrl=old?.image_url||null,modelUrl=old?.model_url||null;
-  if(imageFile){btn.textContent="上传图片…";imageUrl=await uploadFile(imageFile,"images")}
-  if(modelFile){btn.textContent="上传 GLB…";modelUrl=await uploadFile(modelFile,"models")}
-  if(!imageUrl)throw new Error("请上传作品图片");
-  btn.textContent="保存数据库…";const payload={title,category,description,image_url:imageUrl,model_url:modelUrl};
-  const result=editingWorkId?await supabaseClient.from("works").update(payload).eq("id",editingWorkId):await supabaseClient.from("works").insert(payload);
-  if(result.error)throw result.error;showToast(editingWorkId?"作品修改成功":"作品保存成功");resetForm();await loadWorks();
- }catch(err){console.error(err);showToast("保存失败："+err.message,true)}finally{btn.disabled=false;btn.textContent="保存作品 ↗"}
-}
-function resetForm(){editingWorkId=null;$("editingId").value="";$("workForm").reset();$("imageFile").required=true;$("imageStatus").textContent="未选择图片";$("modelStatus").textContent="未选择 GLB";$("saveWorkBtn").textContent="保存作品 ↗"}
-$("cancelEdit").addEventListener("click",resetForm);
-function renderAdminList(){const list=$("adminList");if(!list)return;if(!works.length){list.innerHTML='<div class="empty">暂无作品</div>';return}list.innerHTML=works.map(w=>`<div class="admin-work-row"><img class="admin-work-thumb" src="${escapeHtml(w.image_url)}" alt=""><div><div class="admin-work-name">${escapeHtml(w.title)}</div><div class="admin-work-category">${escapeHtml(w.category||"其他")}${w.model_url?" · GLB ✓":""}</div></div><div class="admin-work-actions"><button class="btn" data-edit="${escapeHtml(w.id)}">编辑</button><button class="btn" data-delete="${escapeHtml(w.id)}">删除</button></div></div>`).join("");
- list.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>editWork(b.dataset.edit)));list.querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>deleteWork(b.dataset.delete)))}
-function editWork(id){const w=works.find(x=>String(x.id)===String(id));if(!w)return;editingWorkId=w.id;$("editingId").value=w.id;$("workTitle").value=w.title||"";$("workCategory").value=w.category||"其他";$("workDescription").value=w.description||"";$("imageFile").required=false;$("imageStatus").textContent="未选择新图片（将保留原图）";$("modelStatus").textContent=w.model_url?"已有 GLB（不选新文件将保留）":"当前没有 GLB";$("saveWorkBtn").textContent="保存修改 ↗";$("workForm").scrollIntoView({behavior:"smooth",block:"start"})}
-async function deleteWork(id){const w=works.find(x=>String(x.id)===String(id));if(!w||!confirm(`确定要删除「${w.title}」吗？`))return;const {error}=await supabaseClient.from("works").delete().eq("id",id);if(error){showToast("删除失败："+error.message,true);return}showToast("作品已删除");await loadWorks()}
-const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+let works=[],cat="全部",editingId=null,current=null,idx=0;const cu=document.getElementById("cursor");
+const esc=(v="")=>String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+const pad=n=>String(n).padStart(2,"0");
+function toast(m,err){const t=$("toast");t.textContent=m;t.classList.toggle("err",!!err);t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),3200)}
+const rname=f=>`${Date.now()}_${Math.random().toString(36).slice(2,10)}${f.name.includes(".")?f.name.slice(f.name.lastIndexOf(".")):""}`;
+const fmt=b=>{if(!b)return"0 B";const u=["B","KB","MB","GB"],i=Math.min(3,Math.floor(Math.log(b)/Math.log(1024)));return(b/1024**i).toFixed(1)+" "+u[i]};
+const shown=()=>cat==="全部"?works:works.filter(w=>w.category===cat);
 
-const PROFILE_DEFAULTS = {
- heroIntro:"角色、场景、道具与风格化资产。这里展示从形体设计、结构搭建到材质呈现的持续探索。选择作品查看详情；支持的项目可直接在网页中旋转查看三维模型。",
- aboutAside:"持续探索不同类型的 3D 游戏资产，用作品记录从形体构思到最终呈现的过程。",
- manifesto:"让形体建立识别，让细节构建可信。\n每件资产都为它所属的世界提供线索。",
- aboutText:"这里记录不同方向的 3D 游戏美术实践，包括角色与生物、武器与道具、机械资产、环境元素及风格化造型。关注轮廓、比例、结构、材质与最终呈现，让每件作品既有清晰的视觉重点，也能自然融入它所处的游戏世界。\n\n欢迎浏览作品、交流制作方法，或就游戏美术相关机会与我联系。",
- contactText:"欢迎交流角色、场景、道具、机械、生物、材质表现与其他 3D 游戏美术方向，也欢迎提出建议或讨论项目合作。作品持续更新中。",
- email:"your-email@example.com",
- timeline:[
-  {date:"NOW — 2026",title:"持续创作 / Independent Practice",description:"围绕角色、道具、机械与环境资产进行练习，积累从参考分析、建模到材质和展示的完整流程。"},
-  {date:"ONGOING",title:"技能迭代 / Learning by Making",description:"通过参考拆解、形体迭代与作品复盘，持续完善建模流程、视觉表达和审美判断。"}
- ],
- skills:[
-  {name:"硬表面建模",level:72},{name:"道具设计与结构拆解",level:66},
-  {name:"材质 / 灯光 / 渲染",level:58},{name:"拓扑 / UV 工作流",level:52}
- ]
-};
-let profileContent = structuredClone(PROFILE_DEFAULTS);
-function parseRows(text, isSkills=false){
- return String(text||"").split("\n").map(line=>line.trim()).filter(Boolean).map(line=>{
-  const parts=line.split("|").map(x=>x.trim());
-  if(isSkills){return {name:parts[0]||"未命名技能",level:Math.max(0,Math.min(100,Number(parts[1])||0))};}
-  return {date:parts[0]||"ONGOING",title:parts[1]||"持续创作",description:parts.slice(2).join(" | ")||""};
+/* ===== 作品读取 ===== */
+async function loadWorks(){
+ const {data,error}=await sb.from("works").select("*").order("created_at",{ascending:false});
+ if(error){console.error(error);toast("作品加载失败："+error.message,true)}
+ works=data||[];build();renderAdminList()}
+$("filters").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;cat=b.dataset.c;$("filters").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));idx=0;target=cur=0;build()});
+
+/* ===== 首屏：WebGL 水波 3D 作品连廊 ===== */
+const hc=$("hc"),stageEl=$("stage");
+const R=new THREE.WebGLRenderer({canvas:hc,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.setClearColor(0x000000,1);
+const HS=new THREE.Scene(),HC=new THREE.PerspectiveCamera(38,1,.1,100);HC.position.set(0,.3,8.4);
+const SP=3.05,PW=2.3,PH=2.95;
+let panels=[],cur=0,target=0,svel=0,hover=-1,dragging=false,moved=false,lastIn=0,mxs=0,mxt=0,gridX=0;
+const blank=new THREE.DataTexture(new Uint8Array([245,245,243,255]),1,1);blank.needsUpdate=true;
+const VS=`uniform float uTime,uVel,uBow,uOff,uHW,uHH;varying vec2 vUv;varying vec3 vN;
+vec3 D(vec2 u){float s=u.x*2.-1.,t=u.y*2.-1.;vec3 p=vec3(s*uHW,t*uHH,0.);
+ float b=(1.-s*s)*(1.-t*t);p.z+=b*.34;
+ float w=sin(u.y*5.+uTime*1.25+uOff*1.9)*.5+sin(u.x*3.5-uTime*.8+uOff*.7)*.5;p.z+=w*(.08+abs(uVel)*.6);
+ p.y+=t*(sin(u.x*3.14159)-.5)*uBow*.3;p.x+=s*(sin(u.y*3.14159)-.5)*uBow*.2;p.x+=t*uVel*.8;p.z+=s*s*uBow*.1;return p;}
+void main(){vUv=uv;vec3 p=D(uv);vec3 n=normalize(cross(D(uv+vec2(.01,0.))-p,D(uv+vec2(0.,.01))-p));vN=normalMatrix*n;gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`;
+const FS=`uniform sampler2D uMap;uniform float uAsp,uPA,uDim,uHov,uLoad,uOff;varying vec2 vUv;varying vec3 vN;
+void main(){vec2 q=abs(vUv-.5)*vec2(uPA,1.)-vec2(uPA,1.)*.5+.08;if(length(max(q,0.))-.08>0.)discard;
+ vec2 iu=vUv;if(uAsp>uPA)iu.x=(vUv.x-.5)*uPA/uAsp+.5+uOff*.0;else iu.y=(vUv.y-.5)*uAsp/uPA+.5;
+ vec3 c=mix(vec3(.96),texture2D(uMap,iu).rgb,uLoad);vec3 n=normalize(vN);
+ float l=dot(n,normalize(vec3(-.35,.5,.8)));c*=.78+.3*l;c*=mix(.8,1.,smoothstep(0.,.55,abs(n.z)));
+ c+=uHov*.07;c*=1.-uDim;gl_FragColor=vec4(c,1.);}`;
+const geo=new THREE.PlaneGeometry(PW,PH,34,42);
+/* 地面透视网格 */
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(70,46),new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{uX:{value:0}},
+ vertexShader:`varying vec3 vW;void main(){vec4 w=modelMatrix*vec4(position,1.);vW=w.xyz;gl_Position=projectionMatrix*viewMatrix*w;}`,
+ fragmentShader:`uniform float uX;varying vec3 vW;void main(){vec2 g=vec2(vW.x+uX,vW.z)*.8;vec2 f=abs(fract(g-.5)-.5)/fwidth(g);float l=1.-min(min(f.x,f.y),1.);float d=length(vW.xz-vec2(0.,-4.));gl_FragColor=vec4(.75,.82,.8,l*.26*smoothstep(15.,3.,d));}`}));
+floor.rotation.x=-Math.PI/2;floor.position.set(0,-1.9,-8);HS.add(floor);
+function demoTex(t,i){const c=document.createElement("canvas");c.width=512;c.height=640;const x=c.getContext("2d"),g=x.createLinearGradient(0,0,512,640);g.addColorStop(0,"#f6f7f5");g.addColorStop(1,["#cfe9dc","#dfe3ea","#e9e0d4","#d6e4ee","#e4dcea"][i%5]);x.fillStyle=g;x.fillRect(0,0,512,640);x.fillStyle="#111";x.font="900 92px 'Barlow Condensed',Impact,sans-serif";x.fillText(t.toUpperCase(),36,560);x.font="14px monospace";x.fillText("WFL / DEMO 0"+(i+1),36,60);const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;return tx}
+function build(){
+ panels.forEach(p=>{HS.remove(p.m);p.m.material.dispose();p.tex?.dispose()});panels=[];
+ let list=shown();
+ if(!works.length)list=["Hard Surface","Creature","Environment","Prop","Character"].map((t,i)=>({id:"demo"+i,demo:1,title:t,category:"DEMO",description:"上传作品后，这里会显示你的作品。"}));
+ list.forEach((w,i)=>{
+  const u={uMap:{value:blank},uTime:{value:0},uVel:{value:0},uBow:{value:0},uOff:{value:i},uHW:{value:PW/2},uHH:{value:PH/2},uAsp:{value:1},uPA:{value:PW/PH},uDim:{value:0},uHov:{value:0},uLoad:{value:0}};
+  const m=new THREE.Mesh(geo,new THREE.ShaderMaterial({uniforms:u,vertexShader:VS,fragmentShader:FS,side:THREE.DoubleSide}));HS.add(m);
+  const p={m,u,w,hov:0,tex:null};panels.push(p);
+  if(w.demo){p.tex=demoTex(w.title,i);u.uMap.value=p.tex;u.uLoad.value=1}
+  else new THREE.TextureLoader().setCrossOrigin("anonymous").load(w.image_url,t=>{t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=4;p.tex=t;u.uMap.value=t;u.uAsp.value=t.image.width/t.image.height;u.uLoad.value=1},undefined,()=>{});
  });
-}
-function fillProfileForm(){
- $("profileHeroIntro").value=profileContent.heroIntro||"";
- $("profileAboutAside").value=profileContent.aboutAside||"";
- $("profileManifesto").value=profileContent.manifesto||"";
- $("profileAboutText").value=profileContent.aboutText||"";
- $("profileContactText").value=profileContent.contactText||"";
- $("profileEmail").value=profileContent.email||"";
- $("profileTimeline").value=(profileContent.timeline||[]).map(x=>`${x.date} | ${x.title} | ${x.description}`).join("\n");
- $("profileSkills").value=(profileContent.skills||[]).map(x=>`${x.name} | ${x.level}`).join("\n");
-}
+ $("tot").textContent=pad(panels.length);caption(true)}
+function caption(force){
+ const n=panels.length;if(!n){$("capK").textContent="00 — EMPTY";$("capT").textContent="No works";$("capS").textContent="这个分类暂时没有作品。";$("fCase").textContent="CASE 00 / 00";return}
+ const i=((Math.round(cur)%n)+n)%n;if(!force&&i===idx&&caption.l===cur>-1e9&&caption.i===i)return;caption.i=i;idx=i;
+ const w=panels[i].w;$("capK").textContent=`${pad(i+1)} — ${(w.category||"其他").toUpperCase()}${w.model_url?" · 3D VIEW":""}`;$("capT").textContent=w.title;$("capS").textContent=w.description||"";
+ $("cur").textContent=pad(i+1);$("fCase").innerHTML=`CASE ${pad(i+1)} / ${pad(n)} · <span>${esc((w.title||"").toUpperCase())}</span>`;$("fVis").textContent=`${n} VISUALS · ${w.model_url?"3D MODEL":"RENDER"}`}
+function size(){const r=stageEl.getBoundingClientRect(),w=Math.max(1,r.width),h=Math.max(1,r.height);R.setSize(w,h,false);HC.aspect=w/h;HC.fov=w/h<.8?52:38;HC.updateProjectionMatrix()}
+new ResizeObserver(size).observe(stageEl);size();
+const ray=new THREE.Raycaster(),pt=new THREE.Vector2();
+const pxPer=()=>innerHeight/5.9*SP*(innerWidth<700?.8:1);
+function moveBy(d){target+=d;lastIn=performance.now()}
+stageEl.addEventListener("pointermove",e=>{const r=stageEl.getBoundingClientRect();mxt=(e.clientX-r.left)/r.width*2-1;
+ if(dragging){const dx=e.clientX-lx;lx=e.clientX;if(Math.abs(e.clientX-sx)>8)moved=true;moveBy(-dx/pxPer());fl=-dx/pxPer()*.6+fl*.4;cur+= -dx/pxPer()*.5;return}
+ pt.set(mxt,-((e.clientY-r.top)/r.height*2-1));ray.setFromCamera(pt,HC);const hits=ray.intersectObjects(panels.map(p=>p.m));const h=hits.length?panels.findIndex(p=>p.m===hits[0].object):-1;
+ hover=h;cu.classList.toggle("big",h>=0&&!panels[h].w.demo);cu.textContent="VIEW"});
+let sx=0,lx=0,fl=0;
+stageEl.addEventListener("pointerdown",e=>{dragging=true;moved=false;sx=lx=e.clientX;fl=0;stageEl.classList.add("drag");stageEl.setPointerCapture?.(e.pointerId)});
+const up=()=>{if(!dragging)return;dragging=false;stageEl.classList.remove("drag");target+=Math.max(-2.5,Math.min(2.5,fl*7));lastIn=performance.now()};
+["pointerup","pointercancel"].forEach(t=>stageEl.addEventListener(t,up));
+stageEl.addEventListener("pointerleave",()=>{hover=-1;cu.classList.remove("big")});
+stageEl.addEventListener("click",()=>{if(moved){moved=false;return}if(hover>=0&&!panels[hover].w.demo)openWork(panels[hover].w.id)});
+stageEl.addEventListener("wheel",e=>{if(Math.abs(e.deltaX)>Math.abs(e.deltaY)||e.shiftKey){e.preventDefault();moveBy(Math.sign(e.deltaX||e.deltaY)*Math.min(.5,Math.abs(e.deltaX||e.deltaY)*.004))}},{passive:false});
+addEventListener("keydown",e=>{if(document.querySelector(".ov.show,.modal.show,.adm.show"))return;if(e.key==="ArrowRight")moveBy(1);if(e.key==="ArrowLeft")moveBy(-1)});
+(function frame(){requestAnimationFrame(frame);const r=stageEl.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+ const t=performance.now()*.001,n=panels.length,prev=cur;
+ if(!dragging&&performance.now()-lastIn>160)target+=(Math.round(target)-target)*.07;
+ cur+=(target-cur)*.09;svel+=((cur-prev)*6-svel)*.15;mxs+=(mxt-mxs)*.05;
+ HC.position.x=mxs*.45;HC.position.y=.3-mxs*.03;HC.lookAt(mxs*.1,-.05,0);floor.material.uniforms.uX.value=cur*SP*.8;
+ panels.forEach((p,i)=>{let o=i-cur;o-=n*Math.round(o/n);const a=Math.abs(o),m=p.m;
+  p.hov+=((hover===i?1:0)-p.hov)*.15;
+  m.position.set(o*SP*(1-Math.min(a,3)*.07),-Math.min(a,3)*.05,-Math.pow(a,1.45)*1.05);
+  m.rotation.set(0,Math.max(-1.05,Math.min(1.05,-o*.36)),-svel*.35);m.scale.setScalar((1-Math.min(a,3.5)*.055)*(1+p.hov*.04));m.visible=a<3.8;
+  const u=p.u;u.uTime.value=t;u.uVel.value=Math.max(-.7,Math.min(.7,svel));u.uBow.value=Math.max(-2.2,Math.min(2.2,o))*1.0;u.uDim.value=Math.min(a*.16,.68);u.uHov.value=p.hov});
+ if(n)caption();R.render(HS,HC)})();
+
+/* ===== 详情页 + GLB 查看（逻辑与原版一致） ===== */
+let renderer,scene,camera,controls,root,raf,inited=false,wire=false,auto=true;
+function openWork(id){
+ current=works.find(w=>String(w.id)===String(id));if(!current)return;
+ const i=works.indexOf(current),total=works.length;
+ $("dTitle").textContent=current.title;$("dCat").textContent=(current.category||"其他").toUpperCase();$("dSub").textContent=current.category||"其他";
+ $("dCase").textContent=`CASE ${pad(shown().indexOf(current)+1)} / ${pad(shown().length)}`;
+ $("dDesc").textContent=current.description||"这件作品还没有添加说明。";
+ $("dNum").firstChild.textContent=current.model_url?"3D":pad(i+1);
+ const cv=$("cv"),s=$("vst");$("dImg").src=current.image_url;$("dImg").style.opacity=1;cv.style.display="none";$("detail").classList.add("show");$("detail").scrollTop=0;document.body.style.overflow="hidden";
+ if(current.model_url){s.textContent="LOADING 3D MODEL · 正在载入模型…";cv.style.display="block";
+  requestAnimationFrame(()=>requestAnimationFrame(()=>loadModel(current.model_url).then(()=>{$("dImg").style.opacity=.04;s.textContent="DRAG TO ROTATE · 滚动缩放 · 拖拽旋转";setTimeout(()=>{if(s.textContent.startsWith("DRAG"))s.textContent=""},2600)}).catch(err=>{console.error(err);s.textContent="3D 加载失败：请检查 GLB 文件与存储桶公开权限";toast("GLB 加载失败："+(err?.message||"请检查模型链接或存储权限"),true);cv.style.display="none";$("dImg").style.opacity=1})))
+ }else{s.textContent="";disposeModel()}}
+function closeDetail(){$("detail").classList.remove("show");document.body.style.overflow="";disposeModel();current=null}
+$("dClose").onclick=closeDetail;
+$("fullBtn").onclick=()=>{if(!current)return;$("fullImg").src=current.image_url;$("imgov").classList.add("show")};
+$("imgX").onclick=()=>$("imgov").classList.remove("show");$("imgov").onclick=e=>{if(e.target===$("imgov"))$("imgov").classList.remove("show")};
+function initThree(){
+ if(inited){resize();return}
+ const canvas=$("cv");renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+ scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(35,1,.01,5000);camera.position.set(3,2.4,4);scene.add(new THREE.HemisphereLight(0xffffff,0x888880,2));
+ const k=new THREE.DirectionalLight(0xffffff,3);k.position.set(4,6,5);scene.add(k);const f=new THREE.DirectionalLight(0xdfeee8,1.4);f.position.set(-4,1,4);scene.add(f);
+ const p=new THREE.PMREMGenerator(renderer);scene.environment=p.fromScene(new RoomEnvironment(),.04).texture;p.dispose();
+ controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.065;controls.autoRotate=auto;controls.autoRotateSpeed=1.1;
+ new ResizeObserver(resize).observe($("view"));
+ const loop=()=>{raf=requestAnimationFrame(loop);controls.autoRotate=auto;controls.update();renderer.render(scene,camera)};loop();inited=true;resize()}
+function resize(){if(!renderer)return;const b=$("view").getBoundingClientRect(),w=Math.max(1,b.width),h=Math.max(1,b.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+async function loadModel(url){
+ initThree();resize();clearModel();if(!url||typeof url!=="string")throw new Error("作品没有有效的 GLB 地址");
+ const L=new GLTFLoader();L.setCrossOrigin("anonymous");let gltf;
+ try{gltf=await L.loadAsync(url)}catch(e){throw new Error(e?.message||"无法读取模型文件。请确认 Supabase Storage 中的 GLB 可公开访问。")}
+ root=gltf.scene;scene.add(root);
+ const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),c=box.getCenter(new THREE.Vector3());root.position.sub(c);
+ const max=Math.max(size.x,size.y,size.z)||1;let d=Math.max((max/2)/Math.tan(camera.fov*Math.PI/360)*1.65,.05);
+ camera.position.set(d*.85,d*.55,d);camera.near=Math.max(max/10000,.001);camera.far=Math.max(max*100,d*20,100);camera.updateProjectionMatrix();controls.target.set(0,0,0);controls.minDistance=max*.08;controls.maxDistance=max*20;controls.update();
+ root.traverse(o=>{if(o.isMesh)o.material=Array.isArray(o.material)?o.material.map(m=>m.clone()):o.material?.clone()});
+ wire=false;$("wireBtn").textContent="线框显示";resize()}
+function clearModel(){if(!root||!scene)return;scene.remove(root);root.traverse(o=>{o.geometry?.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m?.dispose())});root=null}
+const disposeModel=clearModel;
+$("rotBtn").onclick=()=>{auto=!auto;$("rotBtn").textContent="自动旋转："+(auto?"开":"关")};
+$("wireBtn").onclick=()=>{if(!root)return;wire=!wire;root.traverse(o=>{if(o.isMesh)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.wireframe=wire)});$("wireBtn").textContent=wire?"关闭线框":"线框显示"};
+addEventListener("keydown",e=>{if(e.key==="Escape"){if($("imgov").classList.contains("show"))$("imgov").classList.remove("show");else closeDetail();$("loginModal").classList.remove("show");if($("adm").classList.contains("show"))closeAdmin()}});
+
+/* ===== 登录 / 管理台（Supabase Auth，管理员 UID 校验不变） ===== */
+const showLogin=()=>$("loginModal").classList.add("show"),hideLogin=()=>$("loginModal").classList.remove("show");
+$("loginBtn").onclick=showLogin;$("floatAdmin").onclick=showLogin;$("loginCancel").onclick=hideLogin;$("loginX").onclick=hideLogin;$("loginModal").onclick=e=>{if(e.target===$("loginModal"))hideLogin()};
+$("loginForm").addEventListener("submit",async e=>{e.preventDefault();const b=$("loginSubmit");b.disabled=true;b.textContent="验证中…";
+ try{const {data,error}=await sb.auth.signInWithPassword({email:$("lEmail").value.trim(),password:$("lPass").value});if(error)throw error;
+  if(data.user?.id!==ADMIN_UID){await sb.auth.signOut();throw new Error("这个账号没有管理员权限")}hideLogin();openAdmin();toast("登录成功，欢迎回来")}
+ catch(err){toast("登录失败："+err.message,true)}finally{b.disabled=false;b.textContent="登录管理后台 ↗"}});
+async function openAdmin(){$("adm").classList.add("show");renderAdminList();await loadProfile();fillProfile()}
+function closeAdmin(){$("adm").classList.remove("show");resetForm()}
+$("admClose").onclick=closeAdmin;$("logoutBtn").onclick=async()=>{await sb.auth.signOut();closeAdmin();toast("已退出登录")};
+$("imgFile").onchange=e=>{const f=e.target.files[0];$("imgSt").textContent=f?`已选择：${f.name} · ${fmt(f.size)}`:"未选择图片"};
+$("glbFile").onchange=e=>{const f=e.target.files[0];$("glbSt").textContent=f?`已选择：${f.name} · ${fmt(f.size)}`:"未选择 GLB"};
+async function upload(file,folder){if(!file)return null;const path=`${folder}/${rname(file)}`;const {error}=await sb.storage.from(BUCKET).upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream",cacheControl:"31536000"});if(error)throw error;return sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl}
+$("workForm").addEventListener("submit",async e=>{e.preventDefault();const b=$("saveWork");b.disabled=true;
+ try{const title=$("wTitle").value.trim(),category=$("wCat").value,description=$("wDesc").value.trim(),im=$("imgFile").files[0],gl=$("glbFile").files[0];if(!title)throw new Error("请输入作品标题");
+  const old=editingId?works.find(w=>String(w.id)===String(editingId)):null;let image_url=old?.image_url||null,model_url=old?.model_url||null;
+  if(im){b.textContent="上传图片…";image_url=await upload(im,"images")}if(gl){b.textContent="上传 GLB…";model_url=await upload(gl,"models")}
+  if(!image_url)throw new Error("请上传作品图片");b.textContent="保存数据库…";const payload={title,category,description,image_url,model_url};
+  const r=editingId?await sb.from("works").update(payload).eq("id",editingId):await sb.from("works").insert(payload);if(r.error)throw r.error;
+  toast(editingId?"作品修改成功":"作品保存成功");resetForm();await loadWorks()}
+ catch(err){console.error(err);toast("保存失败："+err.message,true)}finally{b.disabled=false;b.textContent="保存作品 ↗"}});
+function resetForm(){editingId=null;$("workForm").reset();$("imgFile").required=true;$("imgSt").textContent="未选择图片";$("glbSt").textContent="未选择 GLB";$("saveWork").textContent="保存作品 ↗"}
+$("cancelEdit").onclick=resetForm;
+function renderAdminList(){const l=$("adminList");if(!l)return;if(!works.length){l.innerHTML='<div class="st">暂无作品</div>';return}
+ l.innerHTML=works.map(w=>`<div class="row"><img src="${esc(w.image_url)}" alt=""><div><div style="font-size:12px">${esc(w.title)}</div><div class="st">${esc(w.category||"其他")}${w.model_url?" · GLB ✓":""}</div></div><div><button class="btn" data-e="${esc(w.id)}">编辑</button> <button class="btn" data-d="${esc(w.id)}">删除</button></div></div>`).join("");
+ l.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>editWork(b.dataset.e));l.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>delWork(b.dataset.d))}
+function editWork(id){const w=works.find(x=>String(x.id)===String(id));if(!w)return;editingId=w.id;$("wTitle").value=w.title||"";$("wCat").value=w.category||"其他";$("wDesc").value=w.description||"";$("imgFile").required=false;$("imgSt").textContent="未选择新图片（将保留原图）";$("glbSt").textContent=w.model_url?"已有 GLB（不选新文件将保留）":"当前没有 GLB";$("saveWork").textContent="保存修改 ↗";$("workForm").scrollIntoView({behavior:"smooth"})}
+async function delWork(id){const w=works.find(x=>String(x.id)===String(id));if(!w||!confirm(`确定要删除「${w.title}」吗？`))return;const {error}=await sb.from("works").delete().eq("id",id);if(error){toast("删除失败："+error.message,true);return}toast("作品已删除");await loadWorks()}
+
+/* ===== 主页内容（Supabase site_content，id=1） ===== */
+const DEF={heroIntro:"角色、场景、道具与风格化资产。这里展示从形体设计、结构搭建到材质呈现的持续探索。选择作品查看详情；支持的项目可直接在网页中旋转查看三维模型。",aboutAside:"持续探索不同类型的 3D 游戏资产，用作品记录从形体构思到最终呈现的过程。",manifesto:"让形体建立识别，\n让细节构建可信。",aboutText:"这里记录不同方向的 3D 游戏美术实践，包括角色与生物、武器与道具、机械资产、环境元素及风格化造型。关注轮廓、比例、结构、材质与最终呈现，让每件作品既有清晰的视觉重点，也能自然融入它所处的游戏世界。\n\n欢迎浏览作品、交流制作方法，或就游戏美术相关机会与我联系。",contactText:"欢迎交流角色、场景、道具、机械、生物、材质表现与其他 3D 游戏美术方向，也欢迎提出建议或讨论项目合作。作品持续更新中。",email:"your-email@example.com",
+ timeline:[{date:"NOW — 2026",title:"持续创作 / Independent Practice",description:"围绕角色、道具、机械与环境资产进行练习，积累从参考分析、建模到材质和展示的完整流程。"},{date:"ONGOING",title:"技能迭代 / Learning by Making",description:"通过参考拆解、形体迭代与作品复盘，持续完善建模流程、视觉表达和审美判断。"}],
+ skills:[{name:"硬表面建模",level:72},{name:"道具设计与结构拆解",level:66},{name:"材质 / 灯光 / 渲染",level:58},{name:"拓扑 / UV 工作流",level:52}]};
+let P=structuredClone(DEF);
+const rows=(t,sk)=>String(t||"").split("\n").map(l=>l.trim()).filter(Boolean).map(l=>{const p=l.split("|").map(x=>x.trim());return sk?{name:p[0]||"未命名技能",level:Math.max(0,Math.min(100,Number(p[1])||0))}:{date:p[0]||"ONGOING",title:p[1]||"持续创作",description:p.slice(2).join(" | ")}});
+function fillProfile(){$("pHero").value=P.heroIntro||"";$("pAside").value=P.aboutAside||"";$("pMani").value=P.manifesto||"";$("pAbout").value=P.aboutText||"";$("pContact").value=P.contactText||"";$("pEmail").value=P.email||"";$("pTime").value=(P.timeline||[]).map(x=>`${x.date} | ${x.title} | ${x.description}`).join("\n");$("pSkill").value=(P.skills||[]).map(x=>`${x.name} | ${x.level}`).join("\n")}
 function renderProfile(){
- $("heroIntro").textContent=profileContent.heroIntro||"";
- $("aboutAside").textContent=profileContent.aboutAside||"";
- const manifestoHtml=escapeHtml(profileContent.manifesto||"").replace(/让细节构建可信。/g,"<mark>让细节构建可信。</mark>").replace(/好的作品不止于完成。/g,"<mark>好的作品不止于完成。</mark>").replace(/\n/g,"<br>");$("manifesto").innerHTML=manifestoHtml;
- $("aboutText").textContent=profileContent.aboutText||"";
- $("contactText").textContent=profileContent.contactText||"";
- const email=(profileContent.email||"").trim();
- const emailLink=$("emailLink"),emailText=$("emailText");
- emailLink.href="mailto:"+(email||"your-email@example.com");
- if(emailText){emailText.textContent=email||"暂未设置邮箱";emailText.href=email?"mailto:"+email:"#";}
- $("timeline").innerHTML=(profileContent.timeline||[]).map(item=>`<div class="timeline-item"><div class="timeline-date">${escapeHtml(item.date)}</div><div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div></div>`).join("");
- $("skillsList").innerHTML=(profileContent.skills||[]).map(item=>`<div class="skill-row"><div class="skill-label"><span>${escapeHtml(item.name)}</span><span>${Math.max(0,Math.min(100,Number(item.level)||0))}%</span></div><div class="skill-track"><div class="skill-fill" style="--level:${Math.max(0,Math.min(100,Number(item.level)||0))}%"></div></div></div>`).join("");
-}
+ $("heroIntro").textContent=P.heroIntro||"";$("aboutAside").textContent=P.aboutAside||"";$("aboutText").textContent=P.aboutText||"";$("contactText").textContent=P.contactText||"";
+ const m=(P.manifesto||"").split("\n");$("manifestoH").innerHTML=m.length>1?esc(m[0])+"<mark>"+esc(m.slice(1).join(" "))+"</mark>":esc(m[0]||"");
+ const em=(P.email||"").trim();$("emailLink").href="mailto:"+(em||"your-email@example.com");$("emailText").textContent=em||"暂未设置邮箱";$("emailText").href=em?"mailto:"+em:"#";
+ $("timeline").innerHTML=(P.timeline||[]).map(i=>`<div class="tl"><b>${esc(i.date)}</b><div><h5>${esc(i.title)}</h5><p>${esc(i.description)}</p></div></div>`).join("");
+ $("skillsList").innerHTML=(P.skills||[]).map(i=>{const l=Math.max(0,Math.min(100,Number(i.level)||0));return`<div class="sk"><div><span>${esc(i.name)}</span><span class="mono">${l}%</span></div><div class="tr"><div class="fl" style="--l:${l}%"></div></div></div>`}).join("")}
 async function loadProfile(){
- try{
-  const {data,error}=await supabaseClient.from("site_content").select("content").eq("id",1).maybeSingle();
-  if(error)throw error;
-  if(data?.content)profileContent={...structuredClone(PROFILE_DEFAULTS),...data.content};
-  $("profileStatus").textContent=data?.content?"已从云端读取主页内容。":"云端还没有自定义内容，当前显示默认文案。保存一次即可写入。";
- }catch(err){
-  console.warn("Profile content table is not ready:",err);
-  $("profileStatus").textContent="主页内容表尚未配置：目前显示默认文案。请先执行随附 SQL 文件，再登录后台保存。";
- }
- renderProfile();
-}
-$("profileForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const btn=$("saveProfileBtn");btn.disabled=true;btn.textContent="保存中…";
- const next={
-  heroIntro:$("profileHeroIntro").value.trim(),
-  aboutAside:$("profileAboutAside").value.trim(),
-  manifesto:$("profileManifesto").value.trim(),
-  aboutText:$("profileAboutText").value.trim(),
-  contactText:$("profileContactText").value.trim(),
-  email:$("profileEmail").value.trim(),
-  timeline:parseRows($("profileTimeline").value),
-  skills:parseRows($("profileSkills").value,true)
- };
- try{
-  const {error}=await supabaseClient.from("site_content").upsert({id:1,content:next},{onConflict:"id"});
-  if(error)throw error;
-  profileContent=next;renderProfile();fillProfileForm();
-  $("profileStatus").textContent="已保存到云端，访客刷新网页后即可看到最新内容。";
-  showToast("主页内容已保存");
- }catch(err){
-  console.error(err);
-  $("profileStatus").textContent="保存失败："+err.message+"。请确认已执行 SQL 配置。";
-  showToast("主页内容保存失败："+err.message,true);
- }finally{btn.disabled=false;btn.textContent="保存主页内容 ↗";}
-});
-$("resetProfileBtn").addEventListener("click",()=>{
- if(!confirm("将编辑表单恢复为默认示例文案？此操作尚未保存到云端。"))return;
- profileContent=structuredClone(PROFILE_DEFAULTS);fillProfileForm();renderProfile();
- $("profileStatus").textContent="已恢复默认示例，点击“保存主页内容”后才会更新云端。";
-});
-// ---- 3D curved gallery: driven by the live Supabase works list ----
-let arcIndex=0,arcMoved=false,arcPointerDown=false,arcStartX=0,arcStartY=0,arcLastX=0,arcVelocity=0,arcFrame=null;
-function arcCards(){return [...gallery.querySelectorAll(".work-card")]}
-function updateArcGallery(){
- const cards=arcCards(),total=cards.length;
- const stage=$("arcStage");if(!stage)return;
- $("arcTotal").textContent=String(total).padStart(2,"0");
- if(!total){$("arcCurrent").textContent="00";$("fixedCase").textContent="CASE 00 / 00 · NO WORKS";return}
- arcIndex=((arcIndex%total)+total)%total;
- $("arcCurrent").textContent=String(arcIndex+1).padStart(2,"0");
- const current=works.filter(w=>currentCategory==="全部"||w.category===currentCategory)[arcIndex];
- $("fixedCase").textContent=`CASE ${String(arcIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")} · ${(current?.title||"WFL WORKS").toUpperCase()}`;
- $("fixedVisuals").textContent=current?.model_url?"3D MODEL · INTERACTIVE VIEW":"HARD SURFACE · 3D PROPS";
- cards.forEach((card,i)=>{
-   let offset=i-arcIndex;const half=total/2;if(offset>half)offset-=total;if(offset< -half)offset+=total;
-   const abs=Math.abs(offset),gap=window.innerWidth<700?Math.min(window.innerWidth*.57,230):Math.min(window.innerWidth*.27,370);
-   const x=offset*gap,rot=offset*-21,scale=Math.max(.68,1-abs*.105),y=abs*19,z=-abs*150;
-   card.style.transform=`translate(-50%, 0) translate3d(${x}px, ${y}px, ${z}px) rotateY(${rot}deg) scale(${scale})`;
-   card.style.zIndex=String(100-Math.round(abs*10));card.style.opacity=abs>3?"0":String(Math.max(.28,1-abs*.2));card.style.filter=abs>1.5?"brightness(.58)":"none";card.style.pointerEvents=abs>2.4?"none":"auto";
-   card.setAttribute("aria-label",`${i+1}: ${card.querySelector('.work-title')?.textContent||'作品'}`);
- });
-}
-function moveArc(delta){const total=arcCards().length;if(total<2)return;arcIndex=(arcIndex+delta+total)%total;updateArcGallery()}
-const arcStage=$("arcStage");
-let arcMouseX=.5,arcMouseY=.45,arcTargetX=.5,arcTargetY=.45,arcWaveClock=0,arcWaveRaf=0;
-function renderArcWaterMotion(){
- if(!arcStage)return;arcWaveClock+=.016;arcMouseX+=(arcTargetX-arcMouseX)*.075;arcMouseY+=(arcTargetY-arcMouseY)*.075;
- arcStage.style.setProperty("--wave-x",(arcMouseX*100).toFixed(2)+"%");arcStage.style.setProperty("--wave-y",(arcMouseY*100).toFixed(2)+"%");
- const cards=arcCards(),total=cards.length;
- cards.forEach((card,i)=>{
-   let offset=i-arcIndex;const half=total/2;if(offset>half)offset-=total;if(offset< -half)offset+=total;
-   const abs=Math.abs(offset),gap=window.innerWidth<700?Math.min(window.innerWidth*.57,230):Math.min(window.innerWidth*.27,370);
-   const phase=arcWaveClock*1.12-i*.78,dist=Math.abs((i/(Math.max(total-1,1)))-arcMouseX),influence=Math.max(0,1-dist*3.5);
-   const ripple=Math.sin(phase)*Math.min(1,abs*.35+0.35),waveY=Math.sin(phase*1.35)*9*ripple+Math.cos(phase*.7+i)*5;
-   const mouseX=(arcMouseX-.5)*-28*influence,mouseY=(arcMouseY-.5)*-18*influence;
-   const x=offset*gap+Math.sin(phase*.6)*8+mouseX,y=abs*19+waveY+mouseY,z=-abs*150+Math.cos(phase)*13*influence;
-   const rot=offset*-21+Math.sin(phase)*1.6+mouseX*.09,rotX=(arcMouseY-.5)*-5*influence+Math.sin(phase)*.7;
-   card.style.transform=`translate(-50%, 0) translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rot}deg) scale(${Math.max(.68,1-abs*.105)})`;
- });
- arcWaveRaf=requestAnimationFrame(renderArcWaterMotion);
-}
-const rippleCanvas=$("arcRippleCanvas"),rippleCtx=rippleCanvas?.getContext("2d");
-let rippleSize={w:1,h:1,dpr:1},ripplePointer={x:.5,y:.45,active:false},rippleEvents=[];
-function resizeRippleCanvas(){if(!rippleCanvas||!arcStage)return;const r=arcStage.getBoundingClientRect();rippleSize={w:Math.max(1,r.width),h:Math.max(1,r.height),dpr:Math.min(window.devicePixelRatio||1,1.7)};rippleCanvas.width=Math.round(rippleSize.w*rippleSize.dpr);rippleCanvas.height=Math.round(rippleSize.h*rippleSize.dpr);rippleCanvas.style.width=rippleSize.w+"px";rippleCanvas.style.height=rippleSize.h+"px";rippleCtx.setTransform(rippleSize.dpr,0,0,rippleSize.dpr,0,0)}
-function emitRipple(x,y,power=1){rippleEvents.push({x,y,r:4,life:0,power});if(rippleEvents.length>18)rippleEvents.shift()}
-function drawRippleCanvas(){if(!rippleCtx||!arcStage)return;const {w,h}=rippleSize;rippleCtx.clearRect(0,0,w,h);const t=performance.now()*.001;for(let row=0;row<13;row++){const base=h*.48+row*Math.max(8,h*.027);rippleCtx.beginPath();for(let x=-12;x<=w+12;x+=9){let y=base+Math.sin(x*.012+t*1.1+row*.3)*(2.4+row*.28)+Math.sin(x*.022-t*.7+row*.5)*1.8;const dx=x-ripplePointer.x*w,dy=base-ripplePointer.y*h,d=Math.hypot(dx,dy);if(ripplePointer.active){const influence=Math.exp(-d/Math.max(95,w*.19));y+=Math.sin(d*.055-t*4.8)*influence*22}for(const rp of rippleEvents){const rd=Math.hypot(x-rp.x,base-rp.y),fade=Math.max(0,1-rp.life/1.55);y+=Math.sin(rd*.07-rp.life*8.5)*fade*rp.power*4.5}if(x===-12)rippleCtx.moveTo(x,y);else rippleCtx.lineTo(x,y)}rippleCtx.strokeStyle=`rgba(127,214,184,${.022+row*.0025})`;rippleCtx.lineWidth=.8;rippleCtx.stroke()}for(const rp of rippleEvents){rp.life+=.016;rp.r+=1.4;const fade=Math.max(0,1-rp.life/1.55);if(fade<=0)continue;for(let ring=0;ring<3;ring++){rippleCtx.beginPath();rippleCtx.ellipse(rp.x,rp.y,rp.r+ring*12,(rp.r+ring*12)*.52,0,0,Math.PI*2);rippleCtx.strokeStyle=`rgba(127,214,184,${fade*(.18-ring*.045)*rp.power})`;rippleCtx.lineWidth=1;rippleCtx.stroke()}}rippleEvents=rippleEvents.filter(r=>r.life<=1.55);if(ripplePointer.active){const x=ripplePointer.x*w,y=ripplePointer.y*h,g=rippleCtx.createRadialGradient(x,y,0,x,y,145);g.addColorStop(0,"rgba(127,214,184,.07)");g.addColorStop(1,"rgba(127,214,184,0)");rippleCtx.fillStyle=g;rippleCtx.fillRect(x-145,y-145,290,290)}requestAnimationFrame(drawRippleCanvas)}
-resizeRippleCanvas();drawRippleCanvas();window.addEventListener("resize",resizeRippleCanvas);
-if(arcStage){
- arcStage.addEventListener("pointerenter",e=>{const r=arcStage.getBoundingClientRect();ripplePointer.active=true;ripplePointer.x=(e.clientX-r.left)/r.width;ripplePointer.y=(e.clientY-r.top)/r.height;emitRipple(e.clientX-r.left,e.clientY-r.top,.9)});
- arcStage.addEventListener("pointermove",e=>{const r=arcStage.getBoundingClientRect();ripplePointer.x=(e.clientX-r.left)/r.width;ripplePointer.y=(e.clientY-r.top)/r.height;ripplePointer.active=true;if(Math.hypot(e.movementX||0,e.movementY||0)>12)emitRipple(e.clientX-r.left,e.clientY-r.top,Math.min(1.5,Math.hypot(e.movementX||0,e.movementY||0)/30))});
- arcStage.addEventListener("pointerleave",()=>{ripplePointer.active=false;emitRipple(ripplePointer.x*rippleSize.w,ripplePointer.y*rippleSize.h,.65)});
- arcStage.addEventListener("pointerdown",e=>{const r=arcStage.getBoundingClientRect();emitRipple(e.clientX-r.left,e.clientY-r.top,1.4)});
- arcStage.addEventListener("pointermove",e=>{const r=arcStage.getBoundingClientRect();arcTargetX=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));arcTargetY=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))});
- arcStage.addEventListener("pointerleave",()=>{arcTargetX=.5;arcTargetY=.45});
- arcStage.addEventListener("click",e=>{
-   if(arcMoved){arcMoved=false;return}
-   let card=e.target.closest?.(".work-card");
-   // Pointer capture may retarget click to the stage; hit-test the actual release point.
-   if(!card&&Number.isFinite(e.clientX)&&Number.isFinite(e.clientY)){const under=document.elementFromPoint(e.clientX,e.clientY);card=under?.closest?.(".work-card")||null}
-   if(card&&arcStage.contains(card)){e.preventDefault();openWork(card.dataset.id)}
- });
- renderArcWaterMotion();
- arcStage.addEventListener("wheel",e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){e.preventDefault();moveArc(e.deltaY>0?1:-1)}else if(Math.abs(e.deltaX)>8){e.preventDefault();moveArc(e.deltaX>0?1:-1)}},{passive:false});
- arcStage.addEventListener("pointerdown",e=>{if(e.target.closest("button,a,.viewer-tools"))return;arcPointerDown=true;arcMoved=false;arcStartX=arcLastX=e.clientX;arcStartY=e.clientY;arcVelocity=0;arcStage.classList.add("dragging");arcStage.setPointerCapture?.(e.pointerId)});
- arcStage.addEventListener("pointermove",e=>{if(!arcPointerDown)return;const dx=e.clientX-arcLastX;arcLastX=e.clientX;if(Math.abs(e.clientX-arcStartX)>10||Math.abs(e.clientY-arcStartY)>16)arcMoved=true;if(Math.abs(dx)>1){arcVelocity=dx;const cards=arcCards(),step=window.innerWidth<700?window.innerWidth*.57:Math.min(window.innerWidth*.27,370);if(Math.abs(e.clientX-arcStartX)>step*.42){moveArc(e.clientX<arcStartX?1:-1);arcStartX=e.clientX}}});
- const endDrag=()=>{if(!arcPointerDown)return;arcPointerDown=false;arcStage.classList.remove("dragging");if(Math.abs(arcVelocity)>13){moveArc(arcVelocity<0?1:-1)}if(arcMoved)setTimeout(()=>{arcMoved=false},260)};
- arcStage.addEventListener("pointerup",endDrag);arcStage.addEventListener("pointercancel",endDrag);arcStage.addEventListener("lostpointercapture",endDrag);
- window.addEventListener("resize",()=>requestAnimationFrame(updateArcGallery));
-}
-// Custom cursor follows with a small lag; disabled for touch and reduced-motion users.
-const cursor=$("customCursor");let cursorX=0,cursorY=0,targetX=0,targetY=0;
-if(cursor&&matchMedia("(pointer:fine)").matches&&!matchMedia("(prefers-reduced-motion: reduce)").matches){window.addEventListener("mousemove",e=>{targetX=e.clientX;targetY=e.clientY;cursor.classList.add("visible")});document.addEventListener("mouseleave",()=>cursor.classList.remove("visible"));const cursorTick=()=>{cursorX+=(targetX-cursorX)*.18;cursorY+=(targetY-cursorY)*.18;cursor.style.left=cursorX+"px";cursor.style.top=cursorY+"px";requestAnimationFrame(cursorTick)};cursorTick();document.querySelectorAll("a,button,.arc-stage").forEach(el=>{el.addEventListener("mouseenter",()=>{cursor.classList.add("large");cursor.textContent=el.closest(".contact")?"NEXT":"VIEW"});el.addEventListener("mouseleave",()=>{cursor.classList.remove("large");cursor.textContent="VIEW"})});document.addEventListener("pointerover",e=>{if(e.target.closest(".work-card")){cursor.classList.add("large");cursor.textContent="VIEW"}});document.addEventListener("pointerout",e=>{if(e.target.closest(".work-card")&&!e.relatedTarget?.closest(".work-card")){cursor.classList.remove("large");cursor.textContent="VIEW"}});}
-$("floatAdmin")?.addEventListener("click",()=>$("loginBtn").click());
-// Soft reveal on scroll (keeps all content in the original document).
-if("IntersectionObserver" in window){const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");revealObserver.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el))}else document.querySelectorAll(".reveal").forEach(el=>el.classList.add("visible"));
-loadProfile();
-loadWorks();
-</script>
-<script>
-// Keep page transitions local and never navigate to a nonexistent project.
-document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',e=>{const target=document.querySelector(link.getAttribute('href'));if(target){target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}}));
+ try{const {data,error}=await sb.from("site_content").select("content").eq("id",1).maybeSingle();if(error)throw error;
+  if(data?.content)P={...structuredClone(DEF),...data.content};$("pStatus").textContent=data?.content?"已从云端读取主页内容。":"云端还没有自定义内容，当前显示默认文案。保存一次即可写入。"}
+ catch(err){console.warn(err);$("pStatus").textContent="主页内容表尚未配置：目前显示默认文案。请先执行随附 SQL 文件，再登录后台保存。"}
+ renderProfile()}
+$("profileForm").addEventListener("submit",async e=>{e.preventDefault();const b=$("saveProfile");b.disabled=true;b.textContent="保存中…";
+ const next={heroIntro:$("pHero").value.trim(),aboutAside:$("pAside").value.trim(),manifesto:$("pMani").value.trim(),aboutText:$("pAbout").value.trim(),contactText:$("pContact").value.trim(),email:$("pEmail").value.trim(),timeline:rows($("pTime").value),skills:rows($("pSkill").value,true)};
+ try{const {error}=await sb.from("site_content").upsert({id:1,content:next},{onConflict:"id"});if(error)throw error;P=next;renderProfile();fillProfile();$("pStatus").textContent="已保存到云端，访客刷新网页后即可看到最新内容。";toast("主页内容已保存")}
+ catch(err){console.error(err);$("pStatus").textContent="保存失败："+err.message+"。请确认已执行 SQL 配置。";toast("主页内容保存失败："+err.message,true)}
+ finally{b.disabled=false;b.textContent="保存主页内容 ↗"}});
+$("resetProfile").onclick=()=>{if(!confirm("将编辑表单恢复为默认示例文案？此操作尚未保存到云端。"))return;P=structuredClone(DEF);fillProfile();renderProfile();$("pStatus").textContent="已恢复默认示例，点击“保存主页内容”后才会更新云端。"};
+
+/* ===== 宣言区：鼠标拨动字母 ===== */
+const LT=$("letters");LT.innerHTML="EVERY ASSET DESERVES TO BE SEEN AND UNDERSTOOD.".split(" ").map(w=>`<span style="display:inline-block;white-space:nowrap">${[...w].map(c=>`<span>${c}</span>`).join("")}</span>`).join(" ");
+const L=[...LT.querySelectorAll("span span")].map(el=>({el,x:0,y:0,r:0,tx:0,ty:0,tr:0}));let mx=-999,my=-999,lraf=0;
+addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY});
+(function tick(){lraf=requestAnimationFrame(tick);const b=LT.getBoundingClientRect();if(b.bottom<0||b.top>innerHeight)return;
+ L.forEach(l=>{const r=l.el.getBoundingClientRect(),cx=r.left+r.width/2-l.x,cy=r.top+r.height/2-l.y,dx=cx-mx,dy=cy-my,d=Math.hypot(dx,dy);
+  if(d<170){const f=(170-d)/170;l.tx=dx/(d||1)*f*90;l.ty=dy/(d||1)*f*90;l.tr=(dx>0?1:-1)*f*70}else{l.tx=l.ty=l.tr=0}
+  l.x+=(l.tx-l.x)*.14;l.y+=(l.ty-l.y)*.14;l.r+=(l.tr-l.r)*.14;l.el.style.transform=`translate(${l.x.toFixed(1)}px,${l.y.toFixed(1)}px) rotate(${l.r.toFixed(1)}deg)`})})();
+
+/* ===== 自定义光标 ===== */
+if(matchMedia("(pointer:fine)").matches&&!matchMedia("(prefers-reduced-motion:reduce)").matches){let cx=0,cy=0,tx=0,ty=0;
+ addEventListener("mousemove",e=>{tx=e.clientX;ty=e.clientY;cu.classList.add("on")});document.addEventListener("mouseleave",()=>cu.classList.remove("on"));
+ (function f(){cx+=(tx-cx)*.18;cy+=(ty-cy)*.18;cu.style.left=cx+"px";cu.style.top=cy+"px";requestAnimationFrame(f)})();
+ document.addEventListener("pointerover",e=>{const t=e.target;if(t.closest("#stage"))cu.textContent="VIEW";else if(t.closest("#contact a"))cu.textContent="NEXT";if(!t.closest("#stage"))cu.classList.toggle("big",!!t.closest("#contact a,button,.menu a"))});}
+
+/* ===== 平滑锚点 ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t&&a.getAttribute("href")!=="#"){e.preventDefault();t.scrollIntoView({behavior:"smooth"})}}));
+loadProfile();loadWorks();
 </script>
 </body>
 </html>
