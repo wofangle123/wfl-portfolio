@@ -4,8 +4,9 @@
 <!-- 首次启用后台主页内容编辑：请执行随附的 site_content_setup.sql。作品表 works 与 portfolio-images 桶保持原样。 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10110f">
-<title>WFL — 3D Game Art Portfolio</title>
+<meta name="theme-color" content="#ecebe3">
+<meta name="description" content="WFL 异构造物研究所：探索 3D 游戏美术作品、数字造物、机械标本与交互式作品档案。">
+<title>WFL — 异构造物研究所 | HETEROMORPHIC ARTIFACT LAB</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}
@@ -161,13 +162,254 @@ html{scroll-padding-top:76px}body{background:#e8e7df;color:#17191d;cursor:none}b
 @media(max-width:850px){.lab-hero{grid-template-columns:1fr;min-height:900px;padding-top:80px}.lab-hero-main{align-self:start;padding-top:60px}.lab-hero-object{position:absolute;right:-6%;top:31%;width:55%;min-height:320px;opacity:.82}.object-shell{width:100%;min-width:0}.lab-hero h1{font-size:clamp(58px,12vw,110px)}.lab-subtitle{max-width:270px}.lab-bottom-meta{font-size:8px}.scene-switch{left:20px;right:20px;bottom:65px;justify-content:flex-start}.arc-stage{height:760px}.arc-gallery .work-card{width:min(68vw,360px)}#journey .process-grid{grid-template-columns:1fr}.#journey .process-card{border-right:0;border-bottom:1px solid #17191d40;min-height:0}.about-layout{grid-template-columns:.75fr 1.25fr;gap:36px}}
 @media(max-width:560px){body{cursor:auto}.custom-cursor{display:none}.topbar{height:64px}.wrap{width:calc(100% - 32px)}.brand{font-size:10px;gap:8px}.brand small{font-size:8px}.nav{gap:10px}.nav a{font-size:9px}.nav a:nth-child(3),.nav a:nth-child(4){display:none}.nav button{font-size:9px;padding:8px}.lab-hero{min-height:790px;padding:72px 20px 120px}.lab-coord{font-size:8px}.lab-coord-a{left:20px;top:20px}.lab-coord-b{right:20px;top:20px}.lab-hero h1{font-size:clamp(58px,15vw,88px)}.lab-hero h1 strong{white-space:normal}.lab-hero-object{top:43%;right:-12%;width:64%;min-height:260px;opacity:.65}.object-label{font-size:7px}.lab-bottom-meta{left:20px;right:20px;bottom:16px;font-size:7px}.lab-bottom-meta span:nth-child(2){display:none}.scene-switch{left:20px;right:20px;bottom:56px;gap:4px}.scene-switch>span{width:100%;margin-bottom:2px}.scene-choice{padding:7px 8px;font-size:8px}.arc-section .wrap{width:calc(100% - 24px)}.arc-masthead{font-size:8px;letter-spacing:.03em}.arc-section .section-head{display:block;padding-top:50px}.arc-section .section-intro{margin-top:16px}.filter-row{overflow:auto;flex-wrap:nowrap}.filter{white-space:nowrap;padding:10px}.arc-stage{height:650px;min-height:600px}.arc-gallery .work-card{width:76vw;top:15%}.arc-instruction{left:12px;right:12px;font-size:7px}.arc-count{right:12px;bottom:15px}.about-layout{grid-template-columns:1fr}.about-sticky{position:relative;top:auto}.about-sticky .big-mark{font-size:100px}.section{padding:70px 0}.skills-layout{grid-template-columns:1fr}.contact{padding:80px 0}.contact-box h2{font-size:clamp(45px,13vw,76px)}.footer-inner{gap:12px;flex-wrap:wrap}.footer-inner span:nth-child(2){display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
+
+/* ===== MACHINE-LIKE ART EXPERIENCE / mixed media refinement ===== */
+:root{--bone:#ecebe3;--cobalt:#102451;--signal:#f04f35;--acid:#caff35;--chrome:#c7ced0}
+html{scroll-behavior:smooth;scroll-padding-top:74px}body{background:var(--bone)}
+/* A narrow coordinate rail replaces the feeling of a conventional website header. */
+.topbar{height:64px;background:#ecebe3f2;border-bottom:1px solid #191b2040;backdrop-filter:blur(10px)}
+.brand-mark{border-radius:0;transform:rotate(45deg);background:var(--acid);color:#17191d;box-shadow:4px 4px 0 #17191d}
+.nav{gap:clamp(10px,2vw,28px)}.nav a{position:relative}.nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:2px;background:var(--signal);transition:right .25s}.nav a:hover:after{right:0}
+.lab-hero{min-height:min(820px,calc(100svh - 64px));grid-template-columns:1.02fr .98fr;background:#efeee7;isolation:isolate}
+.lab-hero:after{content:"形";position:absolute;right:38%;bottom:-.32em;font-size:clamp(230px,38vw,580px);line-height:1;font-weight:900;color:#17191d08;z-index:1;pointer-events:none}
+.lab-hero h1{font-size:clamp(62px,8.3vw,126px);line-height:.88;letter-spacing:-.105em}
+.lab-hero h1 i{font-size:.42em;margin:.22em 0 .18em .12em;letter-spacing:.03em}
+.lab-hero h1 strong{-webkit-text-stroke:1px #17191d;font-size:.93em;letter-spacing:-.09em}
+.lab-index{border-left:3px solid var(--signal);font-size:9px;letter-spacing:.1em}
+.lab-subtitle{max-width:350px;font-size:14px;color:#3f4247;line-height:2.1}
+.lab-hero-object{min-height:520px;filter:drop-shadow(0 40px 30px #101d481c)}
+.object-shell{width:min(35vw,440px);min-width:230px;animation:labFloat 8s cubic-bezier(.45,0,.55,1) infinite}
+.object-core{inset:19%;background:linear-gradient(125deg,#fff 0%,#c4c8c7 13%,#5c6266 24%,#f8f8ed 33%,#777e82 47%,#d8dedb 58%,#34383c 71%,#faf9ee 88%);clip-path:polygon(50% 0,77% 10%,100% 47%,77% 82%,52% 100%,15% 78%,0 40%,22% 13%);transform:rotate(17deg) skew(-3deg,2deg);filter:drop-shadow(20px 28px 20px #101d4830)}
+.object-cut{border-color:var(--signal);mix-blend-mode:normal;transform:rotate(32deg) skew(-8deg,-8deg);box-shadow:8px 8px 0 #17191d}
+.object-ring{border-width:1px;opacity:.65}.object-orb{background:var(--signal);box-shadow:0 0 0 8px #f04f351b,0 0 24px #f04f3540}
+.lab-orbit{opacity:.1}.orbit-b{border-color:#f04f35}.lab-bottom-meta{font-size:9px;letter-spacing:.14em}
+.scene-choice.active,.scene-choice:hover{background:var(--signal);color:#fff;border-color:var(--signal)}
+/* Scene 02: deep-blue archive, but with spatial controls and mixed-media browsing. */
+.arc-section{background:#102451;color:#f4f3ec;padding-bottom:120px}
+.arc-masthead{border-bottom-color:#ffffff35;padding-top:26px}.arc-section .section-head{padding-top:82px}.arc-section h2{font-size:clamp(44px,7.2vw,96px)}
+.archive-controls{display:grid;grid-template-columns:1fr auto;align-items:end;gap:18px;margin:35px 0 16px;border-top:1px solid #ffffff32;padding-top:18px}
+.view-mode-label{font:10px var(--mono);letter-spacing:.12em;color:#caff35}.view-mode-label small{display:block;color:#aebbd5;font-size:8px;margin-top:6px;letter-spacing:.13em}.mode-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#caff35;margin-right:8px;box-shadow:0 0 12px #caff3550}
+.view-mode-switch{display:flex;flex-wrap:wrap;gap:5px}.view-mode{background:transparent;color:#c7d0e4;border:1px solid #ffffff30;padding:10px 12px;font-size:11px;transition:background .25s,color .25s,border-color .25s}.view-mode span{font:8px var(--mono);opacity:.5;margin-left:12px}.view-mode:hover,.view-mode.active{background:#caff35;color:#102451;border-color:#caff35}.view-mode.active span{opacity:.8}
+.archive-search{grid-column:1/-1;display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid #ffffff45;color:#caff35}.archive-search>span{font-size:23px}.archive-search input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font-size:12px;padding:12px 0}.archive-search input::placeholder{color:#9eacc8}.archive-search kbd{font:8px var(--mono);color:#aebbd5;border:1px solid #ffffff25;padding:5px 7px}
+.arc-stage{height:min(70vw,780px);min-height:570px;border:0;background:radial-gradient(ellipse at 50% 44%,#31518b 0%,#172c57 39%,#102451 78%);box-shadow:inset 0 0 0 1px #ffffff27;transition:height .55s ease,background .6s}
+.arc-stage:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(110deg,transparent 10%,#ffffff04 47%,transparent 68%);mix-blend-mode:screen}
+.arc-stage[data-view="space"]{height:min(76vw,850px);min-height:640px}
+.arc-stage[data-view="space"] .arc-gallery .work-card{width:clamp(210px,25vw,360px);top:10%;}
+.arc-stage[data-view="orbit"]{background:radial-gradient(ellipse at 50% 50%,#3a4b65 0%,#1b2b45 38%,#0d172b 80%)}
+.arc-stage[data-view="orbit"] .arc-gallery .work-card{width:clamp(240px,27vw,410px)}
+.arc-stage[data-view="specimen"]{height:auto;min-height:0;padding:36px clamp(16px,4vw,56px) 74px;background:#efeee7;color:#17191d;overflow:hidden;box-shadow:inset 0 0 0 1px #17191d25}
+.arc-stage[data-view="specimen"]:before{opacity:.55;background-image:linear-gradient(#17191d0b 1px,transparent 1px),linear-gradient(90deg,#17191d0b 1px,transparent 1px);background-size:38px 38px;transform:none;mask-image:linear-gradient(#000,transparent)}
+.arc-stage[data-view="specimen"] .arc-floor{border-color:#f04f3535;background:radial-gradient(ellipse,#f04f3518,transparent 68%);height:30%;bottom:-10%}
+.arc-stage[data-view="specimen"] .arc-gallery{position:relative;inset:auto;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px;perspective:none;min-height:300px}
+.arc-stage[data-view="specimen"] .arc-gallery .work-card{position:relative!important;left:auto!important;top:auto!important;width:auto!important;max-width:none;grid-column:span 4;margin:0;transform:none!important;color:#17191d;filter:none!important;opacity:1!important;pointer-events:auto!important;animation:none}
+.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+1){grid-column:span 5;margin-top:44px}.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+2){grid-column:span 3;margin-top:0}.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n){grid-column:span 4;margin-top:80px}
+.arc-stage[data-view="specimen"] .arc-gallery .work-image{aspect-ratio:4/5!important;border:0;background:#d5d4cc;box-shadow:8px 8px 0 #17191d1c}.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+2) .work-image{aspect-ratio:3/4!important}.arc-stage[data-view="specimen"] .arc-gallery .work-info{border-color:#17191d30}.arc-stage[data-view="specimen"] .arc-gallery .work-category{color:#d9422b}.arc-stage[data-view="specimen"] .arc-gallery .work-description{color:#555b63}.arc-stage[data-view="specimen"] .arc-gallery .work-index{background:#17191d;color:#caff35}
+.arc-stage[data-view="archive"]{height:auto;min-height:0;padding:12px 0 68px;background:#102451;overflow:visible}
+.arc-stage[data-view="archive"]:before{display:none}.arc-stage[data-view="archive"] .arc-floor{display:none}.arc-stage[data-view="archive"] .arc-gallery{position:relative;inset:auto;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1px;perspective:none;min-height:0}
+.arc-stage[data-view="archive"] .arc-gallery .work-card{position:relative!important;left:auto!important;top:auto!important;width:auto!important;max-width:none;grid-column:span 4;margin:0;transform:none!important;opacity:1!important;filter:none!important;pointer-events:auto!important;animation:none;border:1px solid #ffffff24;padding:12px;background:#102451}
+.arc-stage[data-view="archive"] .arc-gallery .work-card:nth-child(4n+1){grid-column:span 6}.arc-stage[data-view="archive"] .arc-gallery .work-card:nth-child(4n+1) .work-image{aspect-ratio:1.5!important}.arc-stage[data-view="archive"] .arc-gallery .work-image{aspect-ratio:1.05!important;border:0;background:#1b315b;box-shadow:none}.arc-stage[data-view="archive"] .arc-gallery .work-info{border:0;padding:13px 2px 8px}.arc-stage[data-view="archive"] .arc-gallery .work-title{font-size:15px}.arc-stage[data-view="archive"] .arc-gallery .work-description{color:#b7c2d9}.arc-stage[data-view="archive"] .arc-gallery .work-index{background:#caff35;color:#102451}.arc-stage[data-view="archive"] .arc-count{display:none}
+.arc-stage .arc-instruction,.arc-stage .arc-count{z-index:5}.arc-stage[data-view="specimen"] .arc-instruction{color:#555b63;border-color:#17191d40}.arc-stage[data-view="specimen"] .arc-count{color:#17191d}
+/* About: an editorial archive on warm paper; Skills: the orange-red machine bay. */
+#about{background:#efeee7;color:#17191d;position:relative;overflow:hidden;padding:130px 0}#about:before{content:"CREATOR / FILE";position:absolute;right:-.04em;top:20px;font:900 clamp(100px,18vw,270px)/.8 var(--mono);letter-spacing:-.1em;color:#17191d06;pointer-events:none}
+#about .about-layout{position:relative;z-index:1}#about .eyebrow{color:#d9422b}#about .eyebrow:before{background:#d9422b}#about .big-mark{color:#17191d;font-size:clamp(100px,15vw,205px);letter-spacing:-.14em}#about .big-mark span{color:#f04f35!important}#about .manifesto{font-size:clamp(25px,3.2vw,46px);font-weight:600;line-height:1.48}#about .manifesto mark{color:#d9422b}#about .about-text{color:#45494d}#about .timeline{border-color:#17191d35}#about .timeline-item{border-color:#17191d35}#about .timeline-date{color:#d9422b}#about .timeline-item p{color:#62666a}#about .editable-hint{color:#767a7d}
+#skills{background:#f04f35;color:#201c1b;position:relative;overflow:hidden;padding:130px 0}#skills:after{content:"MATERIAL / TEST";position:absolute;right:-.03em;bottom:-.14em;font:900 clamp(80px,16vw,230px)/.8 var(--mono);letter-spacing:-.1em;color:#fff1;pointer-events:none}#skills .wrap{position:relative;z-index:1}#skills .section-kicker,#skills .section-intro{color:#4b2925}#skills h2{font-weight:900;font-size:clamp(42px,7vw,94px)}#skills h2 em{color:#f8f1df}#skills .skill-panel{background:#ecebe3;border:1px solid #201c1b30;padding:clamp(22px,3vw,42px)}#skills .skill-panel h3{font-size:13px}#skills .skill-label{color:#343536}#skills .skill-label span:last-child{color:#666}#skills .skill-track{background:#c9c7be}#skills .skill-fill{background:#d9422b}#skills .tag{border-color:#17191d38;color:#282b2e;background:#efeee7}#skills .tags{gap:7px}
+#journey{background:#d6d6ce;color:#17191d;position:relative;overflow:hidden;padding:120px 0}#journey .section-kicker,#journey .section-intro{color:#565b60}#journey h2{font-weight:800}#journey h2 em{color:#d9422b}#journey .process-grid{background:#17191d;border-color:#17191d;grid-template-columns:repeat(3,minmax(0,1fr))}#journey .process-card{background:#e7e6de;padding:clamp(20px,3vw,36px);min-height:230px}#journey .process-card:hover{background:#f4f3ec}#journey .process-no{color:#d9422b}#journey .process-card p{color:#555b63}
+.contact{background:#102451;padding:130px 0 110px}.contact-box{border-left:3px solid #caff35;padding-left:clamp(22px,5vw,75px)}.contact .eyebrow{color:#caff35}.contact .eyebrow:before{background:#caff35}.contact-box h2 span{-webkit-text-stroke:1px #caff35}
+.footer{background:#0a1635}.fixed-label{font-size:8px;letter-spacing:.14em}.float-tools{opacity:.95}
+/* Better affordance, keyboard visibility and reduced motion. */
+.work-card{transition:opacity .35s,filter .35s}.work-card:focus-visible{outline:2px solid var(--acid);outline-offset:5px}.archive-search input:focus-visible{outline:0;border-bottom:1px solid #caff35}.view-mode:focus-visible{outline:2px solid #caff35;outline-offset:3px}
+@media(max-width:850px){.archive-controls{grid-template-columns:1fr;align-items:start}.view-mode-switch{gap:5px}.view-mode{flex:1}.arc-stage[data-view="specimen"] .arc-gallery .work-card,.arc-stage[data-view="archive"] .arc-gallery .work-card{grid-column:span 6!important;margin-top:0!important}.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+1),.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+2),.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n){grid-column:span 6!important;margin-top:0!important}.lab-hero{grid-template-columns:1fr 1fr}.lab-hero-object{min-height:400px}}
+@media(max-width:560px){.lab-hero{grid-template-columns:1fr;min-height:790px}.lab-hero-object{min-height:260px}.archive-controls{gap:12px}.view-mode-switch{display:grid;grid-template-columns:1fr 1fr;width:100%}.view-mode{display:flex;justify-content:space-between;align-items:center;padding:11px}.archive-search{margin-top:3px}.arc-stage[data-view="space"]{height:690px;min-height:690px}.arc-stage[data-view="space"] .arc-gallery .work-card{width:43vw;top:15%}.arc-stage[data-view="specimen"],.arc-stage[data-view="archive"]{padding:14px 10px 60px}.arc-stage[data-view="specimen"] .arc-gallery,.arc-stage[data-view="archive"] .arc-gallery{grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.arc-stage[data-view="specimen"] .arc-gallery .work-card,.arc-stage[data-view="archive"] .arc-gallery .work-card{grid-column:span 3!important;padding:8px}.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+1),.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n+2),.arc-stage[data-view="specimen"] .arc-gallery .work-card:nth-child(3n){grid-column:span 3!important}.arc-stage[data-view="specimen"] .arc-gallery .work-title,.arc-stage[data-view="archive"] .arc-gallery .work-title{font-size:13px}#about,#skills,#journey{padding:78px 0}#about .about-layout{grid-template-columns:1fr;gap:24px}#about .about-sticky{position:relative;top:auto}#about .big-mark{font-size:110px}#journey .process-grid{grid-template-columns:1fr}#journey .process-card{min-height:0}.lab-bottom-meta span:nth-child(2){display:none}}
+@media(prefers-reduced-motion:reduce){.object-shell,.object-ring,.ticker-track{animation:none!important}.arc-stage,.work-card,.view-mode{transition:none!important}}
+
+
+/* MULTI-SCENE EXPERIENCE: each chapter has its own visual physics and composition. */
+:root{--chapter-ink:#17191d;--chapter-acid:#caff35;--chapter-orange:#f04f35;--scene-progress:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{overflow-x:hidden;background:#ecebe3}
+.topbar{z-index:100}
+.scene-rail{position:fixed;z-index:90;left:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:17px;color:#f4f1e8;mix-blend-mode:difference;pointer-events:none}
+.scene-rail>*{pointer-events:auto}.rail-brand{font:900 12px/1 var(--mono);letter-spacing:-.12em;writing-mode:vertical-rl}.rail-brand span{color:var(--chapter-acid)}
+.scene-rail nav{display:flex;flex-direction:column;gap:6px}.scene-rail nav a{position:relative;display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;opacity:.48;min-height:29px;transition:opacity .35s,transform .35s}.scene-rail nav a i{display:grid;place-items:center;width:25px;height:25px;border:1px solid currentColor;border-radius:50%;font:9px var(--mono);font-style:normal;transition:background .35s,color .35s,transform .35s}.scene-rail nav a span{font-size:10px;letter-spacing:.12em;writing-mode:vertical-rl;max-height:0;overflow:hidden;opacity:0;transform:translateX(-4px);transition:max-height .35s,opacity .35s,transform .35s}.scene-rail nav a:hover,.scene-rail nav a.active{opacity:1;transform:translateX(2px)}.scene-rail nav a.active i{background:var(--chapter-acid);color:#111;border-color:var(--chapter-acid);transform:scale(1.12)}.scene-rail nav a.active span,.scene-rail nav a:hover span{max-height:100px;opacity:1;transform:none}
+.rail-track{height:70px;width:1px;background:#ffffff40;position:relative;overflow:hidden}.rail-track span{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--chapter-acid);transform:scaleY(var(--scene-progress));transform-origin:top}.rail-current{font:10px var(--mono);writing-mode:vertical-rl}.rail-current b{font-size:16px;color:var(--chapter-acid)}
+.portal-transition{position:fixed;inset:0;z-index:200;pointer-events:none;display:grid;place-items:center;background:#caff35;clip-path:circle(0% at 50% 50%);transition:clip-path .55s cubic-bezier(.7,0,.2,1);color:#17191d;font:10px var(--mono);letter-spacing:.2em}.portal-transition.active{clip-path:circle(150% at 50% 50%)}.portal-ring{width:min(45vw,420px);aspect-ratio:1;border:1px solid #17191d;position:absolute;border-radius:50%;animation:portalSpin 2.8s linear infinite}.portal-ring:before,.portal-ring:after{content:"";position:absolute;inset:13%;border:1px solid #17191d;border-radius:48% 52% 60% 40%;transform:rotate(42deg)}.portal-ring:after{inset:27%;transform:rotate(-35deg);border-radius:38% 62% 41% 59%}@keyframes portalSpin{to{transform:rotate(360deg)}}
+/* Entrance: bone-white architectural field with responsive geometric depth. */
+#works{min-height:calc(100svh - 70px);padding-top:0;background:#ecebe3;isolation:isolate;overflow:hidden}#works .lab-hero{min-height:calc(100svh - 70px);border-bottom:1px solid #17191d20}#works .lab-hero-main{transform:translate3d(calc(var(--hx,0px)*-.2),calc(var(--hy,0px)*-.2),0);transition:transform .5s cubic-bezier(.2,.7,.2,1)}#works .lab-hero-object{filter:drop-shadow(0 30px 32px #17191d16)}#works .object-shell{animation:artifactBreath 8s ease-in-out infinite}#works .object-core{box-shadow:inset -22px -18px 36px #10131a2b, inset 8px 8px 20px #fff9,0 28px 65px #17191d18}#works .lab-orbit{border-style:dashed;animation:orbitWobble 19s ease-in-out infinite alternate}#works .orbit-b{animation-duration:25s;animation-direction:alternate-reverse}#works .orbit-c{animation-duration:31s}@keyframes artifactBreath{0%,100%{transform:rotateX(-8deg) rotateY(15deg) translateY(0)}50%{transform:rotateX(-2deg) rotateY(-9deg) translateY(-13px)}}@keyframes orbitWobble{from{transform:rotate(-19deg) scaleX(.93) scaleY(1.04)}to{transform:rotate(14deg) scaleX(1.04) scaleY(.96)}}
+/* Archive: the cobalt scene becomes a deep, navigable universe. */
+#archive{background:#102451;color:#f0f1f3;position:relative;isolation:isolate;overflow:hidden;padding:100px 0 120px;min-height:100svh}#archive:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 75% 15%,#31538b 0,transparent 38%),radial-gradient(ellipse at 12% 72%,#263d70 0,transparent 34%),linear-gradient(130deg,#0b1734,#102451 50%,#0a1735);background-size:130% 130%;animation:universeDrift 22s ease-in-out infinite alternate}#archive:after{content:"ARCHIVE / GRAVITY FIELD";position:absolute;right:-.03em;top:15px;z-index:-1;font:900 clamp(48px,12vw,170px)/.8 var(--mono);letter-spacing:-.12em;color:#ffffff07;white-space:nowrap;pointer-events:none}@keyframes universeDrift{to{background-position:100% 70%}}#archive .arc-masthead,#archive .section-head,#archive .filter-row,#archive .archive-controls{position:relative;z-index:2}#archive .section-head h2{font-size:clamp(54px,8vw,110px);letter-spacing:-.09em}#archive .section-head h2 em{color:var(--chapter-acid)}#archive .filter{border-color:#ffffff35;color:#e8ecf4}#archive .filter.active,#archive .filter:hover{background:var(--chapter-acid);color:#14213d;border-color:var(--chapter-acid)}#archive .archive-controls{border-color:#ffffff28}#archive .arc-stage{perspective:1300px;isolation:isolate}#archive .arc-floor{opacity:.36}#archive .work-card{filter:drop-shadow(0 18px 35px #02081550)}#archive .work-card:hover{filter:drop-shadow(0 30px 48px #02081588)}#archive .arc-stage[data-view="space"] .work-card{transform-style:preserve-3d}
+/* Creator dossier: giant editorial paper, offset blocks and moving index marks. */
+#about{min-height:100svh;display:flex;align-items:center;background:#f0efe7}#about .about-layout{width:100%;transform:translateY(18px);transition:transform .9s cubic-bezier(.2,.7,.2,1)}#about.visible .about-layout{transform:none}#about .about-sticky{border-right:1px solid #17191d2b;padding-right:30px}#about .big-mark{transform:translateX(-.055em);transition:letter-spacing .7s}#about.visible .big-mark{letter-spacing:-.17em}#about .timeline-item{position:relative;transition:padding-left .4s}#about .timeline-item:hover{padding-left:18px}#about .timeline-item:before{content:"";position:absolute;left:0;top:18px;width:0;height:1px;background:#d9422b;transition:width .4s}#about .timeline-item:hover:before{width:12px}
+/* Material lab: orange/red scene with a slow rotating technical reticle. */
+#skills{min-height:100svh;display:flex;align-items:center;background:#f04f35}#skills .wrap{width:100%}#skills .skill-panel{position:relative;overflow:hidden;transition:transform .5s,box-shadow .5s}#skills .skill-panel:after{content:"";position:absolute;width:180px;aspect-ratio:1;border:1px solid #d9422b30;border-radius:50%;right:-90px;top:-90px;box-shadow:0 0 0 18px #d9422b08,0 0 0 38px #d9422b06;transition:transform 1s}#skills .skill-panel:hover{transform:translateY(-8px) rotate(-.35deg);box-shadow:0 22px 55px #6e1d1428}#skills .skill-panel:hover:after{transform:rotate(55deg) scale(1.2)}#skills .skill-fill{transform-origin:left;animation:skillSignal 3.4s ease-in-out infinite alternate}@keyframes skillSignal{from{filter:brightness(.9)}to{filter:brightness(1.25)}}
+/* Method room: graphite paper, typographic assembly line. */
+#journey{min-height:100svh;display:flex;align-items:center;background:#d6d6ce}#journey .wrap{width:100%}#journey .process-grid{perspective:1000px}#journey .process-card{position:relative;overflow:hidden;transform:translateY(25px) rotateX(4deg);opacity:.7;transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .6s,background .4s}#journey.visible .process-card{transform:none;opacity:1}#journey.visible .process-card:nth-child(2){transition-delay:.12s}#journey.visible .process-card:nth-child(3){transition-delay:.24s}#journey .process-card:after{content:"↗";position:absolute;right:20px;bottom:12px;font-size:50px;color:#d9422b;opacity:0;transform:translate(-10px,10px);transition:opacity .4s,transform .4s}#journey .process-card:hover:after{opacity:1;transform:none}
+/* Exit: dark blue pressure chamber with a bright acid portal. */
+#contact{min-height:92svh;display:flex;align-items:center;position:relative;overflow:hidden;background:#0b1734}#contact:before,#contact:after{content:"";position:absolute;left:70%;top:50%;width:min(70vw,720px);aspect-ratio:1;border:1px solid #caff3530;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 34px #caff3508,0 0 0 90px #caff3506,0 0 0 150px #caff3504;animation:exitPulse 8s ease-in-out infinite alternate}#contact:after{width:min(48vw,490px);border-color:#ffffff30;transform:translate(-50%,-50%) rotateX(66deg);animation-duration:11s}@keyframes exitPulse{to{transform:translate(-50%,-50%) scale(1.09) rotate(15deg)}}#contact .contact-box{position:relative;z-index:1}#contact .contact-box h2{font-size:clamp(55px,10vw,140px);letter-spacing:-.09em;line-height:.98}#contact .contact-box p{max-width:520px}
+/* Scroll choreography and interaction polish. */
+main>section{scroll-margin-top:72px;position:relative}main>section:not(#works){transition:filter .8s}main>section .reveal{will-change:transform,opacity}.reveal{transform:translateY(22px);opacity:0;transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .8s} .reveal.visible{transform:none;opacity:1}
+body[data-chapter="field"] .scene-rail,body[data-chapter="archive"] .scene-rail{color:#fff}body[data-chapter="ember"] .scene-rail,body[data-chapter="acid"] .scene-rail{color:#17191d}body[data-chapter="exit"] .scene-rail{color:#fff}
+@media(max-width:760px){.scene-rail{left:7px;gap:10px}.scene-rail nav{gap:5px}.scene-rail nav a i{width:21px;height:21px;font-size:8px}.scene-rail nav a span{display:none}.rail-brand{font-size:10px}.rail-track{height:44px}#archive{padding:76px 0 80px}#contact:before{left:88%;opacity:.6}.topbar .nav a:nth-child(3),.topbar .nav a:nth-child(4){display:none}}
+@media(prefers-reduced-motion:reduce){.portal-transition,.portal-ring,#works .object-shell,#works .lab-orbit,#archive:before,#skills .skill-fill,#contact:before,#contact:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+
+/* ───── DESIGN SYSTEM 04 / experiential interface, not a theme skin ───── */
+:root{--motion:cubic-bezier(.16,1,.3,1);--scene-hue:205;--scene-velocity:0;--world-ink:#11151c}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{background:#10131a}
+body:after{content:"";position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.035;background:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px);mix-blend-mode:soft-light}
+.topbar{position:fixed;top:10px;left:50%;transform:translateX(-50%);width:min(1420px,calc(100% - 24px));height:58px;border:1px solid #ffffff24;background:#0b1120c9;box-shadow:0 14px 55px #03081335;border-radius:2px;transition:background .6s,border-color .6s}
+.topbar-inner{width:100%;padding:0 18px}.brand-mark{transition:transform .65s var(--motion),background .35s,color .35s}.brand:hover .brand-mark{transform:rotate(82deg);background:var(--accent);color:#111}
+.nav{gap:clamp(10px,1.6vw,24px)}.nav a{position:relative}.nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-8px;height:1px;background:var(--accent);transition:right .4s var(--motion)}.nav a:hover:after{right:0}
+#worldMapBtn{border:1px solid #ffffff2a;background:#d2ff42;color:#111;padding:10px 12px;font:10px var(--mono);letter-spacing:.06em;transition:transform .35s var(--motion),background .35s}#worldMapBtn span{margin-left:10px;font-size:14px}#worldMapBtn:hover{transform:translateY(-2px);background:#fff}
+main>section{position:relative;isolation:isolate;overflow:clip;scroll-margin-top:72px;--section-progress:0}
+main>section:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.2s;background:radial-gradient(ellipse at calc(50% + var(--px,0px)) calc(50% + var(--py,0px)),#ffffff09,transparent 48%)}
+main>section.scene-active:after{opacity:1}
+#works{padding-top:68px;background:#efeee7;color:#17191d}
+#works .lab-hero{min-height:calc(100svh - 80px);border:0;box-shadow:inset 0 0 0 1px #17191d0d}
+#works .lab-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 72% 46%,#fff9,transparent 28%),linear-gradient(110deg,transparent 50%,#bfc6bd24);pointer-events:none}
+#works .lab-hero-main{transform:translate3d(calc(var(--hero-px,0px)*-.16),calc(var(--hero-py,0px)*-.16),0);transition:transform .8s var(--motion)}
+#works .lab-hero-object{transform:translate3d(calc(var(--hero-px,0px)*.22),calc(var(--hero-py,0px)*.22),0);transition:transform .8s var(--motion);filter:drop-shadow(0 40px 32px #18202a22)}
+#works .object-shell{filter:drop-shadow(18px 24px 20px #141a1c18)}
+#works .lab-hero h1{font-size:clamp(64px,9.3vw,146px);line-height:.9;letter-spacing:-.105em}
+#works .lab-hero h1 strong{font-weight:900}
+#works .lab-enter{box-shadow:6px 6px 0 #e34c32;transition:transform .45s var(--motion),box-shadow .45s,background .35s}
+#works .lab-enter:hover{transform:translate(3px,3px);box-shadow:3px 3px 0 #17191d}
+#works .scene-switch{padding:8px;background:#efeee7b8;border:1px solid #17191d1a;backdrop-filter:blur(14px)}
+#archive{background:#10234b;color:#f1f2f3;min-height:100svh;padding:clamp(100px,12vw,170px) 0;overflow:hidden}
+#archive:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 54% 44%,#31538d 0,transparent 44%),linear-gradient(135deg,#0b1734,#10234b 55%,#081329)}
+#archive:after{content:"";position:absolute;inset:0;z-index:-1;opacity:.16;background-image:linear-gradient(#8ba6d520 1px,transparent 1px),linear-gradient(90deg,#8ba6d520 1px,transparent 1px);background-size:60px 60px;mask-image:linear-gradient(transparent,#000 20%,#000 80%,transparent)}
+#archive .wrap{width:min(1460px,calc(100% - 80px))}
+#archive .arc-masthead{border-color:#ffffff25;color:#cbd7eb}
+#archive .section-head h2{font-size:clamp(68px,10vw,150px);line-height:.86;letter-spacing:-.11em}
+#archive .section-head h2 em{color:#d2ff42}
+#archive .section-intro{color:#c2cde1;max-width:360px}
+#archive .filter-row{gap:6px;margin:40px 0 24px}
+#archive .filter{border-color:#ffffff2a;color:#d3ddef;background:#0a173340;padding:11px 14px;transition:background .35s,color .35s,transform .4s var(--motion)}
+#archive .filter:hover{transform:translateY(-3px)}#archive .filter.active,#archive .filter:hover{background:#d2ff42;border-color:#d2ff42;color:#10234b}
+#archive .archive-controls{display:grid;grid-template-columns:auto 1fr minmax(220px,330px);align-items:center;gap:20px;padding:18px 0;border-top:1px solid #ffffff2b;border-bottom:1px solid #ffffff2b;margin-bottom:25px}
+#archive .view-mode-switch{justify-content:center}
+#archive .view-mode{border-radius:0;background:#08152c44;color:#e0e8f6;border-color:#ffffff27;white-space:nowrap}
+#archive .view-mode.active{background:#d2ff42;border-color:#d2ff42;color:#10234b}
+#archive .archive-search{border-color:#ffffff35;background:#07152c80;min-width:0}
+#archive .archive-search input{color:#fff}
+#archive .arc-stage{min-height:clamp(550px,64vw,800px);background:radial-gradient(ellipse at 50% 34%,#2c477a,#10234b 55%,#08142d);border:1px solid #ffffff22;box-shadow:inset 0 0 100px #02091960,0 40px 90px #050b1d30;isolation:isolate}
+#archive .arc-stage:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(transparent 65%,#061027a8),repeating-linear-gradient(0deg,transparent 0 59px,#ffffff0a 60px),repeating-linear-gradient(90deg,transparent 0 59px,#ffffff0a 60px);mask-image:linear-gradient(transparent,#000 30%,#000)}
+#archive .arc-floor{opacity:.26;transform:perspective(650px) rotateX(67deg) scale(1.65) translateY(20%);transform-origin:center bottom}
+#archive .work-card{filter:drop-shadow(0 20px 28px #02091940);transition:transform .85s var(--motion),opacity .6s,filter .6s}
+#archive .work-image{border:1px solid #ffffff40;background:#182c50;box-shadow:0 25px 60px #02081755;overflow:hidden}
+#archive .work-image img{transition:transform 1.15s var(--motion),filter .7s}
+#archive .work-card:hover .work-image img{transform:scale(1.055);filter:contrast(1.03) saturate(1.06)}
+#archive .work-info{border-color:#ffffff28}
+#archive .work-category{color:#d2ff42}
+#archive .work-description{color:#c3cfe4}
+#about{background:#eeede5;color:#17191d;padding:clamp(100px,13vw,180px) 0;min-height:100svh}
+#about:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(130deg,transparent 49.8%,#17191d05 50%,transparent 50.2%),radial-gradient(ellipse at 15% 22%,#fff,transparent 44%)}
+#about .about-layout{gap:clamp(40px,9vw,150px)}#about .eyebrow{color:#d9422b}
+#about .big-mark{font-size:clamp(120px,20vw,285px);line-height:.67;letter-spacing:-.17em;color:#17191d}
+#about .about-content .manifesto{font-size:clamp(28px,4.4vw,65px);line-height:1.28;letter-spacing:-.065em;font-weight:600}
+#about .manifesto mark{color:#d9422b}
+#about .about-text{color:#4f554f;max-width:700px}
+#about .timeline{border-color:#17191d2a}
+#about .timeline-item{border-color:#17191d2a;transition:padding .45s var(--motion)}#about .timeline-item:hover{padding-left:12px}
+#about .timeline-date{color:#d9422b}
+#skills{background:#ee4e34;color:#17191d;padding:clamp(95px,12vw,165px) 0;overflow:hidden}
+#skills:before{content:"MATERIAL / TEST";position:absolute;right:-.06em;top:7%;z-index:-1;font:900 clamp(100px,21vw,310px)/.8 var(--mono);letter-spacing:-.13em;color:#17191d0b;white-space:nowrap}
+#skills .section-kicker,#skills .section-intro{color:#54271f}
+#skills .section-head h2{font-size:clamp(64px,10vw,145px);letter-spacing:-.11em}
+#skills .section-head h2 em{color:#f1eee5}
+#skills .skills-layout{gap:1px;background:#17191d4a;border:1px solid #17191d4a}
+#skills .skill-panel{background:#f0efe7;border:0;padding:clamp(24px,4vw,55px);color:#17191d}
+#skills .skill-panel+.skill-panel{background:#dc442e;border-left:1px solid #17191d4a}
+#skills .skill-panel h3{border-bottom:1px solid #17191d32;padding-bottom:20px}
+#skills .skill-label{color:#252a26}#skills .skill-label span:last-child{color:#51564f}
+#skills .skill-track{background:#17191d20;height:4px}#skills .skill-fill{background:#17191d}
+#skills .tag{border-color:#17191d54;color:#17191d;transition:transform .4s var(--motion),background .3s,color .3s}
+#skills .tag:hover{background:#17191d;color:#f0efe7;transform:translateY(-4px) rotate(-2deg)}
+#journey{background:#d8d9d1;color:#17191d;padding:clamp(100px,13vw,175px) 0;overflow:hidden}
+#journey:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(35deg,transparent 49.8%,#17191d08 50%,transparent 50.2%),linear-gradient(125deg,transparent 49.8%,#17191d07 50%,transparent 50.2%)}
+#journey .section-head h2{font-size:clamp(65px,10vw,145px);letter-spacing:-.11em}
+#journey .section-head h2 em{color:#d9422b}#journey .section-intro{color:#51574f}
+#journey .process-grid{gap:1px;background:#17191d40;border:1px solid #17191d40}
+#journey .process-card{background:#e8e9e1;border:0;min-height:340px;padding:clamp(24px,3vw,44px);transform:translateY(28px) rotateX(3deg);opacity:.25;transition:transform .9s var(--motion),opacity .7s,background .4s}
+#journey.scene-active .process-card{transform:none;opacity:1}
+#journey .process-card:hover{background:#f7f7f0;transform:translateY(-7px)!important}
+#journey .process-no{color:#d9422b}#journey .process-card h3{font-size:clamp(22px,2.7vw,38px);letter-spacing:-.07em;margin-top:70px}
+#journey .process-card p{color:#535950;line-height:2}
+#contact{background:#0a1630;color:#f1f2f3;padding:clamp(100px,14vw,185px) 0 120px;min-height:90svh;display:flex;align-items:center;overflow:hidden}
+#contact:before{content:"";position:absolute;z-index:-1;width:74vw;aspect-ratio:1;right:-25vw;top:-26vw;border:1px solid #d2ff4238;border-radius:50%;box-shadow:0 0 0 35px #d2ff4207,0 0 0 90px #d2ff4206,0 0 0 160px #d2ff4204;animation:labExitOrbit 32s linear infinite}
+#contact:after{content:"WFL";position:absolute;z-index:-1;left:-.06em;bottom:-.2em;font:900 clamp(220px,42vw,670px)/.8 var(--sans);letter-spacing:-.15em;color:#ffffff05;pointer-events:none}
+@keyframes labExitOrbit{to{transform:rotate(360deg)}}
+#contact .contact-box{width:min(100%,1100px);padding:clamp(28px,6vw,90px);border:1px solid #ffffff28;background:linear-gradient(135deg,#142a52a8,#0a163082);backdrop-filter:blur(12px);position:relative;overflow:hidden}
+#contact .contact-box:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:#d2ff42;transform:scaleY(0);transform-origin:top;transition:transform 1s var(--motion)}
+#contact.scene-active .contact-box:before{transform:scaleY(1)}
+#contact .contact-box h2{font-size:clamp(60px,10vw,145px);line-height:.9;letter-spacing:-.11em;margin:38px 0}
+#contact .contact-box h2 span{color:#d2ff42}#contact .contact-box p{color:#c3cee2;max-width:560px;line-height:2}
+#contact .contact-actions .btn.primary{background:#d2ff42;color:#10131a;border-color:#d2ff42}
+.footer{background:#071126;border-color:#ffffff20;color:#aab5c9;padding:24px 0}
+/* Scene map: a genuinely separate navigational interface with six real destinations. */
+.world-map-backdrop{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:clamp(12px,3vw,36px);background:#050b17e8;backdrop-filter:blur(18px);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;clip-path:inset(0 0 100% 0);}
+.world-map-backdrop.open{opacity:1;visibility:visible;clip-path:inset(0);transition:opacity .35s,clip-path .65s var(--motion),visibility .35s}
+.world-map-panel{width:min(1120px,100%);max-height:min(92svh,950px);overflow:auto;background:#eeede5;color:#17191d;border:1px solid #ffffff50;padding:clamp(22px,4vw,48px);box-shadow:0 35px 120px #0008;transform:translateY(25px) scale(.985);transition:transform .55s var(--motion)}
+.world-map-backdrop.open .world-map-panel{transform:none}
+.world-map-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:30px}
+.world-map-kicker{font:10px var(--mono);letter-spacing:.16em;color:#d9422b}
+.world-map-head h2{font-size:clamp(38px,6vw,76px);line-height:.95;letter-spacing:-.09em;margin:17px 0 12px}
+.world-map-head h2 span{color:#d9422b}.world-map-head p{font-size:12px;color:#5b6059;line-height:1.8;margin:0}
+.world-map-close{width:42px;height:42px;flex:none;background:transparent;border:1px solid #17191d40;font-size:26px;transition:background .3s,color .3s,transform .4s var(--motion)}.world-map-close:hover{background:#17191d;color:#fff;transform:rotate(90deg)}
+.world-map-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#17191d45;border:1px solid #17191d45}
+.world-destination{position:relative;text-align:left;min-height:210px;padding:20px;background:#e8e8df;color:#17191d;border:0;display:flex;flex-direction:column;align-items:flex-start;overflow:hidden;isolation:isolate;transition:background .35s,color .35s}
+.world-destination:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 75% 25%,var(--dest-color),transparent 38%);opacity:.2;transition:opacity .4s,transform .6s var(--motion)}
+.world-destination:hover,.world-destination:focus-visible{background:#17191d;color:#f0efe7}.world-destination:hover:before,.world-destination:focus-visible:before{opacity:.38;transform:scale(1.35)}
+.destination-no{font:9px var(--mono);letter-spacing:.1em;opacity:.65}.world-destination strong{font-size:clamp(19px,2vw,27px);letter-spacing:-.06em;margin-top:auto;z-index:1}.world-destination small{font-size:10px;opacity:.68;margin-top:8px;z-index:1}.world-destination i{font:10px var(--mono);font-style:normal;margin-top:17px;color:#d9422b;z-index:1}.world-destination:hover i{color:var(--dest-color)}
+.destination-glyph{position:absolute;right:16px;top:30px;width:76px;height:76px;opacity:.7;transition:transform .65s var(--motion)}.world-destination:hover .destination-glyph{transform:rotate(20deg) scale(1.12)}
+.glyph-entry{border:1px solid #17191d;border-radius:45% 55% 48% 52%;transform:rotate(32deg);box-shadow:inset 0 0 0 9px #e8e8df,inset 0 0 0 10px #17191d}
+.glyph-field{border:1px solid #10234b;border-radius:50%;transform:rotateX(64deg);box-shadow:0 0 0 10px #10234b18,0 0 0 22px #10234b10}.glyph-record{border:1px solid #17191d;transform:rotate(45deg);box-shadow:inset 0 0 0 13px #e8e8df,inset 0 0 0 14px #17191d}
+.glyph-material{border:9px solid #d9422b;transform:rotate(45deg) skew(-8deg,-8deg);box-shadow:inset 0 0 0 8px #e8e8df,inset 0 0 0 9px #d9422b}
+.glyph-process{border:1px dashed #17191d;border-radius:50%;box-shadow:0 0 0 10px #17191d10,0 0 0 20px #17191d08}.glyph-exit{border:1px solid #10234b;border-radius:50%;box-shadow:0 0 0 9px #10234b15,0 0 0 19px #10234b0a}
+.world-map-foot{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #17191d28;margin-top:20px;padding-top:14px;font:9px var(--mono);letter-spacing:.05em;color:#5a6059}
+.scene-rail{left:14px;background:#10131a50;border:1px solid #ffffff12;padding:12px 8px;backdrop-filter:blur(8px);mix-blend-mode:normal;transition:background .4s,color .4s}
+.scene-rail nav a span{writing-mode:horizontal-tb;max-width:0;max-height:none;white-space:nowrap}
+.scene-rail nav a.active span,.scene-rail nav a:hover span{max-width:110px}
+.scene-rail nav a i{border-radius:2px}
+#portalTransition{background:#d2ff42;color:#10131a}
+#portalTransition.active{animation:portalFullFold .75s var(--motion)}
+@keyframes portalFullFold{0%{clip-path:polygon(0 0,0 0,0 100%,0 100%);transform:scaleY(.02)}35%{clip-path:polygon(0 0,100% 0,78% 100%,0 100%);transform:scaleY(1)}100%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:scaleY(1)}}
+/* Section entry motion is staggered and uses transforms only, so it avoids layout thrash. */
+main>section .reveal{transform:translateY(34px) rotateX(2deg);opacity:0;filter:blur(3px);transition:transform .9s var(--motion),opacity .8s,filter .8s;transform-origin:50% 80%}
+main>section.scene-active .reveal,main>section .reveal.visible{transform:none;opacity:1;filter:none}
+#skills .skill-panel,#journey .process-card{transform-style:preserve-3d;transition:transform .55s var(--motion),background .35s,box-shadow .35s}
+#skills .skill-panel:hover{transform:translateY(-5px);box-shadow:0 20px 40px #17191d18}
+#journey .process-card:nth-child(2){transition-delay:.08s}#journey .process-card:nth-child(3){transition-delay:.16s}
+#archive .arc-stage.space-click:after{content:"";position:absolute;left:var(--click-x);top:var(--click-y);width:8px;height:8px;border:1px solid #d2ff42;border-radius:50%;transform:translate(-50%,-50%);animation:spaceClickWave .85s ease-out forwards;pointer-events:none;z-index:20}
+@keyframes spaceClickWave{to{width:min(55vw,520px);height:min(55vw,520px);opacity:0;border-width:1px}}
+#labCursor{position:fixed;left:0;top:0;width:22px;height:22px;border:1px solid #d9422b;border-radius:50%;pointer-events:none;z-index:250;opacity:0;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .25s,height .25s,opacity .2s,background .2s}
+#labCursor:after{content:"";position:absolute;left:50%;top:50%;width:3px;height:3px;background:#d2ff42;border-radius:50%;transform:translate(-50%,-50%)}
+body.lab-cursor-on #labCursor{opacity:1}body.lab-cursor-hot #labCursor{width:48px;height:48px;background:#d2ff4222}
+@media(max-width:900px){#archive .archive-controls{grid-template-columns:1fr;align-items:stretch}#archive .view-mode-switch{justify-content:flex-start}#archive .view-mode{flex:1}#worldMapBtn{padding:9px 10px}.world-destination{min-height:185px}}
+@media(max-width:620px){.topbar{top:0;left:0;transform:none;width:100%;border-radius:0;border-left:0;border-right:0}.topbar-inner{padding:0 10px}.brand{gap:8px;font-size:9px}.brand-mark{width:27px;height:27px}.brand small{font-size:7px}.nav{gap:6px}.nav a{display:none!important}#worldMapBtn{font-size:8px;padding:8px 8px}#worldMapBtn span{margin-left:3px}.nav button#loginBtn{font-size:8px;padding:8px}#works{padding-top:56px}#works .lab-hero{min-height:calc(100svh - 56px);padding:72px 18px 112px}#works .lab-hero h1{font-size:clamp(54px,14vw,84px)}#works .lab-hero-object{min-height:300px;opacity:.45;right:-12%}#archive .wrap{width:calc(100% - 30px)}#archive{padding:90px 0}#archive .section-head{display:block}#archive .section-head h2{font-size:clamp(58px,15vw,92px)}#archive .archive-controls{gap:12px}#archive .view-mode-switch{display:grid;grid-template-columns:1fr 1fr}#archive .arc-stage{min-height:570px}#about .about-layout{grid-template-columns:1fr;gap:30px}#about .about-sticky{position:relative;top:auto}#about .big-mark{font-size:clamp(105px,27vw,165px)}#skills .skills-layout{grid-template-columns:1fr}#skills .skill-panel+.skill-panel{border-left:0;border-top:1px solid #17191d4a}#journey .process-grid{grid-template-columns:1fr}#journey .process-card{min-height:230px}#journey .process-card h3{margin-top:38px}.scene-rail{top:auto;bottom:8px;left:50%;transform:translateX(-50%);flex-direction:row;gap:7px;padding:7px 9px;background:#0a1630ed;color:#fff;border-color:#ffffff28;max-width:calc(100% - 16px)}.scene-rail .rail-brand,.scene-rail .rail-track,.scene-rail .rail-current{display:none}.scene-rail nav{flex-direction:row;gap:4px}.scene-rail nav a{min-height:0}.scene-rail nav a i{width:29px;height:29px;font-size:9px}.scene-rail nav a span{display:none!important}.world-map-panel{padding:20px 15px;max-height:94svh}.world-map-head h2{font-size:38px}.world-map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.world-destination{min-height:155px;padding:13px}.destination-glyph{width:44px;height:44px;right:11px;top:25px}.world-destination strong{font-size:18px}.world-destination small{font-size:9px}.world-map-foot{font-size:8px;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){#labCursor{display:none!important}.world-map-backdrop,.world-map-panel,main>section .reveal{transition:none!important;animation:none!important}main>section .reveal{opacity:1;transform:none;filter:none}#contact:before{animation:none!important}}
+
 </style>
 </head>
 <body>
 <header class="topbar"><div class="wrap topbar-inner">
 <a class="brand" href="#top"><span class="brand-mark">W</span><span>WFL / ART ARCHIVE<small>3D GAME ART · PORTFOLIO</small></span></a>
-<nav class="nav"><a href="#works">作品档案</a><a href="#about">关于创作</a><a href="#skills">技能矩阵</a><a href="#journey">创作履历</a><button id="loginBtn">管理入口 ↗</button></nav>
+<nav class="nav"><a href="#archive">作品档案</a><a href="#about">创作者档案</a><a href="#skills">材料实验</a><a href="#journey">制作方法</a><button type="button" id="worldMapBtn" aria-haspopup="dialog" aria-controls="worldMap" aria-expanded="false">空间地图 <span aria-hidden="true">↗</span></button><button id="loginBtn">管理入口 ↗</button></nav>
 </div></header>
+<aside class="scene-rail" aria-label="空间章节导航">
+  <div class="rail-brand">W<span>FL</span></div>
+  <div class="rail-track"><span id="railProgress"></span></div>
+  <nav>
+    <a href="#works" data-target="works" class="active"><i>01</i><span>入口空间</span></a>
+    <a href="#archive" data-target="archive"><i>02</i><span>作品宇宙</span></a>
+    <a href="#about" data-target="about"><i>03</i><span>创作者档案</span></a>
+    <a href="#skills" data-target="skills"><i>04</i><span>材料实验</span></a>
+    <a href="#journey" data-target="journey"><i>05</i><span>制作方法</span></a>
+    <a href="#contact" data-target="contact"><i>06</i><span>离开装置</span></a>
+  </nav>
+  <div class="rail-current"><b id="railNumber">01</b><span> / 06</span></div>
+</aside>
+<div class="portal-transition" id="portalTransition" aria-hidden="true"><div class="portal-ring"></div><span>CHANGING SPATIAL STATE</span></div>
 <main id="top">
 
 <section class="section arc-section" id="works"><div class="wrap">
@@ -179,11 +421,22 @@ html{scroll-padding-top:76px}body{background:#e8e7df;color:#17191d;cursor:none}b
 <div class="lab-hero-object" id="heroObject" aria-hidden="true"><div class="object-shell"><div class="object-core"></div><div class="object-cut"></div><div class="object-ring"></div><div class="object-ring ring-two"></div><div class="object-orb"></div></div><span class="object-label label-one">FORM / 001</span><span class="object-label label-two">UNSTABLE GEOMETRY</span></div>
 <div class="lab-bottom-meta"><span>01 — 入口装置</span><span>形体 / 结构 / 材质 / 观察</span><span>向下探索 ↓</span></div>
 <div class="scene-switch" aria-label="切换空间视觉"><span>空间状态</span><button class="scene-choice active" data-scene="bone">01 骨白</button><button class="scene-choice" data-scene="void">02 深蓝</button><button class="scene-choice" data-scene="ember">03 熔岩</button></div>
-</div>
+</div></section>
+<section class="section archive-universe" id="archive"><div class="wrap">
 <div class="arc-masthead"><span>02 / 造物档案 · ARTIFACT FIELD</span><span><b id="heroCount">00</b> 件真实作品 / ARCHIVE</span></div>
 <div class="section-head reveal"><div><div class="section-kicker">02 / 可探索的造物群</div><h2>作品档案<em>。</em></h2></div><p class="section-intro" id="heroIntro">角色、场景、道具与风格化资产。这里展示从形体设计、结构搭建到材质呈现的持续探索。选择作品查看详情；支持的项目可直接在网页中旋转查看三维模型。</p></div>
 <div class="filter-row" id="filters"><button class="filter active" data-category="全部">全部作品 / ALL</button><button class="filter" data-category="角色">角色 / CHARACTER</button><button class="filter" data-category="场景">场景 / ENVIRONMENT</button><button class="filter" data-category="道具">道具 / PROP</button><button class="filter" data-category="其他">其他 / EXPERIMENT</button></div>
-<div class="arc-stage" id="arcStage"><div class="arc-floor"></div><canvas class="arc-ripple-canvas" id="arcRippleCanvas" aria-hidden="true"></canvas><div class="gallery arc-gallery" id="gallery"><div class="empty"><b>LOADING ARCHIVE...</b>正在整理作品档案</div></div><div class="arc-instruction"><span>FIELD INTERACTION / ACTIVE</span><span>拖拽改变视角 · 滚动切换造物 · 点击产生波纹</span></div><div class="arc-count"><b id="arcCurrent">01</b><i>/</i><span id="arcTotal">00</span></div></div>
+<div class="archive-controls" aria-label="作品观察方式与搜索">
+  <div class="view-mode-label"><span class="mode-dot"></span>观察方式 <small>OBSERVATION MODE</small></div>
+  <div class="view-mode-switch" role="group" aria-label="切换作品展示方式">
+    <button class="view-mode active" type="button" data-view="space" aria-pressed="true">失重探索 <span>01</span></button>
+    <button class="view-mode" type="button" data-view="orbit" aria-pressed="false">轨道观察 <span>02</span></button>
+    <button class="view-mode" type="button" data-view="specimen" aria-pressed="false">机械标本 <span>03</span></button>
+    <button class="view-mode" type="button" data-view="archive" aria-pressed="false">平面档案 <span>04</span></button>
+  </div>
+  <label class="archive-search"><span>⌕</span><input id="workSearch" type="search" placeholder="搜索作品名称、分类或说明…" aria-label="搜索作品名称、分类或说明"><kbd>ENTER</kbd></label>
+</div>
+<div class="arc-stage" id="arcStage" data-view="space"><div class="arc-floor"></div><canvas class="arc-ripple-canvas" id="arcRippleCanvas" aria-hidden="true"></canvas><div class="gallery arc-gallery" id="gallery"><div class="empty"><b>LOADING ARCHIVE...</b>正在整理作品档案</div></div><div class="arc-instruction"><span>FIELD INTERACTION / ACTIVE</span><span>拖拽改变视角 · 滚动切换造物 · 点击产生波纹</span></div><div class="arc-count"><b id="arcCurrent">01</b><i>/</i><span id="arcTotal">00</span></div></div>
 </div></section>
 <section class="section" id="about"><div class="wrap about-layout">
 <div class="about-sticky reveal"><div class="eyebrow">03 / 创作者档案</div><div class="big-mark">WFL<span style="color:var(--orange)">.</span></div><p id="aboutAside">一个持续学习、持续制作的 3D 游戏美术创作者。用作品记录过程，让每次尝试都留下痕迹。</p><div class="editable-hint">PERSONAL STATEMENT / 后台可编辑</div></div>
@@ -197,8 +450,22 @@ html{scroll-padding-top:76px}body{background:#e8e7df;color:#17191d;cursor:none}b
 <section class="section" id="journey"><div class="wrap"><div class="section-head reveal"><div><div class="section-kicker">05 / 从想法到造物</div><h2>从想法到<em>成形。</em></h2></div><p class="section-intro">可以把这里作为项目履历、制作方法或个人创作原则的展示区。内容强调过程与判断，而不仅仅是结果。</p></div>
 <div class="process-grid reveal"><article class="process-card"><div class="process-no">STEP / 01</div><h3>观察与拆解</h3><p>从真实物体、概念设计或风格参考出发，分析轮廓、比例、结构与视觉层级。</p></article><article class="process-card"><div class="process-no">STEP / 02</div><h3>建模与验证</h3><p>根据作品类型选择合适的建模方式，在形体、细节、风格与可读性之间取得平衡。</p></article><article class="process-card"><div class="process-no">STEP / 03</div><h3>材质与呈现</h3><p>通过材质、灯光、构图与展示方式强化作品特点，让资产在静态呈现和实时查看中都清晰易读。</p></article></div>
 </div></section>
-<section class="contact"><div class="wrap"><div class="contact-box reveal"><div class="eyebrow">05 / OPEN FOR CONVERSATION</div><h2>让下一个想法，<br><span>开始成形。</span></h2><p id="contactText">欢迎交流角色、场景、道具、机械、生物、材质表现与其他 3D 游戏美术方向，也欢迎提出建议或讨论项目合作。作品持续更新中。</p><div class="contact-actions"><a class="btn primary" id="emailLink" href="mailto:your-email@example.com">联系创作者 ↗</a><a class="btn" href="#works">返回作品档案 ↑</a></div><div class="editable-hint">CONTACT EMAIL / <a id="emailText" href="mailto:your-email@example.com">your-email@example.com</a></div></div></div></section>
+<section class="contact" id="contact"><div class="wrap"><div class="contact-box reveal"><div class="eyebrow">05 / OPEN FOR CONVERSATION</div><h2>让下一个想法，<br><span>开始成形。</span></h2><p id="contactText">欢迎交流角色、场景、道具、机械、生物、材质表现与其他 3D 游戏美术方向，也欢迎提出建议或讨论项目合作。作品持续更新中。</p><div class="contact-actions"><a class="btn primary" id="emailLink" href="mailto:your-email@example.com">联系创作者 ↗</a><a class="btn" href="#works">返回作品档案 ↑</a></div><div class="editable-hint">CONTACT EMAIL / <a id="emailText" href="mailto:your-email@example.com">your-email@example.com</a></div></div></div></section>
 </main>
+<div class="world-map-backdrop" id="worldMap" role="dialog" aria-modal="true" aria-labelledby="worldMapTitle" aria-hidden="true">
+  <div class="world-map-panel">
+    <div class="world-map-head"><div><span class="world-map-kicker">WFL / NAVIGATION SYSTEM</span><h2 id="worldMapTitle">选择一个空间<span>。</span></h2><p>这不是菜单目录，而是研究所的六个观察区域。</p></div><button type="button" id="worldMapClose" class="world-map-close" aria-label="关闭空间地图">×</button></div>
+    <div class="world-map-grid">
+      <button class="world-destination is-current" data-go="works" style="--dest-color:#d8ff53"><span class="destination-no">01 / ENTRY</span><span class="destination-glyph glyph-entry" aria-hidden="true"></span><strong>造物入口</strong><small>骨白建筑 · 生成造物</small><i>进入 ↗</i></button>
+      <button class="world-destination" data-go="archive" style="--dest-color:#a9c8ff"><span class="destination-no">02 / FIELD</span><span class="destination-glyph glyph-field" aria-hidden="true"></span><strong>作品宇宙</strong><small>真实作品 · 四种观察方式</small><i>进入 ↗</i></button>
+      <button class="world-destination" data-go="about" style="--dest-color:#d9d5c8"><span class="destination-no">03 / RECORD</span><span class="destination-glyph glyph-record" aria-hidden="true"></span><strong>创作者档案</strong><small>个人资料 · 创作立场</small><i>进入 ↗</i></button>
+      <button class="world-destination" data-go="skills" style="--dest-color:#ff6849"><span class="destination-no">04 / MATERIAL</span><span class="destination-glyph glyph-material" aria-hidden="true"></span><strong>材料实验室</strong><small>工具 · 技能 · 方向</small><i>进入 ↗</i></button>
+      <button class="world-destination" data-go="journey" style="--dest-color:#baff62"><span class="destination-no">05 / PROCESS</span><span class="destination-glyph glyph-process" aria-hidden="true"></span><strong>制作方法</strong><small>观察 · 建模 · 呈现</small><i>进入 ↗</i></button>
+      <button class="world-destination" data-go="contact" style="--dest-color:#a9c8ff"><span class="destination-no">06 / EXIT</span><span class="destination-glyph glyph-exit" aria-hidden="true"></span><strong>离开装置</strong><small>联系 · 开启下一次合作</small><i>进入 ↗</i></button>
+    </div>
+    <div class="world-map-foot"><span>方向键选择 · ENTER 进入 · ESC 返回</span><span id="worldMapLocation">CURRENT POSITION / 01</span></div>
+  </div>
+</div>
 <footer class="footer"><div class="wrap footer-inner"><span>© 2026 WFL — 3D GAME ART ARCHIVE</span><span>MADE WITH PATIENCE · BUILT THROUGH PRACTICE</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 
 <div class="modal-backdrop" id="detailModal"><div class="modal"><button class="modal-close" id="detailClose">×</button><div class="detail-grid"><div class="detail-view" id="detailView"><img id="detailImage" alt=""><canvas class="model-canvas" id="modelCanvas"></canvas><div class="viewer-status" id="viewerStatus" aria-live="polite">PREPARING 3D VIEW…</div><div class="viewer-tools"><button id="rotateBtn">自动旋转：开</button><button id="wireBtn">线框显示</button><button id="fullImageBtn">查看大图</button></div></div><div class="detail-info"><div class="work-category" id="detailCategory"></div><h2 id="detailTitle"></h2><p id="detailDescription"></p><div class="detail-meta" id="detailMeta">WFL / DIGITAL ASSET</div></div></div></div></div>
@@ -249,7 +516,7 @@ const SUPABASE_KEY="sb_publishable_cJILto1EtvPpkHLkMlBoWw_h2rV1I-W";
 const BUCKET="portfolio-images";
 const ADMIN_UID="3cf62ecd-d066-44e2-ac80-65ef6b0ef79b";
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let works=[],currentCategory="全部",editingWorkId=null,currentWork=null;
+let works=[],currentCategory="全部",currentSearch="",editingWorkId=null,currentWork=null;
 let renderer=null,scene=null,camera=null,controls=null,modelRoot=null,animationFrame=null,originalMaterials=[],wireframeMode=false,autoRotate=true,threeInitialized=false;
 const $=id=>document.getElementById(id);
 const gallery=$("gallery"),toast=$("toast");
@@ -261,10 +528,10 @@ async function loadWorks(){
  gallery.innerHTML='<div class="empty"><b>LOADING ARCHIVE...</b>正在整理作品档案</div>';
  const {data,error}=await supabaseClient.from("works").select("*").order("created_at",{ascending:false});
  if(error){console.error(error);gallery.innerHTML='<div class="empty"><b>ARCHIVE UNAVAILABLE</b>作品加载失败，请检查网络或 Supabase 配置。</div>';showToast("作品加载失败："+error.message,true);return}
- works=data||[];renderGallery();renderAdminList();if($("heroCount"))$("heroCount").textContent=String(works.length).padStart(2,"0");
+ works=data||[];syncDynamicCategories();renderGallery();renderAdminList();if($("heroCount"))$("heroCount").textContent=String(works.length).padStart(2,"0");
 }
 function renderGallery(){
- const filtered=currentCategory==="全部"?works:works.filter(w=>w.category===currentCategory);
+ const q=currentSearch.trim().toLocaleLowerCase();const filtered=works.filter(w=>(currentCategory==="全部"||w.category===currentCategory)&&(!q||[w.title,w.category,w.description].some(v=>String(v||"").toLocaleLowerCase().includes(q))));
  if(!filtered.length){gallery.innerHTML='<div class="empty"><b>NO WORKS IN THIS FRAME</b>这个分类暂时没有作品。<br>新的形体，正在路上。</div>';gallery.classList.remove("has-works");updateArcGallery();return}
  gallery.classList.add("has-works");
  gallery.innerHTML=filtered.map((w,i)=>`<article class="work-card" data-id="${escapeHtml(w.id)}" style="--i:${i}"><div class="work-image"><img src="${escapeHtml(w.image_url)}" alt="${escapeHtml(w.title)}" loading="lazy" draggable="false"><span class="work-index">WFL / ${String(i+1).padStart(3,"0")}</span></div><div class="work-info"><div><div class="work-category">${escapeHtml(w.category||"其他")}${w.model_url?' · 3D VIEW':''}</div><div class="work-title">${escapeHtml(w.title)}</div><div class="work-description">${escapeHtml(w.description||"")}</div></div><span class="work-arrow">↗</span></div></article>`).join("");
@@ -453,7 +720,7 @@ function updateArcGallery(){
  if(!total){$("arcCurrent").textContent="00";$("fixedCase").textContent="CASE 00 / 00 · NO WORKS";return}
  arcIndex=((arcIndex%total)+total)%total;
  $("arcCurrent").textContent=String(arcIndex+1).padStart(2,"0");
- const current=works.filter(w=>currentCategory==="全部"||w.category===currentCategory)[arcIndex];
+ const current=works.filter(w=>(currentCategory==="全部"||w.category===currentCategory)&&(!currentSearch.trim()||[w.title,w.category,w.description].some(v=>String(v||"").toLocaleLowerCase().includes(currentSearch.trim().toLocaleLowerCase()))))[arcIndex];
  $("fixedCase").textContent=`CASE ${String(arcIndex+1).padStart(2,"0")} / ${String(total).padStart(2,"0")} · ${(current?.title||"WFL WORKS").toUpperCase()}`;
  $("fixedVisuals").textContent=current?.model_url?"3D MODEL · INTERACTIVE VIEW":"HARD SURFACE · 3D PROPS";
  cards.forEach((card,i)=>{
@@ -472,10 +739,30 @@ function renderArcWaterMotion(){
  if(!arcStage)return;arcWaveClock+=.016;arcMouseX+=(arcTargetX-arcMouseX)*.075;arcMouseY+=(arcTargetY-arcMouseY)*.075;
  arcStage.style.setProperty("--wave-x",(arcMouseX*100).toFixed(2)+"%");arcStage.style.setProperty("--wave-y",(arcMouseY*100).toFixed(2)+"%");
  const cards=arcCards(),total=cards.length;
+ const viewMode=window.__wflViewMode||"space";
+ if(viewMode==="archive"||viewMode==="specimen"){
+   if(arcStage.style.height!=="auto")arcStage.style.height="auto";
+   cards.forEach((card,i)=>{
+     card.style.zIndex=String(2+i);card.style.opacity="1";card.style.filter="none";card.style.pointerEvents="auto";
+     if(viewMode==="archive"){card.style.transform="none";card.style.setProperty("--specimen-angle","0deg");}
+     else {const angle=(i*137.5+arcWaveClock*2.5)%360;card.style.transform=`translate(-50%, 0) translate3d(${Math.cos(angle*Math.PI/180)*Math.min(90,window.innerWidth*.07)}px, ${Math.sin(angle*Math.PI/180)*28}px, ${-Math.abs(Math.sin(angle*Math.PI/180))*65}px) rotate(${Math.sin(angle*Math.PI/180)*-2}deg) scale(${.96+Math.cos(angle*Math.PI/180)*.035})`;card.style.setProperty("--specimen-angle",angle+"deg");}
+   });
+   arcWaveRaf=requestAnimationFrame(renderArcWaterMotion);return;
+ }
+ if(viewMode==="space"){const cols=window.innerWidth<700?2:3;arcStage.style.height=Math.max(window.innerWidth<700?690:640,Math.ceil(total/cols)*(window.innerWidth<700?215:235)+155)+"px";}else if(arcStage.style.height==="auto"){arcStage.style.height="";}
  cards.forEach((card,i)=>{
    let offset=i-arcIndex;const half=total/2;if(offset>half)offset-=total;if(offset< -half)offset+=total;
    const abs=Math.abs(offset),gap=window.innerWidth<700?Math.min(window.innerWidth*.57,230):Math.min(window.innerWidth*.27,370);
    const phase=arcWaveClock*1.12-i*.78,dist=Math.abs((i/(Math.max(total-1,1)))-arcMouseX),influence=Math.max(0,1-dist*3.5);
+   if(viewMode==="space"){
+     const cols=window.innerWidth<700?2:3,row=Math.floor(i/cols),col=i%cols,center=(cols-1)/2;
+     const x=(col-center)*(window.innerWidth<700?window.innerWidth*.32:Math.min(window.innerWidth*.22,290))+(arcMouseX-.5)*-26*(1-dist);
+     const y=row*(window.innerWidth<700?210:235)+Math.sin(phase)*5+(arcMouseY-.5)*-18*(1-dist);
+     const z=-Math.abs(col-center)*48-Math.abs(Math.sin(phase))*8;
+     const rotY=(col-center)*-7+(arcMouseX-.5)*-5*(1-dist),rotX=(arcMouseY-.5)*-4*(1-dist);
+     card.style.transform=`translate(-50%, 0) translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${1-Math.abs(col-center)*.035})`;
+     card.style.zIndex=String(30-row*2-Math.abs(col-center));card.style.opacity="1";card.style.filter="none";card.style.pointerEvents="auto";return;
+   }
    const ripple=Math.sin(phase)*Math.min(1,abs*.35+0.35),waveY=Math.sin(phase*1.35)*9*ripple+Math.cos(phase*.7+i)*5;
    const mouseX=(arcMouseX-.5)*-28*influence,mouseY=(arcMouseY-.5)*-18*influence;
    const x=offset*gap+Math.sin(phase*.6)*8+mouseX,y=abs*19+waveY+mouseY,z=-abs*150+Math.cos(phase)*13*influence;
@@ -512,6 +799,24 @@ if(arcStage){
  arcStage.addEventListener("pointerup",endDrag);arcStage.addEventListener("pointercancel",endDrag);arcStage.addEventListener("lostpointercapture",endDrag);
  window.addEventListener("resize",()=>requestAnimationFrame(updateArcGallery));
 }
+// Observation modes alter the real gallery layout, not merely its palette.
+window.__wflViewMode="space";
+const modeButtons=[...document.querySelectorAll(".view-mode")];
+function setGalleryMode(mode){
+ window.__wflViewMode=mode;arcStage.dataset.view=mode;
+ modeButtons.forEach(btn=>{const active=btn.dataset.view===mode;btn.classList.toggle("active",active);btn.setAttribute("aria-pressed",String(active));});
+ if(mode==="archive"||mode==="specimen"){arcStage.style.height="auto";gallery.style.transform="none";gallery.style.perspective="none";}else{arcStage.style.height="";gallery.style.transformStyle="preserve-3d";gallery.style.perspective="1200px";}
+ updateArcGallery();
+}
+modeButtons.forEach(btn=>btn.addEventListener("click",()=>setGalleryMode(btn.dataset.view)));
+const searchInput=$("workSearch");
+if(searchInput){let searchDebounce;searchInput.addEventListener("input",()=>{clearTimeout(searchDebounce);searchDebounce=setTimeout(()=>{currentSearch=searchInput.value;arcIndex=0;renderGallery()},120)});searchInput.addEventListener("keydown",e=>{if(e.key==="Enter"){currentSearch=searchInput.value;arcIndex=0;renderGallery();}})}
+// Dynamically extend category filters from real database values, keeping the existing categories intact.
+function syncDynamicCategories(){
+ const root=$("filters");if(!root)return;const known=[...root.querySelectorAll("[data-category]")].map(b=>b.dataset.category);const extras=[...new Set(works.map(w=>String(w.category||"其他").trim()).filter(Boolean))].filter(c=>!known.includes(c));
+ extras.forEach(category=>{const btn=document.createElement("button");btn.type="button";btn.className="filter";btn.dataset.category=category;btn.textContent=category;btn.addEventListener("click",()=>{currentCategory=category;root.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b===btn));renderGallery()});root.appendChild(btn)});
+}
+const originalLoadWorks=loadWorks;
 // Custom cursor follows with a small lag; disabled for touch and reduced-motion users.
 const cursor=$("customCursor");let cursorX=0,cursorY=0,targetX=0,targetY=0;
 if(cursor&&matchMedia("(pointer:fine)").matches&&!matchMedia("(prefers-reduced-motion: reduce)").matches){window.addEventListener("mousemove",e=>{targetX=e.clientX;targetY=e.clientY;cursor.classList.add("visible")});document.addEventListener("mouseleave",()=>cursor.classList.remove("visible"));const cursorTick=()=>{cursorX+=(targetX-cursorX)*.18;cursorY+=(targetY-cursorY)*.18;cursor.style.left=cursorX+"px";cursor.style.top=cursorY+"px";requestAnimationFrame(cursorTick)};cursorTick();document.querySelectorAll("a,button,.arc-stage").forEach(el=>{el.addEventListener("mouseenter",()=>{cursor.classList.add("large");cursor.textContent=el.closest(".contact")?"NEXT":"VIEW"});el.addEventListener("mouseleave",()=>{cursor.classList.remove("large");cursor.textContent="VIEW"})});document.addEventListener("pointerover",e=>{if(e.target.closest(".work-card")){cursor.classList.add("large");cursor.textContent="VIEW"}});document.addEventListener("pointerout",e=>{if(e.target.closest(".work-card")&&!e.relatedTarget?.closest(".work-card")){cursor.classList.remove("large");cursor.textContent="VIEW"}});}
@@ -538,7 +843,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('c
  function resize(){const r=hero.getBoundingClientRect();w=r.width;h=r.height;dpr=Math.min(devicePixelRatio||1,1.6);canvas.width=Math.max(1,Math.floor(w*dpr));canvas.height=Math.max(1,Math.floor(h*dpr));canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
  function line(x1,y1,x2,y2,color,a=1,width=1){ctx.globalAlpha=a;ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
  function poly(points,fill,stroke,alpha=1){ctx.globalAlpha=alpha;ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke()}}
- function draw(){if(document.hidden&&!reduce){requestAnimationFrame(draw);return}t+=reduce?.003:.008;mx+=(tx-mx)*.045;my+=(ty-my)*.045;ctx.clearRect(0,0,w,h);const c=colors[scene]||colors.bone;const ink=c[0],acid=c[1],hot=c[2];
+ function draw(){if(document.hidden&&!reduce){requestAnimationFrame(draw);return}t+=reduce ? .003 : .008;mx+=(tx-mx)*.045;my+=(ty-my)*.045;ctx.clearRect(0,0,w,h);const c=colors[scene]||colors.bone;const ink=c[0],acid=c[1],hot=c[2];
   // Spatial drafting grid fades into the void.
   const ox=w*(.72+(mx-.5)*.06),oy=h*(.52+(my-.5)*.05);ctx.save();ctx.translate(ox,oy);ctx.rotate(-.24+mx*.07);for(let i=-12;i<=12;i++){const a=(1-Math.abs(i)/13)*.15;line(i*34,-h,i*34,h,ink,a,.7);line(-w,i*34,w,i*34,ink,a,.7)}ctx.restore();
   // Large broken orbit paths, with different eccentricities and parallax.
@@ -551,7 +856,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('c
   // Crosshair and coordinate marks.
   line(cx-size*1.45,cy,cx+size*1.45,cy,hot,.55,.7);line(cx,cy-size*1.35,cx,cy+size*1.35,hot,.55,.7);ctx.globalAlpha=.6;ctx.fillStyle=ink;ctx.font='9px monospace';ctx.fillText('X / '+(mx*100).toFixed(1),cx-size*1.4,cy+size*1.5);ctx.fillText('Z / '+(my*100).toFixed(1),cx+size*.95,cy-size*1.2);
   // Pointer creates expanding elliptical wave rings.
-  ripples=ripples.filter(r=>r.life<1);ripples.forEach(r=>{r.life+=reduce?.025:.012;const rad=r.life*Math.max(w,h)*.24;ctx.globalAlpha=(1-r.life)*.5;ctx.strokeStyle=acid;ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(r.x,r.y,rad,rad*.48, -.2,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.ellipse(r.x,r.y,rad*.74,rad*.34,-.2,0,Math.PI*2);ctx.stroke()});ctx.globalAlpha=1;
+  ripples=ripples.filter(r=>r.life<1);ripples.forEach(r=>{r.life+=reduce ? .025 : .012;const rad=r.life*Math.max(w,h)*.24;ctx.globalAlpha=(1-r.life)*.5;ctx.strokeStyle=acid;ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(r.x,r.y,rad,rad*.48, -.2,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.ellipse(r.x,r.y,rad*.74,rad*.34,-.2,0,Math.PI*2);ctx.stroke()});ctx.globalAlpha=1;
   requestAnimationFrame(draw)
  }
  function setScene(next){scene=next;hero.dataset.scene=next;hero.querySelectorAll('.scene-choice').forEach(b=>b.classList.toggle('active',b.dataset.scene===next));document.documentElement.dataset.artScene=next}
@@ -563,7 +868,72 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('c
  const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const id=e.target.id;if(id==='works')document.body.dataset.chapter='field';else if(id==='about')document.body.dataset.chapter='archive';else if(id==='skills')document.body.dataset.chapter='ember';else if(id==='journey')document.body.dataset.chapter='acid';else if(e.target.classList.contains('contact'))document.body.dataset.chapter='exit'}}),{threshold:.2});document.querySelectorAll('#works,#about,#skills,#journey,.contact').forEach(el=>observer.observe(el));
  resize();window.addEventListener('resize',resize,{passive:true});if(!reduce)draw();else{draw();}
 })();
+
+/* Chapter navigator: portal transitions, active chapter tracking and progress. */
+(()=>{
+ const rail=document.querySelector('.scene-rail');if(!rail)return;
+ const links=[...rail.querySelectorAll('a[data-target]')],sections=links.map(a=>document.getElementById(a.dataset.target)).filter(Boolean),veil=document.getElementById('portalTransition'),progress=document.getElementById('railProgress'),number=document.getElementById('railNumber');
+ let active='works',locked=false,hideTimer;
+ function setActive(id){active=id;links.forEach((a,i)=>{const on=a.dataset.target===id;a.classList.toggle('active',on);if(on){number.textContent=String(i+1).padStart(2,'0')}});document.body.dataset.chapter=id==='archive'?'field':id==='works'?'entrance':id==='about'?'archive':id==='skills'?'ember':id==='journey'?'acid':'exit'}
+ function go(id){const target=document.getElementById(id);if(!target)return;if(locked){target.scrollIntoView({behavior:'smooth',block:'start'});return}locked=true;veil?.classList.add('active');clearTimeout(hideTimer);setTimeout(()=>{target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});setTimeout(()=>{veil?.classList.remove('active');locked=false},520)},220)}
+ links.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.target)}));
+ document.querySelectorAll('a[href^="#"]').forEach(a=>{if(a.closest('.scene-rail'))return;const id=a.getAttribute('href').slice(1);if(!id)return;a.addEventListener('click',()=>{const target=document.getElementById(id);if(target&&target!==document.getElementById(active)){veil?.classList.add('active');setTimeout(()=>veil?.classList.remove('active'),420)}})});
+ const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.18)setActive(e.target.id)}),{threshold:[.18,.35,.55]});sections.forEach(s=>io.observe(s));
+ function updateProgress(){const max=document.documentElement.scrollHeight-innerHeight;progress?.style.setProperty('transform',`scaleY(${max>0?scrollY/max:0})`);document.documentElement.style.setProperty('--scene-progress',String(max>0?scrollY/max:0))}window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+ // Space clicks ripple only on empty background; actual artwork keeps its normal click behavior.
+ document.querySelectorAll('#archive .arc-stage').forEach(stage=>stage.addEventListener('pointerdown',e=>{if(e.target.closest('.work-card'))return;stage.classList.remove('space-click');void stage.offsetWidth;stage.style.setProperty('--click-x',(e.clientX-stage.getBoundingClientRect().left)+'px');stage.style.setProperty('--click-y',(e.clientY-stage.getBoundingClientRect().top)+'px');stage.classList.add('space-click');setTimeout(()=>stage.classList.remove('space-click'),900)}));
+ // Keyboard chapter movement for accessibility; don't hijack typing in fields or open modals.
+ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.target.matches('input,textarea,select,[contenteditable="true"]')||document.querySelector('.modal-backdrop.show,.admin-modal.show'))return;const idx=sections.findIndex(s=>s.id===active);if(e.key==='PageDown'||(e.key==='ArrowDown'&&e.shiftKey)){if(idx<sections.length-1){e.preventDefault();go(sections[idx+1].id)}}else if(e.key==='PageUp'||(e.key==='ArrowUp'&&e.shiftKey)){if(idx>0){e.preventDefault();go(sections[idx-1].id)}}});
+})();
+
 </script>
 
+<script>
+
+/* EXPERIENCE DIRECTOR 04 — route transitions, real scene map, contextual parallax. */
+(()=>{
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const fine=matchMedia('(pointer:fine)').matches;
+ const body=document.body;
+ const sections=[...document.querySelectorAll('main>section[id]')];
+ const veil=document.getElementById('portalTransition');
+ const map=document.getElementById('worldMap');
+ const mapBtn=document.getElementById('worldMapBtn');
+ const closeBtn=document.getElementById('worldMapClose');
+ const destinations=[...document.querySelectorAll('.world-destination')];
+ const locationLabel=document.getElementById('worldMapLocation');
+ let mapOpen=false,lastFocus=null,transitionLock=false,hideTimer=0;
+ const labels={works:'01 / ENTRY',archive:'02 / FIELD',about:'03 / RECORD',skills:'04 / MATERIAL',journey:'05 / PROCESS',contact:'06 / EXIT'};
+ function setChapter(id){
+   body.dataset.chapter=({works:'entrance',archive:'field',about:'archive',skills:'ember',journey:'acid',contact:'exit'})[id]||'entrance';
+   sections.forEach(s=>s.classList.toggle('scene-active',s.id===id));
+   destinations.forEach(b=>{const current=b.dataset.go===id;b.classList.toggle('is-current',current);b.setAttribute('aria-current',current?'location':'false')});
+   if(locationLabel)locationLabel.textContent='CURRENT POSITION / '+(labels[id]||'01 / ENTRY');
+ }
+ function openMap(){if(mapOpen)return;mapOpen=true;lastFocus=document.activeElement;map.classList.add('open');map.setAttribute('aria-hidden','false');mapBtn?.setAttribute('aria-expanded','true');body.style.overflow='hidden';const current=destinations.find(b=>b.classList.contains('is-current'))||destinations[0];setTimeout(()=>current?.focus(),80)}
+ function closeMap(){if(!mapOpen)return;mapOpen=false;map.classList.remove('open');map.setAttribute('aria-hidden','true');mapBtn?.setAttribute('aria-expanded','false');body.style.overflow='';lastFocus?.focus?.()}
+ function go(id){const target=document.getElementById(id);if(!target)return;closeMap();if(transitionLock){target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});return}transitionLock=true;clearTimeout(hideTimer);veil?.classList.add('active');setTimeout(()=>{target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});setTimeout(()=>{veil?.classList.remove('active');transitionLock=false},reduce?0:620)},reduce?0:170)}
+ mapBtn?.addEventListener('click',openMap);closeBtn?.addEventListener('click',closeMap);
+ map?.addEventListener('click',e=>{if(e.target===map)closeMap()});
+ destinations.forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+ document.addEventListener('keydown',e=>{
+   if(mapOpen){if(e.key==='Escape'){e.preventDefault();closeMap();return}if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key==='ArrowLeft'||e.key==='ArrowUp'){const active=destinations.indexOf(document.activeElement);if(active>=0){e.preventDefault();const dir=(e.key==='ArrowRight'||e.key==='ArrowDown')?1:-1;destinations[(active+dir+destinations.length)%destinations.length].focus()}}if(e.key==='Enter'&&document.activeElement?.dataset?.go){e.preventDefault();go(document.activeElement.dataset.go)}return}
+   if(e.key.toLowerCase()==='m'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!e.target.matches('input,textarea,select,[contenteditable="true"]')&&!document.querySelector('.modal-backdrop.show,.admin-modal.show')){e.preventDefault();openMap()}
+ });
+ // Update active scene by the dominant viewport region; no fake page switches, all destinations are real sections.
+ if('IntersectionObserver' in window){const io=new IntersectionObserver(entries=>{const visible=entries.filter(x=>x.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(visible)setChapter(visible.target.id)},{rootMargin:'-18% 0px -28% 0px',threshold:[.08,.2,.4,.65]});sections.forEach(s=>io.observe(s));}
+ // The scroll itself gently changes each world, with restrained, GPU-friendly transforms.
+ let scrollTick=false;function updateWorldScroll(){if(scrollTick)return;scrollTick=true;requestAnimationFrame(()=>{scrollTick=false;const vh=innerHeight||1;sections.forEach(s=>{const r=s.getBoundingClientRect(),p=Math.max(-1,Math.min(1,(vh*.5-(r.top+r.height*.5))/(vh+r.height*.5)));s.style.setProperty('--section-progress',p.toFixed(3));s.style.setProperty('--px',(p*22).toFixed(1)+'px');s.style.setProperty('--py',(p*-18).toFixed(1)+'px')})})}addEventListener('scroll',updateWorldScroll,{passive:true});addEventListener('resize',updateWorldScroll,{passive:true});updateWorldScroll();
+ // Pointer parallax is localized to the active world and kept subtle so the art stays legible.
+ if(fine&&!reduce){let tx=0,ty=0,x=0,y=0,raf=0;const hero=document.getElementById('labHero');addEventListener('pointermove',e=>{tx=(e.clientX/innerWidth-.5)*2;ty=(e.clientY/innerHeight-.5)*2},{passive:true});function move(){x+=(tx-x)*.055;y+=(ty-y)*.055;if(hero){hero.style.setProperty('--hero-px',(x*24).toFixed(2)+'px');hero.style.setProperty('--hero-py',(y*18).toFixed(2)+'px')}raf=requestAnimationFrame(move)}move();document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else move()})}
+ // Custom cursor only follows a pointer; touch and reduced-motion users keep the standard cursor.
+ if(fine&&!reduce){const c=document.createElement('div');c.id='labCursor';c.setAttribute('aria-hidden','true');body.appendChild(c);body.classList.add('lab-cursor-on');let x=-30,y=-30,tx=-30,ty=-30;addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY},{passive:true});function loop(){x+=(tx-x)*.23;y+=(ty-y)*.23;c.style.left=x+'px';c.style.top=y+'px';requestAnimationFrame(loop)}loop();document.querySelectorAll('a,button,.work-card,.process-card,.tag').forEach(el=>{el.addEventListener('pointerenter',()=>body.classList.add('lab-cursor-hot'));el.addEventListener('pointerleave',()=>body.classList.remove('lab-cursor-hot'))})}
+ // Stagger existing reveals without changing any CMS content or data access code.
+ document.querySelectorAll('#archive .work-card').forEach((el,i)=>el.style.setProperty('--i',Math.min(i,12)));
+ // Keep current map destination in sync on initial load and when a hash link is opened directly.
+ const initial=(location.hash||'').slice(1);setChapter(labels[initial]?initial:(document.getElementById(initial)?initial:'works'));
+})();
+
+</script>
 </body>
 </html>
