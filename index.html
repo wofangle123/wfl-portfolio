@@ -1017,17 +1017,43 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('c
  body.appendChild(controls);
  const navLinks=[...d.querySelectorAll('.topbar .nav a[href^="#"]')];
  function sync(){const top=innerHeight*.45;let best=0,dist=Infinity;scenes.forEach((s,i)=>{const r=s.getBoundingClientRect();const delta=Math.abs((r.top+Math.min(r.height,innerHeight)*.35)-top);if(r.bottom>0&&r.top<innerHeight&&delta<dist){best=i;dist=delta}});current=best;const p=d.getElementById('wflPrevIndex'),n=d.getElementById('wflNextIndex');if(p)p.textContent=String((current-1+scenes.length)%scenes.length+1).padStart(2,'0');if(n)n.textContent=String((current+1)%scenes.length+1).padStart(2,'0');controls.querySelector('[data-step="-1"]').disabled=current===0;controls.querySelector('[data-step="1"]').disabled=current===scenes.length-1;}
- function jump(id){const target=d.getElementById(id);if(!target)return;current=Math.max(0,scenes.indexOf(target));if(busy){target.scrollIntoView({behavior:'auto',block:'start'});return}busy=true;const veil=d.getElementById('portalTransition'),wipe=d.getElementById('kineticWipe');clearTimeout(timer);if(veil)veil.classList.add('active');if(wipe&&!reduce){wipe.style.background=colors[id]||'#e7432d';wipe.style.setProperty('--wipe-x','50%');wipe.style.setProperty('--wipe-y','50%');wipe.classList.remove('play');void wipe.offsetWidth;wipe.classList.add('play');setTimeout(()=>wipe.classList.remove('play'),780)}timer=setTimeout(()=>{target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});setTimeout(()=>{if(veil)veil.classList.remove('active');busy=false;sync()},reduce?0:680)},reduce?0:130);}
+ function jump(id){const target=d.getElementById(id);if(!target)return;current=Math.max(0,scenes.indexOf(target));clearTimeout(timer);busy=true;target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});timer=setTimeout(()=>{busy=false;sync()},reduce?0:720);}
  controls.addEventListener('click',e=>{const b=e.target.closest('button[data-step]');if(!b)return;const i=current+Number(b.dataset.step);if(i>=0&&i<scenes.length)jump(scenes[i].id)});
  navLinks.forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href').slice(1);if(!scenes.some(s=>s.id===id))return;e.preventDefault();jump(id)}));
- // Wheel and trackpad gestures must not change the active scene; navigation is button-driven.
- const wheelGuard=e=>{if(e.ctrlKey)return;if(e.target.closest('input,textarea,select,[contenteditable="true"],.modal-backdrop,.admin-modal,.world-map-panel'))return;e.preventDefault()};
- window.addEventListener('wheel',wheelGuard,{passive:false,capture:true});
- // Prevent browser key scrolling; the existing chapter keys and scene buttons remain available.
- d.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.target.matches('input,textarea,select,[contenteditable="true"]')||d.querySelector('.modal-backdrop.show,.admin-modal.show,.world-map-backdrop.open'))return;if(['ArrowDown','ArrowUp','PageDown','PageUp',' '].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();}} ,{capture:true});
+ // Native wheel, trackpad, and keyboard scrolling are intentionally restored.
  // Native hash jumps from any other internal link are converted to scene transitions.
  d.querySelectorAll('a[href^="#"]').forEach(a=>{if(a.closest('.topbar .nav')||a.closest('.scene-rail')||a.closest('.world-map-panel'))return;const id=a.getAttribute('href').slice(1);if(!scenes.some(s=>s.id===id))return;a.addEventListener('click',e=>{e.preventDefault();jump(id)})});
  let raf=0;window.addEventListener('scroll',()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;sync()})},{passive:true});window.addEventListener('resize',sync,{passive:true});sync();
+})();
+</script>
+
+
+<style id="wfl-scroll-and-layout-refinement">
+/* Restore natural scrolling; transitions should never cover the whole screen. */
+html{scroll-behavior:smooth!important;scroll-snap-type:none!important}
+body{overscroll-behavior-y:auto!important}
+#portalTransition,#kineticWipe{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+/* Remove the fixed side chapter directory so the artwork and text remain unobstructed. */
+.scene-rail{display:none!important}
+/* The current chapter indicator stays compact and never blocks clicks. */
+.kinetic-scene-tag{right:18px!important;bottom:16px!important;max-width:calc(100vw - 36px);padding:8px 10px!important;font-size:8px!important;opacity:.78;z-index:35!important}
+/* Keep navigation controls away from the subject and make them visually quieter. */
+.wfl-scene-jump{right:18px!important;bottom:58px!important;gap:6px!important;z-index:75!important}
+.wfl-scene-jump button{min-height:38px!important;padding:0 11px!important;background:#f3f0e8d9!important;border-color:#191a1c24!important;box-shadow:0 4px 18px #0000000a!important;font-size:9px!important}
+.wfl-scene-jump button:hover{background:var(--signal,#e7432d)!important;border-color:var(--signal,#e7432d)!important;color:#fff!important}
+.wfl-scene-jump button:disabled{opacity:.35;cursor:default}
+@media(max-width:620px){.kinetic-scene-tag{display:none!important}.wfl-scene-jump{right:10px!important;bottom:10px!important}.wfl-scene-jump button{min-height:36px!important;padding:0 9px!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+</style>
+<script id="wfl-navigation-transition-cleanup">
+(()=>{
+ const d=document;
+ // A final guard ensures no older transition handler can flash a full-screen overlay.
+ const portal=d.getElementById('portalTransition'),wipe=d.getElementById('kineticWipe');
+ if(portal){portal.classList.remove('active');portal.setAttribute('aria-hidden','true')}
+ if(wipe){wipe.classList.remove('play');wipe.setAttribute('aria-hidden','true')}
+ // Keep keyboard page navigation native and update the small scene indicator while scrolling.
+ d.addEventListener('wheel',()=>{}, {passive:true});
 })();
 </script>
 
