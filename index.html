@@ -53,7 +53,7 @@
 <section class="section" id="journey"><div class="wrap"><div class="section-head reveal"><div><div class="section-kicker">04 / WORKING PHILOSOPHY</div><h2>从想法到<em>成形。</em></h2></div><p class="section-intro">可以把这里作为项目履历、制作方法或个人创作原则的展示区。内容强调过程与判断，而不仅仅是结果。</p></div>
 <div class="process-grid reveal"><article class="process-card"><div class="process-no">STEP / 01</div><h3>观察与拆解</h3><p>从真实物体、历史器械或概念参考出发，理解比例、结构、磨损与使用痕迹。</p></article><article class="process-card"><div class="process-no">STEP / 02</div><h3>建模与验证</h3><p>用清晰的结构建立形体，在轮廓、细节和可读性之间找到平衡。</p></article><article class="process-card"><div class="process-no">STEP / 03</div><h3>材质与呈现</h3><p>通过材质、灯光和构图建立视觉重点，让作品在静态展示与实时查看中都易于理解。</p></article></div>
 </div></section>
-<section class="contact"><div class="wrap"><div class="contact-box reveal"><div class="eyebrow">05 / OPEN FOR CONVERSATION</div><h2>让下一个想法，<br><span>开始成形。</span></h2><p id="contactText">如果你对作品有建议，或希望交流 3D 游戏美术、数字资产制作与相关合作，欢迎联系。持续更新中。</p><div class="contact-actions"><a class="btn primary" id="emailLink" href="mailto:your-email@example.com">联系创作者 ↗</a><a class="btn" href="#works">返回作品档案 ↑</a></div><div class="editable-hint">请将下方 HTML 中的邮箱占位地址改为你自己的联系邮箱。</div></div></div></section>
+<section class="contact"><div class="wrap"><div class="contact-box reveal"><div class="eyebrow">05 / OPEN FOR CONVERSATION</div><h2>让下一个想法，<br><span>开始成形。</span></h2><p id="contactText">如果你对作品有建议，或希望交流 3D 游戏美术、数字资产制作与相关合作，欢迎联系。持续更新中。</p><div class="contact-actions"><a class="btn primary" id="emailLink" href="mailto:your-email@example.com">联系创作者 ↗</a><a class="btn" href="#works">返回作品档案 ↑</a></div><div class="editable-hint">CONTACT EMAIL / <a id="emailText" href="mailto:your-email@example.com">your-email@example.com</a></div></div></div></section>
 </main>
 <footer class="footer"><div class="wrap footer-inner"><span>© 2026 WFL — 3D GAME ART ARCHIVE</span><span>MADE WITH PATIENCE · BUILT THROUGH PRACTICE</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 
@@ -147,7 +147,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDetail();$("lo
 $("loginBtn").addEventListener("click",()=>$("loginModal").classList.add("show"));$("loginCancel").addEventListener("click",()=>$("loginModal").classList.remove("show"));$("loginCancel2").addEventListener("click",()=>$("loginModal").classList.remove("show"));
 $("loginModal").addEventListener("click",e=>{if(e.target===$("loginModal"))$("loginModal").classList.remove("show")});
 $("loginForm").addEventListener("submit",async e=>{e.preventDefault();const btn=$("loginSubmit");btn.disabled=true;btn.textContent="验证中…";try{const {data,error}=await supabaseClient.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(error)throw error;if(data.user?.id!==ADMIN_UID){await supabaseClient.auth.signOut();throw new Error("这个账号没有管理员权限")} $("loginModal").classList.remove("show");openAdmin();showToast("登录成功，欢迎回来")}catch(err){showToast("登录失败："+err.message,true)}finally{btn.disabled=false;btn.textContent="登录管理后台 ↗"}});
-function openAdmin(){$("adminModal").classList.add("show");renderAdminList()}
+async function openAdmin(){$("adminModal").classList.add("show");renderAdminList();await loadProfile();fillProfileForm()}
 function closeAdmin(){$("adminModal").classList.remove("show");resetForm()}
 $("adminClose").addEventListener("click",closeAdmin);
 $("logoutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();closeAdmin();showToast("已退出登录")});
@@ -196,7 +196,7 @@ const PROFILE_DEFAULTS = {
 };
 let profileContent = structuredClone(PROFILE_DEFAULTS);
 function parseRows(text, isSkills=false){
- return String(text||"").split("\\n").map(line=>line.trim()).filter(Boolean).map(line=>{
+ return String(text||"").split("\n").map(line=>line.trim()).filter(Boolean).map(line=>{
   const parts=line.split("|").map(x=>x.trim());
   if(isSkills){return {name:parts[0]||"未命名技能",level:Math.max(0,Math.min(100,Number(parts[1])||0))};}
   return {date:parts[0]||"ONGOING",title:parts[1]||"持续创作",description:parts.slice(2).join(" | ")||""};
@@ -209,16 +209,19 @@ function fillProfileForm(){
  $("profileAboutText").value=profileContent.aboutText||"";
  $("profileContactText").value=profileContent.contactText||"";
  $("profileEmail").value=profileContent.email||"";
- $("profileTimeline").value=(profileContent.timeline||[]).map(x=>`${x.date} | ${x.title} | ${x.description}`).join("\\n");
- $("profileSkills").value=(profileContent.skills||[]).map(x=>`${x.name} | ${x.level}`).join("\\n");
+ $("profileTimeline").value=(profileContent.timeline||[]).map(x=>`${x.date} | ${x.title} | ${x.description}`).join("\n");
+ $("profileSkills").value=(profileContent.skills||[]).map(x=>`${x.name} | ${x.level}`).join("\n");
 }
 function renderProfile(){
  $("heroIntro").textContent=profileContent.heroIntro||"";
  $("aboutAside").textContent=profileContent.aboutAside||"";
- $("manifesto").innerHTML=escapeHtml(profileContent.manifesto||"").replace(/好的作品不止于完成。/g,"<mark>好的作品不止于完成。</mark>").replace(/\\n/g,"<br>");
+ $("manifesto").innerHTML=escapeHtml(profileContent.manifesto||"").replace(/好的作品不止于完成。/g,"<mark>好的作品不止于完成。</mark>").replace(/\n/g,"<br>");
  $("aboutText").textContent=profileContent.aboutText||"";
  $("contactText").textContent=profileContent.contactText||"";
- $("emailLink").href="mailto:"+(profileContent.email||"your-email@example.com");
+ const email=(profileContent.email||"").trim();
+ const emailLink=$("emailLink"),emailText=$("emailText");
+ emailLink.href="mailto:"+(email||"your-email@example.com");
+ if(emailText){emailText.textContent=email||"暂未设置邮箱";emailText.href=email?"mailto:"+email:"#";}
  $("timeline").innerHTML=(profileContent.timeline||[]).map(item=>`<div class="timeline-item"><div class="timeline-date">${escapeHtml(item.date)}</div><div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div></div>`).join("");
  $("skillsList").innerHTML=(profileContent.skills||[]).map(item=>`<div class="skill-row"><div class="skill-label"><span>${escapeHtml(item.name)}</span><span>${Math.max(0,Math.min(100,Number(item.level)||0))}%</span></div><div class="skill-track"><div class="skill-fill" style="--level:${Math.max(0,Math.min(100,Number(item.level)||0))}%"></div></div></div>`).join("");
 }
@@ -250,7 +253,7 @@ $("profileForm").addEventListener("submit",async e=>{
  try{
   const {error}=await supabaseClient.from("site_content").upsert({id:1,content:next},{onConflict:"id"});
   if(error)throw error;
-  profileContent=next;renderProfile();
+  profileContent=next;renderProfile();fillProfileForm();
   $("profileStatus").textContent="已保存到云端，访客刷新网页后即可看到最新内容。";
   showToast("主页内容已保存");
  }catch(err){
