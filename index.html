@@ -27,6 +27,14 @@ html{scroll-behavior:smooth;scroll-padding-top:70px}body{background:#0a0a0a;colo
 @media(max-width:520px){.hero h1{font-size:17vw}.hero-lead{font-size:12px}.hero-art{min-height:260px}.hero-meta{gap:8px}.metric strong{font-size:18px}.metric span{font-size:9px}.arc-stage{height:570px}.arc-gallery .work-card{width:76vw;top:5%}.arc-gallery .work-image,.arc-gallery .work-card:nth-child(n) .work-image{aspect-ratio:.9}.arc-gallery .work-title{font-size:21px}.arc-gallery .work-description{font-size:9px}.filter-row{gap:5px}.filter{padding:8px 9px;font-size:9px}.timeline-item{grid-template-columns:82px 1fr;gap:14px}.footer-inner{font-size:8px}.admin-grid{grid-template-columns:1fr}.admin-head{align-items:flex-start;flex-direction:column}.admin-body{padding:16px}.detail-grid{grid-template-columns:1fr}.detail-view{min-height:330px}.detail-info{padding:25px}.custom-cursor{display:none}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
+
+/* WFL water-motion gallery + robust 3D viewer */
+.arc-stage{--wave-x:50%;--wave-y:45%;cursor:grab;}
+.arc-stage:before{content:"";position:absolute;inset:4% -8% 0;z-index:0;pointer-events:none;opacity:.62;background:radial-gradient(ellipse at var(--wave-x) var(--wave-y),#7fd6b81b 0%,transparent 25%),radial-gradient(ellipse at calc(var(--wave-x) + 9%) calc(var(--wave-y) + 8%),transparent 0 20%,#7fd6b80b 20.4% 20.7%,transparent 21%),radial-gradient(ellipse at calc(var(--wave-x) - 8%) calc(var(--wave-y) - 5%),transparent 0 30%,#7fd6b80a 30.2% 30.5%,transparent 31%);mix-blend-mode:screen;transition:opacity .35s}
+.arc-stage:after{content:"";position:absolute;left:-15%;right:-15%;bottom:0;height:44%;z-index:0;pointer-events:none;background:repeating-radial-gradient(ellipse at var(--wave-x) 110%,transparent 0 26px,#7fd6b80b 27px 28px,transparent 29px 48px);transform:perspective(420px) rotateX(53deg);transform-origin:bottom;mask-image:linear-gradient(to top,transparent,#000 25%,transparent 95%);opacity:.8}
+.arc-gallery{z-index:1;pointer-events:none}.arc-gallery .work-card{pointer-events:auto;transition:transform .16s linear,opacity .35s,filter .35s;will-change:transform;cursor:pointer}.arc-gallery .work-card .work-image{position:relative;isolation:isolate;box-shadow:0 22px 70px #0009,0 0 0 1px #ffffff18,inset 0 0 40px #fff2;transition:box-shadow .35s,border-color .35s}.arc-gallery .work-card .work-image:before{content:"";position:absolute;inset:-30% -80%;z-index:2;pointer-events:none;background:linear-gradient(105deg,transparent 40%,#ffffff26 48%,#ffffff04 53%,transparent 60%);transform:translateX(-45%) rotate(4deg);transition:transform .8s cubic-bezier(.16,1,.3,1)}.arc-gallery .work-card:hover .work-image:before{transform:translateX(45%) rotate(4deg)}.arc-gallery .work-card:hover .work-image{box-shadow:0 30px 90px #000b,0 0 0 1px #7fd6b87a,0 0 50px #7fd6b814}.arc-gallery .work-card .work-info{position:relative;z-index:2}.viewer-status{position:absolute;z-index:4;top:18px;left:18px;padding:9px 12px;background:#080908d9;border:1px solid #7fd6b84d;color:#7fd6b8;font:10px var(--mono);letter-spacing:.1em;max-width:calc(100% - 36px);pointer-events:none}.viewer-status:empty{display:none}.model-canvas{z-index:2;touch-action:none;outline:none}.detail-view img{position:relative;z-index:1;pointer-events:none}.viewer-tools{z-index:5}.detail-view:has(.model-canvas[style*="display: block"]) img{opacity:.04!important}
+@media(max-width:850px){.arc-gallery{pointer-events:none}.arc-gallery .work-card{transition:transform .18s linear,opacity .35s,filter .35s}.arc-stage:after{height:35%}}
+@media(prefers-reduced-motion:reduce){.arc-gallery .work-card,.arc-gallery .work-image:before{transition:none!important}}
 </style>
 </head>
 <body>
@@ -68,7 +76,7 @@ html{scroll-behavior:smooth;scroll-padding-top:70px}body{background:#0a0a0a;colo
 </main>
 <footer class="footer"><div class="wrap footer-inner"><span>© 2026 WFL — 3D GAME ART ARCHIVE</span><span>MADE WITH PATIENCE · BUILT THROUGH PRACTICE</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 
-<div class="modal-backdrop" id="detailModal"><div class="modal"><button class="modal-close" id="detailClose">×</button><div class="detail-grid"><div class="detail-view" id="detailView"><img id="detailImage" alt=""><canvas class="model-canvas" id="modelCanvas"></canvas><div class="viewer-tools"><button id="rotateBtn">自动旋转：开</button><button id="wireBtn">线框显示</button><button id="fullImageBtn">查看大图</button></div></div><div class="detail-info"><div class="work-category" id="detailCategory"></div><h2 id="detailTitle"></h2><p id="detailDescription"></p><div class="detail-meta" id="detailMeta">WFL / DIGITAL ASSET</div></div></div></div></div>
+<div class="modal-backdrop" id="detailModal"><div class="modal"><button class="modal-close" id="detailClose">×</button><div class="detail-grid"><div class="detail-view" id="detailView"><img id="detailImage" alt=""><canvas class="model-canvas" id="modelCanvas"></canvas><div class="viewer-status" id="viewerStatus" aria-live="polite">PREPARING 3D VIEW…</div><div class="viewer-tools"><button id="rotateBtn">自动旋转：开</button><button id="wireBtn">线框显示</button><button id="fullImageBtn">查看大图</button></div></div><div class="detail-info"><div class="work-category" id="detailCategory"></div><h2 id="detailTitle"></h2><p id="detailDescription"></p><div class="detail-meta" id="detailMeta">WFL / DIGITAL ASSET</div></div></div></div></div>
 <div class="modal-backdrop" id="imageModal"><div class="modal" style="width:min(1200px,100%);background:#090a08"><button class="modal-close" id="imageClose">×</button><img id="fullscreenImage" alt="" style="width:100%;max-height:88vh;object-fit:contain;padding:25px"></div></div>
 <div class="modal-backdrop" id="loginModal"><div class="modal login-box"><button class="modal-close" id="loginCancel">×</button><div class="eyebrow">PRIVATE ACCESS</div><h2>管理入口</h2><p>登录后可以上传、编辑和删除作品。管理权限仍由原有 Supabase 账号控制。</p><form id="loginForm"><div class="form-group"><label for="loginEmail">邮箱地址 / EMAIL</label><input class="field" id="loginEmail" type="email" autocomplete="username" required placeholder="管理员邮箱"></div><div class="form-group"><label for="loginPassword">密码 / PASSWORD</label><input class="field" id="loginPassword" type="password" autocomplete="current-password" required placeholder="登录密码"></div><div class="form-actions"><button type="button" class="btn" id="loginCancel2">取消</button><button class="btn primary" type="submit" id="loginSubmit">登录管理后台 ↗</button></div></form></div></div>
 <div class="admin-modal" id="adminModal"><div class="admin-panel"><div class="admin-head"><div><h2>作品管理台 / WORKS CMS</h2><small>上传作品图片与 GLB 模型；作品保存在原有 Supabase 项目中。</small></div><div><button class="btn" id="logoutBtn">退出登录</button> <button class="btn" id="adminClose">关闭 ×</button></div></div><div class="admin-body">
@@ -135,30 +143,53 @@ function renderGallery(){
  if(!filtered.length){gallery.innerHTML='<div class="empty"><b>NO WORKS IN THIS FRAME</b>这个分类暂时没有作品。<br>新的形体，正在路上。</div>';gallery.classList.remove("has-works");updateArcGallery();return}
  gallery.classList.add("has-works");
  gallery.innerHTML=filtered.map((w,i)=>`<article class="work-card" data-id="${escapeHtml(w.id)}" style="--i:${i}"><div class="work-image"><img src="${escapeHtml(w.image_url)}" alt="${escapeHtml(w.title)}" loading="lazy" draggable="false"><span class="work-index">WFL / ${String(i+1).padStart(3,"0")}</span></div><div class="work-info"><div><div class="work-category">${escapeHtml(w.category||"其他")}${w.model_url?' · 3D VIEW':''}</div><div class="work-title">${escapeHtml(w.title)}</div><div class="work-description">${escapeHtml(w.description||"")}</div></div><span class="work-arrow">↗</span></div></article>`).join("");
- gallery.querySelectorAll(".work-card").forEach(card=>card.addEventListener("click",()=>{if(arcMoved){arcMoved=false;return}openWork(card.dataset.id)}));
+ // Click handling is delegated to the stage: pointer capture during drag can retarget the click to the stage itself.
  arcIndex=Math.min(arcIndex,filtered.length-1);updateArcGallery();
 }
 $("filters").querySelectorAll("[data-category]").forEach(btn=>btn.addEventListener("click",()=>{currentCategory=btn.dataset.category;$("filters").querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b===btn));renderGallery()}));
 function openWork(id){
  currentWork=works.find(w=>String(w.id)===String(id));if(!currentWork)return;
  $("detailTitle").textContent=currentWork.title;$("detailCategory").textContent=currentWork.category||"其他";$("detailDescription").textContent=currentWork.description||"这件作品还没有添加说明。";$("detailMeta").textContent=`WFL / ${currentWork.model_url?"INTERACTIVE 3D ASSET":"DIGITAL ARTWORK"}`;
- $("detailImage").src=currentWork.image_url;$("detailImage").style.display="block";$("modelCanvas").style.display="none";$("fullImageBtn").style.display="inline-block";$("detailModal").classList.add("show");document.body.style.overflow="hidden";
- if(currentWork.model_url){$("modelCanvas").style.display="block";$("detailImage").style.opacity=".08";loadModel(currentWork.model_url).catch(err=>{console.error(err);showToast("模型加载失败，将显示作品图片",true);$("modelCanvas").style.display="none";$("detailImage").style.opacity="1"})}else{$("detailImage").style.opacity="1";disposeModel()}
+ const canvas=$("modelCanvas"),status=$("viewerStatus");
+ $("detailImage").src=currentWork.image_url;$("detailImage").style.display="block";$("detailImage").style.opacity="1";canvas.style.display="none";$("fullImageBtn").style.display="inline-block";$("detailModal").classList.add("show");document.body.style.overflow="hidden";
+ if(currentWork.model_url){
+   status.textContent="LOADING 3D MODEL · 正在载入模型…";status.style.display="block";canvas.style.display="block";
+   // Wait for the modal to become measurable before initializing WebGL.
+   requestAnimationFrame(()=>requestAnimationFrame(()=>loadModel(currentWork.model_url).then(()=>{status.textContent="DRAG TO ROTATE · 滚动缩放 · 拖拽旋转";setTimeout(()=>{if(status.textContent.startsWith("DRAG TO ROTATE"))status.style.display="none"},2600)}).catch(err=>{console.error("GLB load failed:",err);status.textContent="3D 加载失败：请检查 GLB 文件与存储桶公开权限";status.style.display="block";showToast("GLB 加载失败："+(err?.message||"请检查模型链接或存储权限"),true);canvas.style.display="none";$("detailImage").style.opacity="1";})));
+ }else{status.style.display="none";$("detailImage").style.opacity="1";disposeModel()}
 }
 function closeDetail(){$("detailModal").classList.remove("show");document.body.style.overflow="";disposeModel();currentWork=null}
 $("detailClose").addEventListener("click",closeDetail);$("detailModal").addEventListener("click",e=>{if(e.target===$("detailModal"))closeDetail()});
 $("fullImageBtn").addEventListener("click",()=>{if(!currentWork)return;$("fullscreenImage").src=currentWork.image_url;$("imageModal").classList.add("show")});
 $("imageClose").addEventListener("click",()=>$("imageModal").classList.remove("show"));$("imageModal").addEventListener("click",e=>{if(e.target===$("imageModal"))$("imageModal").classList.remove("show")});
 async function initThree(){
- if(threeInitialized)return;const canvas=$("modelCanvas");renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
- scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(35,1,.1,1000);camera.position.set(3,2.4,4);scene.add(new THREE.HemisphereLight(0xffffff,0x343528,2));
- const key=new THREE.DirectionalLight(0xffffff,3);key.position.set(4,6,5);scene.add(key);const rim=new THREE.DirectionalLight(0xd5ff9a,2);rim.position.set(-4,2,-3);scene.add(rim);
+ if(threeInitialized){resizeThreeViewer();return}
+ const canvas=$("modelCanvas");
+ renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"high-performance"});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;
+ scene=new THREE.Scene();scene.background=null;camera=new THREE.PerspectiveCamera(35,1,.01,5000);camera.position.set(3,2.4,4);scene.add(new THREE.HemisphereLight(0xffffff,0x343528,2.2));
+ const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,6,5);scene.add(key);const fill=new THREE.DirectionalLight(0xb8e9d8,1.6);fill.position.set(-4,1,4);scene.add(fill);const rim=new THREE.DirectionalLight(0xd5ff9a,2.2);rim.position.set(-4,2,-3);scene.add(rim);
  const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(new RoomEnvironment(),.04).texture;pmrem.dispose();
- controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.06;controls.autoRotate=autoRotate;controls.autoRotateSpeed=1.1;
- const resize=()=>{if(!renderer)return;const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()};new ResizeObserver(resize).observe(canvas);resize();
- const animate=()=>{animationFrame=requestAnimationFrame(animate);if(controls){controls.autoRotate=autoRotate;controls.update()}renderer.render(scene,camera)};animate();threeInitialized=true;
+ controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.065;controls.enableZoom=true;controls.zoomSpeed=.85;controls.enablePan=true;controls.autoRotate=autoRotate;controls.autoRotateSpeed=1.1;controls.minDistance=.01;controls.maxDistance=10000;
+ if(window.ResizeObserver){new ResizeObserver(resizeThreeViewer).observe($("detailView"))}else window.addEventListener("resize",resizeThreeViewer);
+ const animate=()=>{animationFrame=requestAnimationFrame(animate);if(controls){controls.autoRotate=autoRotate;controls.update()}if(renderer&&scene&&camera)renderer.render(scene,camera)};animate();threeInitialized=true;resizeThreeViewer();
 }
-async function loadModel(url){await initThree();disposeLoadedModel();$("viewerLoading")?.remove();const loader=new GLTFLoader();const gltf=await loader.loadAsync(url);modelRoot=gltf.scene;scene.add(modelRoot);const box=new THREE.Box3().setFromObject(modelRoot),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());modelRoot.position.sub(center);const max=Math.max(size.x,size.y,size.z)||1;camera.position.set(max*1.8,max*1.2,max*2.2);camera.near=max/1000;camera.far=max*100;camera.updateProjectionMatrix();controls.target.set(0,0,0);controls.update();originalMaterials=[];modelRoot.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;originalMaterials.push({mesh:o,material:o.material});o.material=o.material.clone()}});wireframeMode=false;$("wireBtn").textContent="线框显示"}
+function resizeThreeViewer(){if(!renderer||!camera)return;const box=$("detailView").getBoundingClientRect();const w=Math.max(1,box.width),h=Math.max(1,box.height);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+async function loadModel(url){
+ await initThree();resizeThreeViewer();disposeLoadedModel();
+ if(!url||typeof url!=="string")throw new Error("作品没有有效的 GLB 地址");
+ const loader=new GLTFLoader();loader.setCrossOrigin("anonymous");
+ let gltf;
+ try{gltf=await loader.loadAsync(url)}catch(firstError){
+   // Give a clear error for failed storage URLs / CORS rather than silently leaving a blank canvas.
+   throw new Error(firstError?.message||"无法读取模型文件。请确认 Supabase Storage 中的 GLB 可公开访问。")
+ }
+ modelRoot=gltf.scene;scene.add(modelRoot);
+ const box=new THREE.Box3().setFromObject(modelRoot),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());modelRoot.position.sub(center);
+ const max=Math.max(size.x,size.y,size.z)||1;const fov=camera.fov*Math.PI/180;let distance=(max/2)/Math.tan(fov/2)*1.65;distance=Math.max(distance,.05);
+ camera.position.set(distance*.85,distance*.55,distance);camera.near=Math.max(max/10000,.001);camera.far=Math.max(max*100,distance*20,100);camera.updateProjectionMatrix();controls.target.set(0,0,0);controls.minDistance=max*.08;controls.maxDistance=max*20;controls.update();
+ modelRoot.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;originalMaterials.push({mesh:o,material:o.material});if(Array.isArray(o.material))o.material=o.material.map(m=>m.clone());else if(o.material)o.material=o.material.clone()}});
+ wireframeMode=false;$("wireBtn").textContent="线框显示";resizeThreeViewer();
+}
 function disposeLoadedModel(){if(!modelRoot||!scene)return;scene.remove(modelRoot);modelRoot.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material){const ms=Array.isArray(o.material)?o.material:[o.material];ms.forEach(m=>m.dispose())}});modelRoot=null;originalMaterials=[]}
 function disposeModel(){if(modelRoot)disposeLoadedModel();if(renderer&&scene){/* renderer is reused for the next model */}}
 $("rotateBtn").addEventListener("click",()=>{autoRotate=!autoRotate;$("rotateBtn").textContent="自动旋转："+(autoRotate?"开":"关")});
@@ -311,11 +342,38 @@ function updateArcGallery(){
 }
 function moveArc(delta){const total=arcCards().length;if(total<2)return;arcIndex=(arcIndex+delta+total)%total;updateArcGallery()}
 const arcStage=$("arcStage");
+let arcMouseX=.5,arcMouseY=.45,arcTargetX=.5,arcTargetY=.45,arcWaveClock=0,arcWaveRaf=0;
+function renderArcWaterMotion(){
+ if(!arcStage)return;arcWaveClock+=.016;arcMouseX+=(arcTargetX-arcMouseX)*.075;arcMouseY+=(arcTargetY-arcMouseY)*.075;
+ arcStage.style.setProperty("--wave-x",(arcMouseX*100).toFixed(2)+"%");arcStage.style.setProperty("--wave-y",(arcMouseY*100).toFixed(2)+"%");
+ const cards=arcCards(),total=cards.length;
+ cards.forEach((card,i)=>{
+   let offset=i-arcIndex;const half=total/2;if(offset>half)offset-=total;if(offset< -half)offset+=total;
+   const abs=Math.abs(offset),gap=window.innerWidth<700?Math.min(window.innerWidth*.57,230):Math.min(window.innerWidth*.27,370);
+   const phase=arcWaveClock*1.12-i*.78,dist=Math.abs((i/(Math.max(total-1,1)))-arcMouseX),influence=Math.max(0,1-dist*3.5);
+   const ripple=Math.sin(phase)*Math.min(1,abs*.35+0.35),waveY=Math.sin(phase*1.35)*9*ripple+Math.cos(phase*.7+i)*5;
+   const mouseX=(arcMouseX-.5)*-28*influence,mouseY=(arcMouseY-.5)*-18*influence;
+   const x=offset*gap+Math.sin(phase*.6)*8+mouseX,y=abs*19+waveY+mouseY,z=-abs*150+Math.cos(phase)*13*influence;
+   const rot=offset*-21+Math.sin(phase)*1.6+mouseX*.09,rotX=(arcMouseY-.5)*-5*influence+Math.sin(phase)*.7;
+   card.style.transform=`translate(-50%, 0) translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotX}deg) rotateY(${rot}deg) scale(${Math.max(.68,1-abs*.105)})`;
+ });
+ arcWaveRaf=requestAnimationFrame(renderArcWaterMotion);
+}
 if(arcStage){
+ arcStage.addEventListener("pointermove",e=>{const r=arcStage.getBoundingClientRect();arcTargetX=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));arcTargetY=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))});
+ arcStage.addEventListener("pointerleave",()=>{arcTargetX=.5;arcTargetY=.45});
+ arcStage.addEventListener("click",e=>{
+   if(arcMoved){arcMoved=false;return}
+   let card=e.target.closest?.(".work-card");
+   // Pointer capture may retarget click to the stage; hit-test the actual release point.
+   if(!card&&Number.isFinite(e.clientX)&&Number.isFinite(e.clientY)){const under=document.elementFromPoint(e.clientX,e.clientY);card=under?.closest?.(".work-card")||null}
+   if(card&&arcStage.contains(card)){e.preventDefault();openWork(card.dataset.id)}
+ });
+ renderArcWaterMotion();
  arcStage.addEventListener("wheel",e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){e.preventDefault();moveArc(e.deltaY>0?1:-1)}else if(Math.abs(e.deltaX)>8){e.preventDefault();moveArc(e.deltaX>0?1:-1)}},{passive:false});
- arcStage.addEventListener("pointerdown",e=>{if(e.target.closest("button,a"))return;arcPointerDown=true;arcMoved=false;arcStartX=arcLastX=e.clientX;arcStartY=e.clientY;arcVelocity=0;arcStage.classList.add("dragging");arcStage.setPointerCapture?.(e.pointerId)});
- arcStage.addEventListener("pointermove",e=>{if(!arcPointerDown)return;const dx=e.clientX-arcLastX;arcLastX=e.clientX;if(Math.abs(e.clientX-arcStartX)>7||Math.abs(e.clientY-arcStartY)>12)arcMoved=true;if(Math.abs(dx)>1){arcVelocity=dx;const cards=arcCards(),step=window.innerWidth<700?window.innerWidth*.57:Math.min(window.innerWidth*.27,370);if(Math.abs(e.clientX-arcStartX)>step*.42){moveArc(e.clientX<arcStartX?1:-1);arcStartX=e.clientX}}});
- const endDrag=()=>{if(!arcPointerDown)return;arcPointerDown=false;arcStage.classList.remove("dragging");if(Math.abs(arcVelocity)>13){moveArc(arcVelocity<0?1:-1)}if(arcMoved)setTimeout(()=>{arcMoved=false},80)};
+ arcStage.addEventListener("pointerdown",e=>{if(e.target.closest("button,a,.viewer-tools"))return;arcPointerDown=true;arcMoved=false;arcStartX=arcLastX=e.clientX;arcStartY=e.clientY;arcVelocity=0;arcStage.classList.add("dragging");arcStage.setPointerCapture?.(e.pointerId)});
+ arcStage.addEventListener("pointermove",e=>{if(!arcPointerDown)return;const dx=e.clientX-arcLastX;arcLastX=e.clientX;if(Math.abs(e.clientX-arcStartX)>10||Math.abs(e.clientY-arcStartY)>16)arcMoved=true;if(Math.abs(dx)>1){arcVelocity=dx;const cards=arcCards(),step=window.innerWidth<700?window.innerWidth*.57:Math.min(window.innerWidth*.27,370);if(Math.abs(e.clientX-arcStartX)>step*.42){moveArc(e.clientX<arcStartX?1:-1);arcStartX=e.clientX}}});
+ const endDrag=()=>{if(!arcPointerDown)return;arcPointerDown=false;arcStage.classList.remove("dragging");if(Math.abs(arcVelocity)>13){moveArc(arcVelocity<0?1:-1)}if(arcMoved)setTimeout(()=>{arcMoved=false},260)};
  arcStage.addEventListener("pointerup",endDrag);arcStage.addEventListener("pointercancel",endDrag);arcStage.addEventListener("lostpointercapture",endDrag);
  window.addEventListener("resize",()=>requestAnimationFrame(updateArcGallery));
 }
